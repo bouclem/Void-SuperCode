@@ -1,0 +1,86 @@
+{
+  "name": "gitlab",
+  "displayName": "%displayName%",
+  "description": "%description%",
+  "publisher": "void-supercode",
+  "license": "MIT",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.41.0"
+  },
+  "icon": "images/icon.png",
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "extensionDependencies": [
+    "vscode.git-base"
+  ],
+  "type": "module",
+  "main": "./out/extension.js",
+  "capabilities": {
+    "virtualWorkspaces": true,
+    "untrustedWorkspaces": {
+      "supported": true
+    }
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "gitlab.publish",
+        "title": "%command.publish%"
+      },
+      {
+        "command": "gitlab.openOnGitLab",
+        "title": "%command.openOnGitLab%"
+      },
+      {
+        "command": "gitlab.createMergeRequest",
+        "title": "%command.createMergeRequest%"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "gitlab.publish",
+          "when": "git.state == initialized"
+        },
+        {
+          "command": "gitlab.openOnGitLab",
+          "when": "git.state == initialized"
+        },
+        {
+          "command": "gitlab.createMergeRequest",
+          "when": "git.state == initialized"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "GitLab",
+      "properties": {
+        "gitlab.gitAuthentication": {
+          "type": "boolean",
+          "default": true,
+          "description": "%config.gitAuthentication%"
+        },
+        "gitlab.gitProtocol": {
+          "type": "string",
+          "enum": ["https", "ssh"],
+          "default": "https",
+          "description": "%config.gitProtocol%"
+        },
+        "gitlab.instanceUrl": {
+          "type": "string",
+          "default": "https://gitlab.com",
+          "description": "%config.instanceUrl%"
+        }
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  }
+}

@@ -1,0 +1,10 @@
+{
+	"displayName": "GitLab",
+	"description": "GitLab features for Void Supercode",
+	"command.publish": "Publish to GitLab",
+	"command.openOnGitLab": "Open on GitLab",
+	"command.createMergeRequest": "Create Merge Request",
+	"config.gitAuthentication": "Controls whether to enable automatic GitLab authentication for git commands.",
+	"config.gitProtocol": "Controls which protocol is used to clone a GitLab repository.",
+	"config.instanceUrl": "The GitLab instance URL. Use https://gitlab.com for GitLab.com or your self-hosted instance URL."
+}
