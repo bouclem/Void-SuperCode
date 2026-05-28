@@ -18,3 +18,4 @@ Summaries marked aging/stale/expired.
 | context/systems/integrated-ext.md | fresh | 2026-05-28T21:25 |
 | context/systems/eslint-local.md | fresh | 2026-05-28T21:25 |
 | context/important-files/package-json.md | fresh | 2026-05-28T21:25 |
+| context/systems/vce.md          | fresh | 2026-05-28T21:41 |

@@ -6,6 +6,7 @@
     "context/systems/void-ai.md": { "verified": "2026-05-28T21:25", "state": "fresh" },
     "context/systems/integrated-ext.md": { "verified": "2026-05-28T21:25", "state": "fresh" },
     "context/systems/eslint-local.md": { "verified": "2026-05-28T21:25", "state": "fresh" },
-    "context/important-files/package-json.md": { "verified": "2026-05-28T21:25", "state": "fresh" }
+    "context/important-files/package-json.md": { "verified": "2026-05-28T21:25", "state": "fresh" },
+    "context/systems/vce.md": { "verified": "2026-05-28T21:41", "state": "fresh" }
   }
 }
