@@ -1,7 +1,14 @@
 # Void Context Engine (VCE)
 
 **Location:** `void_ai/context_engines/`
-**Status:** Skeleton (Step 1) — interfaces defined, all methods throw `not implemented`
+**Status:** Phase 2 — file discovery implemented (workspace walking,
+`.gitignore` parsing, language detection). Parser / storage / queries
+still skeletons.
+
+## tsconfig
+`void_ai/tsconfig.json` extends `src/tsconfig.base.json`. Adds `node`
+types, `noEmit: true`. Type-check only — not yet wired into the build
+pipeline.
 
 ## Purpose
 Workspace-wide code understanding for Void's coding agents. Indexes the
@@ -48,6 +55,8 @@ void_ai/context_engines/
 ├── core/
 │   ├── contextEngine.ts        # IContextEngine + ContextEngineService stub
 │   ├── workspaceSource.ts      # LocalWorkspaceSource (no git)
+│   ├── ignore.ts               # IgnoreMatcher (.gitignore + builtins)
+│   ├── languageMap.ts          # extension → language id
 │   ├── indexer/
 │   │   ├── indexer.ts
 │   │   ├── treeSitterParser.ts
@@ -87,7 +96,8 @@ void_ai/context_engines/
 - Naming prefix: `vce_*`
 
 ## Next steps (not started)
-- Implement `LocalWorkspaceSource` (FS walk + `.gitignore` parsing)
+- Implement `TreeSitterParser` (TypeScript first)
 - Wire `SqliteStore` to `@vscode/sqlite3`
-- Tree-sitter parser for TypeScript first
+- `FileWatcher` via `@parcel/watcher`
+- Symbol/call graph extraction
 - DI registration into `src/vs/` (separate approval required)
