@@ -10,12 +10,6 @@
 /extensions/
 /cli/
 /src/vscode-dts/
-/src/vs/platform/
-/src/vs/workbench/contrib/
-/src/vs/workbench/services/
-/src/vs/workbench/test/
-/src/vs/workbench/api/
-/src/vs/server/
 
 # === OS ===
 .DS_Store
