@@ -48,6 +48,7 @@ interface Window {
     readFile(filePath: string): Promise<string>;
     createFile(filePath: string): Promise<boolean>;
     saveFile(filePath: string, content: string): Promise<boolean>;
+    createFolder(folderPath: string): Promise<boolean>;
   };
   MonacoEnvironment: {
     getWorkerUrl(): string;

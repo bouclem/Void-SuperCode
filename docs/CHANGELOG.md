@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.0.6] - 2026-07-01
+
+- Fixed: Monaco editor no longer editable when welcome page is visible
+- Fixed: Welcome page layout is now responsive and scrollable on small windows
+- Fixed: File explorer sidebar is now closed by default on startup
+- Replaced browser prompt() popups with inline input field in file tree (Enter to create, Escape to cancel)
+- Added new folder creation button with new-folder.svg icon
+- Added create-folder IPC handler (fs.mkdirSync with recursive)
+- Remade app icon with space-vibe gradient design (glowing brackets, orbit circles, star accents)
+
 ## [0.0.5] - 2026-07-01
 
 - Added open file dialog for opening individual files

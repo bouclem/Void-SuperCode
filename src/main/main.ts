@@ -107,3 +107,15 @@ ipcMain.handle('save-file', async (_event, filePath: string, content: string) =>
     return false;
   }
 });
+
+ipcMain.handle('create-folder', async (_event, folderPath: string) => {
+  try {
+    if (fs.existsSync(folderPath)) {
+      return false;
+    }
+    fs.mkdirSync(folderPath, { recursive: true });
+    return true;
+  } catch {
+    return false;
+  }
+});

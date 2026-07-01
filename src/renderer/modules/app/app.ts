@@ -10,7 +10,9 @@ window.App = (() => {
   function initActivityBar(): void {
     const filesBtn = document.getElementById('activity-files-btn')!;
     const sidebar = document.getElementById('sidebar')!;
-    let sidebarVisible = true;
+    let sidebarVisible = false;
+
+    sidebar.style.display = 'none';
 
     filesBtn.addEventListener('click', function () {
       sidebarVisible = !sidebarVisible;

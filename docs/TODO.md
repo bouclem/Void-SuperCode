@@ -8,3 +8,4 @@
 - [ ] Add settings/preferences
 - [x] Add syntax detection per file type
 - [x] Add create new file from sidebar
+- [x] Add create new folder from sidebar
