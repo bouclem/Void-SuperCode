@@ -6,6 +6,19 @@ window.RunFile = (() => {
     }
   }
 
+  function switchToDebugTab(): void {
+    const tabs = document.querySelectorAll('.panel-tab');
+    tabs.forEach(function (t) { t.classList.remove('active'); });
+    const debugTab = document.querySelector('.panel-tab[data-panel="debug"]');
+    if (debugTab) debugTab.classList.add('active');
+
+    document.querySelectorAll('.panel-content').forEach(function (c) {
+      c.classList.remove('active');
+    });
+    const debugOutput = document.getElementById('debug-console-output');
+    if (debugOutput) debugOutput.classList.add('active');
+  }
+
   async function run(): Promise<void> {
     const tab = window.Tabs.getActiveTab();
     if (!tab) return;
@@ -17,10 +30,12 @@ window.RunFile = (() => {
       return;
     }
 
-    if (ext === 'js' || ext === 'mjs' || ext === 'ts') {
+    if (ext === 'js' || ext === 'mjs' || ext === 'ts' || ext === 'tsx' || ext === 'jsx') {
       const content = tab.model.getValue();
-      const result = await window.api.runFile(tab.path, content);
+      switchToDebugTab();
       window.DebugConsole.show();
+      window.DebugConsole.appendLine('INFO', 'run', 'Running ' + tab.name + '...');
+      const result = await window.api.runFile(tab.path, content);
       if (result.success) {
         window.DebugConsole.appendLine('INFO', 'run', 'File executed successfully');
         if (result.stdout) {
@@ -35,6 +50,7 @@ window.RunFile = (() => {
       return;
     }
 
+    switchToDebugTab();
     window.DebugConsole.show();
     window.DebugConsole.appendLine('WARN', 'run', 'Cannot run file type: .' + ext);
   }

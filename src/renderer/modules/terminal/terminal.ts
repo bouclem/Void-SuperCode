@@ -1,5 +1,5 @@
-declare const Terminal: any;
-declare const FitAddon: any;
+const XtermTerminal = (window as any).Terminal;
+const XtermFitAddon = (window as any).FitAddon;
 
 window.Terminal = (() => {
   let panel: HTMLElement | null = null;
@@ -14,7 +14,7 @@ window.Terminal = (() => {
     if (!panel) return;
 
     if (!initialized) {
-      term = new Terminal({
+      term = new XtermTerminal({
         theme: {
           background: '#1e1e1e',
           foreground: '#cccccc',
@@ -25,7 +25,7 @@ window.Terminal = (() => {
         cursorBlink: true,
       });
 
-      const fitAddon = new FitAddon.FitAddon();
+      const fitAddon = new XtermFitAddon.FitAddon();
       term.loadAddon(fitAddon);
       term.open(panel);
       fitAddon.fit();

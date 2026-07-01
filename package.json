@@ -1,11 +1,11 @@
 {
   "name": "void-supercode",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Void SuperCode - A lightweight code editor",
   "releaseChannel": "insider",
   "main": "dist/main/main.js",
   "scripts": {
-    "build": "tsc -p tsconfig.json && tsc -p tsconfig.renderer.json && npx copyfiles -u 2 src/renderer/*.html src/renderer/*.css dist/renderer && npx copyfiles -u 3 src/renderer/styles/*.css dist/renderer/styles && npx copyfiles -u 4 node_modules/monaco-editor/min/vs/**/* dist/renderer/vs && npx copyfiles -u 3 src/renderer/icons/*.svg dist/renderer/icons && npx copyfiles -u 1 src/lang/javascript/icons/*.svg dist/renderer/lang/javascript/icons && npx copyfiles -u 1 src/lang/julia/icons/*.svg dist/renderer/lang/julia/icons && npx copyfiles -u 3 node_modules/@xterm/xterm/css/xterm.css dist/renderer/xterm/xterm.css && npx copyfiles -u 3 node_modules/@xterm/xterm/lib/xterm.js dist/renderer/xterm/xterm.js && npx copyfiles -u 3 node_modules/@xterm/addon-fit/lib/addon-fit.js dist/renderer/xterm/addon-fit.js && npx copyfiles icon.png dist",
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig.renderer.json && npx copyfiles -u 2 src/renderer/*.html src/renderer/*.css dist/renderer && npx copyfiles -u 3 src/renderer/styles/*.css dist/renderer/styles && npx copyfiles -u 4 node_modules/monaco-editor/min/vs/**/* dist/renderer/vs && npx copyfiles -u 3 src/renderer/icons/*.svg dist/renderer/icons && npx copyfiles -u 1 src/lang/javascript/icons/*.svg dist/renderer/lang/javascript/icons && npx copyfiles -u 1 src/lang/julia/icons/*.svg dist/renderer/lang/julia/icons && npx copyfiles -u 1 src/lang/typescript/icons/*.svg dist/renderer/lang/typescript/icons && npx copyfiles -u 3 node_modules/@xterm/xterm/css/xterm.css dist/renderer/xterm/xterm.css && npx copyfiles -u 3 node_modules/@xterm/xterm/lib/xterm.js dist/renderer/xterm/xterm.js && npx copyfiles -u 3 node_modules/@xterm/addon-fit/lib/addon-fit.js dist/renderer/xterm/addon-fit.js && npx copyfiles icon.png dist",
     "start": "npm run build && electron .",
     "dev": "npm run build && electron .",
     "dist": "npm run build && electron-builder --win",

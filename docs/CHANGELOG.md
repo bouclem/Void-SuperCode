@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.1.1] - 2026-07-01
+
+- Fixed: terminal not working — "Terminal is not a constructor" error (xterm constructor was overwritten by module)
+- Fixed: run file output not showing — now switches to Debug Console tab before running
+- Added: TypeScript language support — syntax highlighting for .ts and .tsx files in Monaco
+- Added: TypeScript file icons in src/lang/typescript/ (ts-file.svg, tsx-file.svg)
+- Added: Publish button in source control sidebar — shows when branch has no remote, pushes with -u origin
+- Added: commit history view — click history button in source control header to see last 50 commits
+- Added: git log, git publish, git has-remote IPC handlers
+- Changed: version bumped to 0.1.1
+
 ## [0.1.0] - 2026-07-01
 
 - Added: command palette (Ctrl+Shift+P) — fuzzy search and run commands

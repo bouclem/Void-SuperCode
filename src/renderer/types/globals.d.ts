@@ -80,6 +80,8 @@ interface Window {
     pull(): Promise<void>;
     fetch(): Promise<void>;
     showCloneDialog(): void;
+    publish(): Promise<void>;
+    showHistory(): void;
   };
   CommandPalette: {
     init(): void;
@@ -133,6 +135,9 @@ interface Window {
     gitClone(url: string, destDir: string): Promise<boolean>;
     gitGetConfig(cwd: string): Promise<{ name: string; email: string }>;
     gitSetConfig(cwd: string, name: string, email: string): Promise<boolean>;
+    gitLog(cwd: string, maxCount: number): Promise<{ hash: string; shortHash: string; author: string; date: string; message: string }[]>;
+    gitPublish(cwd: string): Promise<boolean>;
+    gitHasRemote(cwd: string): Promise<boolean>;
     openSettingsWindow(): void;
     onSettingsUpdated(callback: (updates: Record<string, unknown>) => void): void;
     runFile(filePath: string, content: string): Promise<{ success: boolean; stdout: string; stderr: string; error?: string }>;

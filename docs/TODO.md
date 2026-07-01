@@ -33,3 +33,8 @@
 - [x] Add Julia language support
 - [x] Add auto-update (check, download, install from GitHub releases)
 - [x] Add auto-update setting in settings window
+- [x] Fix terminal "Terminal is not a constructor" error
+- [x] Fix run file not showing output
+- [x] Add TypeScript language support
+- [x] Add Publish button in source control
+- [x] Add commit history view

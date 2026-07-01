@@ -14,6 +14,8 @@ A lightweight desktop code editor built with Electron, TypeScript, and Monaco Ed
 - Settings window — separate Electron window with autosave, log level, git config, and auto-update settings
 - Git integration — source control panel with stage/unstage/commit
 - GitHub & GitLab integration — clone from any remote URL, push, pull, fetch
+- Git publish button — push branch to remote with -u origin when no remote is set
+- Git commit history — view last 50 commits with hash, author, date, and message
 - Git settings — user.name and user.email configuration in settings window
 - Resizable bottom panel — drag to resize terminal/debug console
 - Command palette (Ctrl+Shift+P) — fuzzy search and execute commands
@@ -80,5 +82,6 @@ src/
   lang/
     javascript/   JavaScript language support (config, icons)
     julia/        Julia language support (config, icons)
+    typescript/   TypeScript language support (config, icons)
 docs/             Project documentation
 ```

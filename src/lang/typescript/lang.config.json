@@ -1,0 +1,11 @@
+{
+  "language": "typescript",
+  "extensions": [".ts", ".tsx"],
+  "monacoLanguage": "typescript",
+  "bracketPairColorization": true,
+  "autoClosingBrackets": "always",
+  "icons": {
+    "ts": "icons/ts-file.svg",
+    "tsx": "icons/tsx-file.svg"
+  }
+}

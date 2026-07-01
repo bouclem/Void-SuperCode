@@ -38,6 +38,8 @@ window.App = (() => {
       { id: 'git.pull', label: 'Git: Pull', action: function () { window.Git.pull(); } },
       { id: 'git.fetch', label: 'Git: Fetch', action: function () { window.Git.fetch(); } },
       { id: 'git.clone', label: 'Git: Clone', action: function () { window.Git.showCloneDialog(); } },
+      { id: 'git.publish', label: 'Git: Publish Branch', action: function () { window.Git.publish(); } },
+      { id: 'git.history', label: 'Git: Show Commit History', action: function () { window.Git.showHistory(); } },
       { id: 'view.toggle-sidebar', label: 'Toggle Sidebar', action: function () { document.getElementById('activity-files-btn')!.click(); } },
       { id: 'view.toggle-debug', label: 'Toggle Debug Console', action: function () { window.DebugConsole.toggle(); } },
       { id: 'view.toggle-git', label: 'Toggle Source Control', action: function () { window.Git.toggle(); } },
@@ -125,6 +127,12 @@ window.App = (() => {
 
     const cloneBtn = document.getElementById('git-clone-btn');
     if (cloneBtn) cloneBtn.addEventListener('click', function () { window.Git.showCloneDialog(); });
+
+    const publishBtn = document.getElementById('git-publish-btn');
+    if (publishBtn) publishBtn.addEventListener('click', function () { window.Git.publish(); });
+
+    const historyBtn = document.getElementById('git-history-btn');
+    if (historyBtn) historyBtn.addEventListener('click', function () { window.Git.showHistory(); });
   }
 
   function initResizeHandle(): void {

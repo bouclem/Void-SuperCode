@@ -142,3 +142,56 @@ export async function setGitConfig(cwd: string, name: string, email: string): Pr
     return false;
   }
 }
+
+export interface GitLogEntry {
+  hash: string;
+  shortHash: string;
+  author: string;
+  date: string;
+  message: string;
+}
+
+export async function gitLog(cwd: string, maxCount: number): Promise<GitLogEntry[]> {
+  try {
+    const format = '%H%x1f%h%x1f%an%x1f%ad%x1f%s';
+    const output = await runGit(cwd, ['log', '-' + maxCount, '--pretty=format:' + format, '--date=short']);
+    if (!output) return [];
+
+    const entries: GitLogEntry[] = [];
+    const lines = output.split('\n');
+    for (const line of lines) {
+      const parts = line.split('\x1f');
+      if (parts.length >= 5) {
+        entries.push({
+          hash: parts[0]!,
+          shortHash: parts[1]!,
+          author: parts[2]!,
+          date: parts[3]!,
+          message: parts[4]!,
+        });
+      }
+    }
+    return entries;
+  } catch {
+    return [];
+  }
+}
+
+export async function gitHasRemote(cwd: string): Promise<boolean> {
+  try {
+    const output = await runGit(cwd, ['remote']);
+    return output.length > 0;
+  } catch {
+    return false;
+  }
+}
+
+export async function gitPublish(cwd: string): Promise<boolean> {
+  try {
+    const branch = await runGit(cwd, ['rev-parse', '--abbrev-ref', 'HEAD']);
+    await runGit(cwd, ['push', '-u', 'origin', branch]);
+    return true;
+  } catch {
+    return false;
+  }
+}

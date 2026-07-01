@@ -129,6 +129,12 @@ window.Git = (() => {
     if (commitSection) {
       commitSection.style.display = staged.length > 0 ? 'flex' : 'none';
     }
+
+    const publishBtn = document.getElementById('git-publish-btn');
+    if (publishBtn && status.isRepo) {
+      const hasRemote = await window.api.gitHasRemote(currentFolder);
+      publishBtn.style.display = hasRemote ? 'none' : 'block';
+    }
   }
 
   function createFileRow(file: GitFile, isStaged: boolean): HTMLElement {
@@ -260,5 +266,101 @@ window.Git = (() => {
     urlInput.focus();
   }
 
-  return { init, show, hide, toggle, refresh, setFolder, commit, push, pull, fetch, showCloneDialog };
+  async function publish(): Promise<void> {
+    if (!currentFolder) return;
+    const success = await window.api.gitPublish(currentFolder);
+    if (success) {
+      refresh();
+    }
+  }
+
+  async function showHistory(): Promise<void> {
+    if (!currentFolder) return;
+
+    const entries = await window.api.gitLog(currentFolder, 50);
+
+    const overlay = document.createElement('div');
+    overlay.className = 'palette-overlay';
+
+    const container = document.createElement('div');
+    container.className = 'palette-container';
+    container.style.maxHeight = '400px';
+
+    const header = document.createElement('div');
+    header.style.padding = '12px 16px';
+    header.style.borderBottom = '1px solid #333';
+    header.style.color = '#fff';
+    header.style.fontSize = '14px';
+    header.style.fontWeight = '600';
+    header.textContent = 'Commit History';
+
+    const list = document.createElement('div');
+    list.style.maxHeight = '320px';
+    list.style.overflowY = 'auto';
+
+    if (entries.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'palette-empty';
+      empty.textContent = 'No commits yet';
+      list.appendChild(empty);
+    } else {
+      for (const entry of entries) {
+        const item = document.createElement('div');
+        item.className = 'palette-item';
+        item.style.flexDirection = 'column';
+        item.style.alignItems = 'flex-start';
+        item.style.padding = '8px 16px';
+        item.style.cursor = 'default';
+
+        const topRow = document.createElement('div');
+        topRow.style.display = 'flex';
+        topRow.style.alignItems = 'center';
+        topRow.style.width = '100%';
+
+        const hashSpan = document.createElement('span');
+        hashSpan.className = 'git-history-hash';
+        hashSpan.textContent = entry.shortHash;
+
+        const msgSpan = document.createElement('span');
+        msgSpan.className = 'git-history-msg';
+        msgSpan.textContent = entry.message;
+        msgSpan.style.flex = '1';
+        msgSpan.style.marginLeft = '8px';
+        msgSpan.style.overflow = 'hidden';
+        msgSpan.style.textOverflow = 'ellipsis';
+        msgSpan.style.whiteSpace = 'nowrap';
+
+        topRow.appendChild(hashSpan);
+        topRow.appendChild(msgSpan);
+
+        const metaRow = document.createElement('div');
+        metaRow.style.fontSize = '11px';
+        metaRow.style.color = '#888';
+        metaRow.style.marginTop = '2px';
+        metaRow.style.marginLeft = '0';
+        metaRow.textContent = entry.author + ' - ' + entry.date;
+
+        item.appendChild(topRow);
+        item.appendChild(metaRow);
+        list.appendChild(item);
+      }
+    }
+
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'update-btn-later';
+    closeBtn.textContent = 'Close';
+    closeBtn.style.margin = '12px 16px';
+    closeBtn.addEventListener('click', function () { overlay.remove(); });
+
+    container.appendChild(header);
+    container.appendChild(list);
+    container.appendChild(closeBtn);
+    overlay.appendChild(container);
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) overlay.remove();
+    });
+    document.body.appendChild(overlay);
+  }
+
+  return { init, show, hide, toggle, refresh, setFolder, commit, push, pull, fetch, showCloneDialog, publish, showHistory };
 })();
