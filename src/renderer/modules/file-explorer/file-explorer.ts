@@ -27,6 +27,7 @@ window.FileExplorer = (() => {
       if (config.lastFolder) {
         currentFolderPath = config.lastFolder;
         await refresh();
+        window.App.showSidebar();
       }
     } catch {
       // Non-critical
@@ -47,6 +48,7 @@ window.FileExplorer = (() => {
       currentFolderPath = folderPath;
       await refresh();
       await window.api.setConfig({ lastFolder: folderPath });
+      window.App.showSidebar();
     }
   }
 

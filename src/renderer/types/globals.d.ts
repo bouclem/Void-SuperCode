@@ -40,6 +40,8 @@ interface Window {
   };
   App: {
     init(): void;
+    showSidebar(): void;
+    hideSidebar(): void;
   };
   api: {
     openFolderDialog(): Promise<string | null>;

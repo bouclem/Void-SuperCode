@@ -56,6 +56,15 @@ $g.FillEllipse($starBrush2, 64, 192, 4, 4)
 $starBrush3 = New-Object System.Drawing.SolidBrush([System.Drawing.Color]::FromArgb(128, 167, 139, 250))
 $g.FillEllipse($starBrush3, 200, 184, 3, 3)
 
+# INSIDER text
+$insiderFont = New-Object System.Drawing.Font("Segoe UI", 9, [System.Drawing.FontStyle]::Bold)
+$insiderBrush = New-Object System.Drawing.SolidBrush([System.Drawing.Color]::FromArgb(255, 245, 158, 11))
+$insiderFormat = New-Object System.Drawing.StringFormat
+$insiderFormat.Alignment = [System.Drawing.StringAlignment]::Center
+$insiderFormat.LineAlignment = [System.Drawing.StringAlignment]::Center
+$insiderRect = New-Object System.Drawing.RectangleF(0, 220, 256, 24)
+$g.DrawString("INSIDER", $insiderFont, $insiderBrush, $insiderRect, $insiderFormat)
+
 $outPath = "c:\Users\Utilisateur\Documents\Project\IDE\Void-SuperCode\icon.png"
 $bmp.Save($outPath, [System.Drawing.Imaging.ImageFormat]::Png)
 $g.Dispose()

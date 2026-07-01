@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.0.8] - 2026-07-01
+
+- Added: "INSIDER" text on app icon for insider builds
+- Fixed: file explorer sidebar now auto-opens when a folder is loaded (both on startup via last folder and on manual open)
+- Added: showSidebar/hideSidebar methods to App module for programmatic sidebar control
+
 ## [0.0.7] - 2026-07-01
 
 - Added: last opened folder is remembered and auto-loaded on next startup
