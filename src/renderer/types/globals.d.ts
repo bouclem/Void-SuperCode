@@ -81,6 +81,31 @@ interface Window {
     fetch(): Promise<void>;
     showCloneDialog(): void;
   };
+  CommandPalette: {
+    init(): void;
+    registerCommands(cmds: { id: string; label: string; shortcut?: string; action: () => void }[]): void;
+    show(): void;
+    hide(): void;
+  };
+  FileSearch: {
+    init(): void;
+    show(): Promise<void>;
+    hide(): void;
+  };
+  MarkdownPreview: {
+    init(): void;
+    show(content: string): void;
+    hide(): void;
+    isOpen(): boolean;
+  };
+  RunFile: {
+    init(): void;
+    run(): Promise<void>;
+  };
+  AutoUpdate: {
+    init(): void;
+    checkForUpdates(showNotification: boolean): Promise<void>;
+  };
   api: {
     openFolderDialog(): Promise<string | null>;
     openFileDialog(): Promise<string | null>;
@@ -110,6 +135,12 @@ interface Window {
     gitSetConfig(cwd: string, name: string, email: string): Promise<boolean>;
     openSettingsWindow(): void;
     onSettingsUpdated(callback: (updates: Record<string, unknown>) => void): void;
+    runFile(filePath: string, content: string): Promise<{ success: boolean; stdout: string; stderr: string; error?: string }>;
+    searchFiles(rootDir: string, query: string): Promise<{ name: string; path: string; relativePath: string }[]>;
+    checkForUpdates(): Promise<{ updateAvailable: boolean; latestVersion: string; downloadUrl: string; currentVersion: string }>;
+    openExternal(url: string): void;
+    installUpdate(latestTag: string): Promise<boolean>;
+    onInstallProgress(callback: (progress: { stage: string; message: string; percent?: number }) => void): void;
   };
   MonacoEnvironment: {
     getWorkerUrl(): string;

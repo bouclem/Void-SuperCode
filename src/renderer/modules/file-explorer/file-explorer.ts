@@ -115,6 +115,7 @@ window.FileExplorer = (() => {
     if (ext === 'js') return 'lang/javascript/icons/js-file.svg';
     if (ext === 'jsx') return 'lang/javascript/icons/jsx-file.svg';
     if (ext === 'mjs') return 'lang/javascript/icons/mjs-file.svg';
+    if (ext === 'jl') return 'lang/julia/icons/julia-file.svg';
     return 'icons/file.svg';
   }
 

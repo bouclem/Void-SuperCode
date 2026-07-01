@@ -26,3 +26,10 @@
 - [x] Add git settings (user.name, user.email)
 - [x] Fix terminal not opening
 - [x] Split CSS into multiple files
+- [x] Add command palette (Ctrl+Shift+P)
+- [x] Add global file search (Ctrl+P)
+- [x] Add markdown support with preview
+- [x] Add run file button
+- [x] Add Julia language support
+- [x] Add auto-update (check, download, install from GitHub releases)
+- [x] Add auto-update setting in settings window

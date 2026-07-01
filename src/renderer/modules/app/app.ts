@@ -12,10 +12,38 @@ window.App = (() => {
     window.Settings.initControls();
     window.Terminal.init();
     window.Git.init();
+    window.CommandPalette.init();
+    window.FileSearch.init();
+    window.MarkdownPreview.init();
+    window.RunFile.init();
+    window.AutoUpdate.init();
+    registerCommands();
     initActivityBar();
     initBottomPanelTabs();
     initResizeHandle();
     initGitCommit();
+  }
+
+  function registerCommands(): void {
+    window.CommandPalette.registerCommands([
+      { id: 'files.open-folder', label: 'Open Folder', action: function () { document.getElementById('open-folder-btn')!.click(); } },
+      { id: 'files.open-file', label: 'Open File', action: function () { document.getElementById('open-file-btn')!.click(); } },
+      { id: 'files.new-file', label: 'New File', action: function () { document.getElementById('new-file-btn')!.click(); } },
+      { id: 'files.new-folder', label: 'New Folder', action: function () { document.getElementById('new-folder-btn')!.click(); } },
+      { id: 'files.search', label: 'Go to File', shortcut: 'Ctrl+P', action: function () { window.FileSearch.show(); } },
+      { id: 'file.run', label: 'Run File', action: function () { window.RunFile.run(); } },
+      { id: 'file.save', label: 'Save File', shortcut: 'Ctrl+S', action: function () { window.Editor.saveCurrentFile(); } },
+      { id: 'git.commit', label: 'Git: Commit', action: function () { window.Git.commit(); } },
+      { id: 'git.push', label: 'Git: Push', action: function () { window.Git.push(); } },
+      { id: 'git.pull', label: 'Git: Pull', action: function () { window.Git.pull(); } },
+      { id: 'git.fetch', label: 'Git: Fetch', action: function () { window.Git.fetch(); } },
+      { id: 'git.clone', label: 'Git: Clone', action: function () { window.Git.showCloneDialog(); } },
+      { id: 'view.toggle-sidebar', label: 'Toggle Sidebar', action: function () { document.getElementById('activity-files-btn')!.click(); } },
+      { id: 'view.toggle-debug', label: 'Toggle Debug Console', action: function () { window.DebugConsole.toggle(); } },
+      { id: 'view.toggle-git', label: 'Toggle Source Control', action: function () { window.Git.toggle(); } },
+      { id: 'settings.open', label: 'Open Settings', action: function () { window.api.openSettingsWindow(); } },
+      { id: 'app.check-updates', label: 'Check for Updates', action: function () { window.AutoUpdate.checkForUpdates(true); } },
+    ]);
   }
 
   function initActivityBar(): void {

@@ -5,6 +5,28 @@ import { getConfig, setConfig } from './voidscode';
 import { logError, logInfo, logWarn } from './logger';
 import { createTerminal, writeTerminal, resizeTerminal, killTerminal } from './terminal';
 import { getGitStatus, stageFile, unstageFile, commitChanges, pushChanges, pullChanges, fetchRemotes, cloneRepo, getGitConfig, setGitConfig } from './git';
+import { runFile as runFileExec, searchFiles, checkForUpdates, downloadAndInstallUpdate } from './auto-update';
+import { shell } from 'electron';
+
+function getPkgVersion(): string {
+  try {
+    const pkgPath = path.join(__dirname, '..', '..', 'package.json');
+    const raw = fs.readFileSync(pkgPath, 'utf-8');
+    return (JSON.parse(raw) as { version: string }).version;
+  } catch {
+    return '0.0.0';
+  }
+}
+
+function isInsiderBuild(): boolean {
+  try {
+    const pkgPath = path.join(__dirname, '..', '..', 'package.json');
+    const raw = fs.readFileSync(pkgPath, 'utf-8');
+    return (JSON.parse(raw) as { releaseChannel?: string }).releaseChannel === 'insider';
+  } catch {
+    return false;
+  }
+}
 
 let mainWindow: BrowserWindow | null = null;
 let settingsWindow: BrowserWindow | null = null;
@@ -265,4 +287,29 @@ ipcMain.on('settings-changed', (_event, updates: Record<string, unknown>) => {
   if (mainWindow && !mainWindow.isDestroyed()) {
     mainWindow.webContents.send('settings-updated', updates);
   }
+});
+
+ipcMain.handle('run-file', async (_event, filePath: string, content: string) => {
+  return runFileExec(filePath, content);
+});
+
+ipcMain.handle('search-files', async (_event, rootDir: string, query: string) => {
+  return searchFiles(rootDir, query);
+});
+
+ipcMain.handle('check-for-updates', async () => {
+  return checkForUpdates(getPkgVersion(), isInsiderBuild());
+});
+
+ipcMain.on('open-external', (_event, url: string) => {
+  shell.openExternal(url);
+});
+
+ipcMain.handle('install-update', async (event, latestTag: string) => {
+  const win = BrowserWindow.fromWebContents(event.sender);
+  return downloadAndInstallUpdate(latestTag, function (progress) {
+    if (win && !win.isDestroyed()) {
+      win.webContents.send('install-progress', progress);
+    }
+  });
 });

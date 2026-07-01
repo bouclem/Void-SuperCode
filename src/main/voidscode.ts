@@ -6,12 +6,16 @@ interface VoidCodeConfig {
   lastFolder: string | null;
   autosave: boolean;
   logLevel: 'full' | 'normal' | 'minimal';
+  autoUpdate: boolean;
+  releaseChannel: string;
 }
 
 const defaultConfig: VoidCodeConfig = {
   lastFolder: null,
   autosave: true,
   logLevel: 'normal',
+  autoUpdate: true,
+  releaseChannel: 'insider',
 };
 
 function getVoidCodeDir(): string {

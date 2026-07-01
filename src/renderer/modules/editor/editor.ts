@@ -42,6 +42,7 @@ window.Editor = (() => {
       c: 'c', cpp: 'cpp', rs: 'rust', go: 'go',
       xml: 'xml', yaml: 'yaml', yml: 'yaml',
       sh: 'shell', sql: 'sql', txt: 'plaintext',
+      jl: 'julia', markdown: 'markdown',
     };
     return map[ext] ?? 'plaintext';
   }

@@ -1,0 +1,10 @@
+{
+  "language": "julia",
+  "extensions": [".jl"],
+  "monacoLanguage": "julia",
+  "bracketPairColorization": true,
+  "autoClosingBrackets": "always",
+  "icons": {
+    "jl": "icons/julia-file.svg"
+  }
+}

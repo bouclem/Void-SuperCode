@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.1.0] - 2026-07-01
+
+- Added: command palette (Ctrl+Shift+P) — fuzzy search and run commands
+- Added: global file search (Ctrl+P) — fuzzy find files by name across project
+- Added: markdown support — .md files render as formatted preview via Run button
+- Added: run file button in tab bar — executes JS/TS files, shows MD preview
+- Added: Julia language support — syntax highlighting for .jl files in Monaco
+- Added: Julia file icon in src/lang/julia/
+- Added: auto-update system — checks GitHub releases for new versions
+- Added: auto-update downloads and installs pre-built release binaries (no npm required)
+- Added: auto-update respects insider channel — matches -insider tags for insider builds
+- Added: auto-update setting in settings window (enable/disable automatic checks)
+- Added: install progress dialog with download bar and stage indicators
+- Added: features.css — styles for command palette, file search, run button, MD preview, update dialog
+- Changed: version bumped to 0.1.0
+
 ## [0.0.14] - 2026-07-01
 
 - Fixed: terminal not opening — bottom panel and resize handle were outside #app div, pushed below viewport

@@ -38,4 +38,15 @@ contextBridge.exposeInMainWorld('api', {
   onSettingsUpdated: (callback: (updates: Record<string, unknown>) => void): void => {
     ipcRenderer.on('settings-updated', (_event, updates) => callback(updates));
   },
+  runFile: (filePath: string, content: string): Promise<{ success: boolean; stdout: string; stderr: string; error?: string }> =>
+    ipcRenderer.invoke('run-file', filePath, content),
+  searchFiles: (rootDir: string, query: string): Promise<{ name: string; path: string; relativePath: string }[]> =>
+    ipcRenderer.invoke('search-files', rootDir, query),
+  checkForUpdates: (): Promise<{ updateAvailable: boolean; latestVersion: string; downloadUrl: string; currentVersion: string }> =>
+    ipcRenderer.invoke('check-for-updates'),
+  openExternal: (url: string): void => { ipcRenderer.send('open-external', url); },
+  installUpdate: (latestTag: string): Promise<boolean> => ipcRenderer.invoke('install-update', latestTag),
+  onInstallProgress: (callback: (progress: { stage: string; message: string; percent?: number }) => void): void => {
+    ipcRenderer.on('install-progress', (_event, progress) => callback(progress));
+  },
 });
