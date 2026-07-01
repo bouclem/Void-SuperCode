@@ -1,10 +1,10 @@
 {
   "name": "void-supercode",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Void SuperCode - A lightweight code editor",
   "main": "dist/main/main.js",
   "scripts": {
-    "build": "tsc && npx copyfiles -u 2 src/renderer/*.html src/renderer/*.css dist/renderer && npx copyfiles -u 4 node_modules/monaco-editor/min/vs/**/* dist/renderer/vs && npx copyfiles icon.svg dist",
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig.renderer.json && npx copyfiles -u 2 src/renderer/*.html src/renderer/*.css dist/renderer && npx copyfiles -u 4 node_modules/monaco-editor/min/vs/**/* dist/renderer/vs && npx copyfiles -u 3 src/renderer/icons/*.svg dist/renderer/icons && npx copyfiles icon.svg dist",
     "start": "npm run build && electron .",
     "dev": "npm run build && electron ."
   },

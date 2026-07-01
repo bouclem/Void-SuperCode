@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "None",
+    "moduleResolution": "Node",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "types": [],
+    "outDir": "dist/renderer/js",
+    "rootDir": "src/renderer/ts",
+    "sourceMap": false,
+    "incremental": true,
+    "tsBuildInfoFile": "dist/renderer/tsconfig.renderer.tsbuildinfo"
+  },
+  "include": ["src/renderer/ts/**/*.ts"]
+}

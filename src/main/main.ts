@@ -76,3 +76,15 @@ ipcMain.handle('read-file', async (_event, filePath: string) => {
     return '';
   }
 });
+
+ipcMain.handle('create-file', async (_event, filePath: string) => {
+  try {
+    if (fs.existsSync(filePath)) {
+      return false;
+    }
+    fs.writeFileSync(filePath, '', 'utf-8');
+    return true;
+  } catch {
+    return false;
+  }
+});

@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.3] - 2026-07-01
+
+- Added create new file via + icon button in sidebar
+- Added create new file via double-click on file explorer
+- Added custom SVG icons (plus, folder, file, new-file)
+- Split renderer code into separate TypeScript modules (editor, file-explorer, app)
+- Added separate tsconfig for renderer (no module wrapping)
+
 ## [0.0.2] - 2026-07-01
 
 - Added file explorer sidebar with folder open dialog
