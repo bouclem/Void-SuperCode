@@ -1,7 +1,7 @@
 # Changelog
 
-> Version history — to be populated.
+## [0.0.1] - 2026-07-01
 
-## [Unreleased]
-
-- TODO: Initial project setup
+- Added simple Electron desktop window
+- Added Monaco editor with dark theme
+- Basic project structure (main process + renderer)

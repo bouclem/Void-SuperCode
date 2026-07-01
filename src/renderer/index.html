@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Void SuperCode</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <div id="titlebar">
+      <span id="title">Void SuperCode</span>
+    </div>
+    <div id="editor"></div>
+  </div>
+
+  <script>
+    // Load Monaco via AMD loader
+    const path = require('path');
+    const monacoPath = path.join(__dirname, '..', '..', 'node_modules', 'monaco-editor', 'min', 'vs');
+
+    // Workaround for Monaco worker in Electron
+    self.MonacoEnvironment = {
+      getWorkerUrl: function () {
+        return `data:text/javascript;charset=utf-8,${encodeURIComponent(`
+          self.MonacoEnvironment = { baseUrl: '${monacoPath}' };
+          importScripts('${path.join(monacoPath, 'base', 'worker', 'workerMain.js').replace(/\\\\/g, '/')}');
+        `)}`;
+      }
+    };
+
+    require.config({ paths: { vs: monacoPath.replace(/\\\\/g, '/') } });
+    require(['vs/editor/editor.main'], function () {
+      monaco.editor.create(document.getElementById('editor'), {
+        value: [
+          '// Welcome to Void SuperCode',
+          '// Start coding here...',
+          '',
+          'function hello() {',
+          "  console.log('Hello, World!');",
+          '}',
+          '',
+          'hello();',
+          ''
+        ].join('\\n'),
+        language: 'javascript',
+        theme: 'vs-dark',
+        automaticLayout: true,
+        fontSize: 14,
+        minimap: { enabled: true },
+        scrollBeyondLastLine: false,
+        tabSize: 2,
+      });
+    });
+  </script>
+</body>
+</html>
