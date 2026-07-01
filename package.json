@@ -4,16 +4,20 @@
   "description": "Void SuperCode - A lightweight code editor",
   "main": "dist/main/main.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && npx copyfiles -u 2 src/renderer/*.html src/renderer/*.css dist/renderer && npx copyfiles -u 4 node_modules/monaco-editor/min/vs/**/* dist/renderer/vs",
     "start": "npm run build && electron .",
-    "dev": "tsc && electron ."
+    "dev": "npm run build && electron ."
   },
   "devDependencies": {
-    "electron": "^31.0.0",
-    "typescript": "^5.5.0",
-    "@types/node": "^20.14.0"
+    "@types/node": "^20.14.0",
+    "copyfiles": "^2.4.1",
+    "electron": "^31.7.7",
+    "typescript": "^5.5.0"
   },
   "dependencies": {
     "monaco-editor": "^0.50.0"
+  },
+  "overrides": {
+    "yauzl": "^3.3.1"
   }
 }

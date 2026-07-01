@@ -15,21 +15,19 @@
   </div>
 
   <script>
-    // Load Monaco via AMD loader
-    const path = require('path');
-    const monacoPath = path.join(__dirname, '..', '..', 'node_modules', 'monaco-editor', 'min', 'vs');
-
-    // Workaround for Monaco worker in Electron
     self.MonacoEnvironment = {
       getWorkerUrl: function () {
+        const workerUrl = new URL('vs/base/worker/workerMain.js', location.href).href;
         return `data:text/javascript;charset=utf-8,${encodeURIComponent(`
-          self.MonacoEnvironment = { baseUrl: '${monacoPath}' };
-          importScripts('${path.join(monacoPath, 'base', 'worker', 'workerMain.js').replace(/\\\\/g, '/')}');
+          self.MonacoEnvironment = { baseUrl: '${new URL('vs', location.href).href}' };
+          importScripts('${workerUrl}');
         `)}`;
       }
     };
-
-    require.config({ paths: { vs: monacoPath.replace(/\\\\/g, '/') } });
+  </script>
+  <script src="vs/loader.js"></script>
+  <script>
+    require.config({ paths: { vs: 'vs' } });
     require(['vs/editor/editor.main'], function () {
       monaco.editor.create(document.getElementById('editor'), {
         value: [
@@ -42,7 +40,7 @@
           '',
           'hello();',
           ''
-        ].join('\\n'),
+        ].join('\n'),
         language: 'javascript',
         theme: 'vs-dark',
         automaticLayout: true,
