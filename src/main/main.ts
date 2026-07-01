@@ -6,6 +6,7 @@ import { logError, logInfo, logWarn } from './logger';
 import { createTerminal, writeTerminal, resizeTerminal, killTerminal } from './terminal';
 import { getGitStatus, stageFile, unstageFile, commitChanges, pushChanges, pullChanges, fetchRemotes, cloneRepo, getGitConfig, setGitConfig, gitLog, gitPublish, gitHasRemote, gitInit } from './git';
 import { runFile as runFileExec, searchFiles, checkForUpdates, downloadAndInstallUpdate } from './auto-update';
+import { searchInFiles } from './search';
 import { shell } from 'electron';
 
 function getPkgVersion(): string {
@@ -166,6 +167,52 @@ ipcMain.handle('create-folder', async (_event, folderPath: string) => {
     logError('create-folder', 'Failed to create folder: ' + folderPath + ' - ' + (err as Error).message);
     return false;
   }
+});
+
+ipcMain.handle('rename-file', async (_event, oldPath: string, newPath: string) => {
+  try {
+    const normalizedOld = path.normalize(oldPath);
+    const normalizedNew = path.normalize(newPath);
+    if (!fs.existsSync(normalizedOld)) {
+      logError('rename-file', 'Source does not exist: ' + normalizedOld);
+      return false;
+    }
+    if (fs.existsSync(normalizedNew)) {
+      logError('rename-file', 'Target already exists: ' + normalizedNew);
+      return false;
+    }
+    fs.renameSync(normalizedOld, normalizedNew);
+    logInfo('rename-file', 'Renamed: ' + normalizedOld + ' -> ' + normalizedNew);
+    return true;
+  } catch (err) {
+    logError('rename-file', 'Failed to rename: ' + oldPath + ' -> ' + newPath + ' - ' + (err as Error).message);
+    return false;
+  }
+});
+
+ipcMain.handle('delete-file', async (_event, targetPath: string) => {
+  try {
+    const normalized = path.normalize(targetPath);
+    if (!fs.existsSync(normalized)) {
+      logError('delete-file', 'Path does not exist: ' + normalized);
+      return false;
+    }
+    const stat = fs.statSync(normalized);
+    if (stat.isDirectory()) {
+      fs.rmSync(normalized, { recursive: true });
+    } else {
+      fs.unlinkSync(normalized);
+    }
+    logInfo('delete-file', 'Deleted: ' + normalized);
+    return true;
+  } catch (err) {
+    logError('delete-file', 'Failed to delete: ' + targetPath + ' - ' + (err as Error).message);
+    return false;
+  }
+});
+
+ipcMain.handle('search-in-files', async (_event, rootDir: string, query: string, options?: { caseSensitive?: boolean }) => {
+  return searchInFiles(rootDir, query, options);
 });
 
 ipcMain.handle('get-config', async () => {

@@ -307,3 +307,83 @@
   font-size: 13px;
   color: #ccc;
 }
+
+.find-in-files-container {
+  width: 600px;
+}
+
+.find-in-files-list {
+  max-height: 400px;
+}
+
+.find-file-header {
+  display: flex;
+  align-items: center;
+  padding: 6px 16px;
+  background: #2d2d2d;
+  border-bottom: 1px solid #333;
+  user-select: none;
+}
+
+.find-file-name {
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.find-file-path {
+  color: #6b6b6b;
+  font-size: 11px;
+  margin-left: 8px;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.find-match-count {
+  color: #888;
+  font-size: 11px;
+  background: #3d3d3d;
+  border-radius: 8px;
+  padding: 1px 8px;
+  flex-shrink: 0;
+}
+
+.find-match-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 4px 16px 4px 32px;
+  color: #cccccc;
+  font-size: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.find-match-item:hover {
+  background: #2a2d2e;
+}
+
+.find-match-active {
+  background: #04395e;
+  color: #ffffff;
+}
+
+.find-line-num {
+  color: #858585;
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 11px;
+  min-width: 36px;
+  text-align: right;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.find-line-text {
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}

@@ -42,9 +42,9 @@
 ## Future Ideas
 
 - [x] Add find & replace in file (Ctrl+F / Ctrl+H)
-- [ ] Add find across files (Ctrl+Shift+F)
+- [x] Add find across files (Ctrl+Shift+F)
 - [x] Add keyboard shortcuts settings (rebindable, persisted in config)
-- [ ] Add file rename/delete from file explorer context menu
+- [x] Add file rename/delete from file explorer context menu
 - [ ] Add drag & drop file open (drop file onto editor)
 - [ ] Add multi-cursor editing support
 - [ ] Add code folding in Monaco editor

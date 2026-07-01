@@ -22,6 +22,7 @@ interface Window {
     refresh(): Promise<void>;
     openFile(filename: string, content: string, filePath: string): void;
     getCurrentFolder(): string | null;
+    refreshActiveTab(oldPath: string, newPath: string): void;
   };
   Welcome: {
     init(): void;
@@ -110,6 +111,11 @@ interface Window {
     show(): Promise<void>;
     hide(): void;
   };
+  FindInFiles: {
+    init(): void;
+    show(): Promise<void>;
+    hide(): void;
+  };
   MarkdownPreview: {
     init(): void;
     show(content: string): void;
@@ -132,6 +138,9 @@ interface Window {
     createFile(filePath: string): Promise<boolean>;
     saveFile(filePath: string, content: string): Promise<boolean>;
     createFolder(folderPath: string): Promise<boolean>;
+    renameFile(oldPath: string, newPath: string): Promise<boolean>;
+    deleteFile(targetPath: string): Promise<boolean>;
+    searchInFiles(rootDir: string, query: string, options?: { caseSensitive?: boolean }): Promise<{ filePath: string; relativePath: string; matches: { line: number; text: string; column: number }[] }[]>;
     getConfig(): Promise<Record<string, unknown>>;
     setConfig(updates: Record<string, unknown>): Promise<boolean>;
     logMessage(level: string, source: string, message: string): Promise<boolean>;

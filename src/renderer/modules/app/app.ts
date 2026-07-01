@@ -14,6 +14,7 @@ window.App = (() => {
     window.Git.init();
     window.CommandPalette.init();
     window.FileSearch.init();
+    window.FindInFiles.init();
     window.MarkdownPreview.init();
     window.RunFile.init();
     window.AutoUpdate.init();
@@ -33,6 +34,7 @@ window.App = (() => {
       { id: 'files.new-file', label: 'New File', action: function () { document.getElementById('new-file-btn')!.click(); } },
       { id: 'files.new-folder', label: 'New Folder', action: function () { document.getElementById('new-folder-btn')!.click(); } },
       { id: 'files.search', label: 'Go to File', shortcut: 'Ctrl+P', action: function () { window.FileSearch.show(); } },
+      { id: 'files.find-in-files', label: 'Find in Files', shortcut: 'Ctrl+Shift+F', action: function () { window.FindInFiles.show(); } },
       { id: 'file.run', label: 'Run File', action: function () { window.RunFile.run(); } },
       { id: 'file.save', label: 'Save File', shortcut: 'Ctrl+S', action: function () { window.Editor.saveCurrentFile(); } },
       { id: 'editor.find', label: 'Find', shortcut: 'Ctrl+F', action: function () { const ed = window.editor; if (ed) { const a = ed.getAction('actions.find'); if (a) a.run(); } } },
@@ -189,6 +191,10 @@ window.App = (() => {
     window.Shortcuts.register({
       id: 'files.search', label: 'Go to File', defaultBinding: 'Ctrl+P', monaco: false,
       action: function () { window.FileSearch.show(); }
+    });
+    window.Shortcuts.register({
+      id: 'files.find-in-files', label: 'Find in Files', defaultBinding: 'Ctrl+Shift+F', monaco: false,
+      action: function () { window.FindInFiles.show(); }
     });
     window.Shortcuts.register({
       id: 'commandPalette.open', label: 'Command Palette', defaultBinding: 'Ctrl+Shift+P', monaco: false,

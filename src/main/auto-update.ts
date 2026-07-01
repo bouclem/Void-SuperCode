@@ -26,7 +26,7 @@ interface GitHubRelease {
 
 function getPlatformAssetPattern(): RegExp {
   const platform = process.platform;
-  if (platform === 'win32') return /supercode.*\.zip$/i;
+  if (platform === 'win32') return /supercode.*\.(zip|exe)$/i;
   if (platform === 'darwin') return /supercode.*\.dmg$/i;
   if (platform === 'linux') return /supercode.*\.(appimage|tar\.gz)$/i;
   return /supercode.*/i;
@@ -39,7 +39,9 @@ export function downloadAndInstallUpdate(
   return new Promise(function (resolve) {
     fetchReleaseAssets(latestTag).then(function (assets) {
       const pattern = getPlatformAssetPattern();
-      const asset = assets.find(function (a) { return pattern.test(a.name); });
+      const matchingAssets = assets.filter(function (a) { return pattern.test(a.name); });
+      const zipAsset = matchingAssets.find(function (a) { return a.name.endsWith('.zip'); });
+      const asset = zipAsset || matchingAssets[0];
 
       if (!asset) {
         onProgress({ stage: 'error', message: 'No matching release asset found for platform: ' + process.platform });
@@ -71,6 +73,16 @@ export function downloadAndInstallUpdate(
         try {
           if (asset.name.endsWith('.zip')) {
             execSync('powershell -Command "Expand-Archive -Path \'' + archivePath + '\' -DestinationPath \'' + extractDir + '\' -Force"', { stdio: 'ignore', timeout: 60000 });
+          } else if (asset.name.endsWith('.exe')) {
+            onProgress({ stage: 'installing', message: 'Launching installer...' });
+            const child = require('child_process').spawn(archivePath, ['--updated'], { detached: true, stdio: 'ignore' });
+            child.unref();
+            onProgress({ stage: 'done', message: 'Installer launched. Closing app...' });
+            setTimeout(function () {
+              app.exit(0);
+            }, 1500);
+            resolve(true);
+            return;
           } else if (asset.name.endsWith('.tar.gz')) {
             execSync('tar -xzf "' + archivePath + '" -C "' + extractDir + '"', { stdio: 'ignore', timeout: 60000 });
           } else if (asset.name.endsWith('.AppImage')) {

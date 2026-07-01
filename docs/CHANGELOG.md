@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.1.4] - 2026-07-01
+
+- Fixed: auto-update "No matching release asset found for platform: win32" — regex now matches both .zip and .exe assets, prefers .zip for in-place extraction, falls back to .exe NSIS installer
+- Added: file rename/delete context menu — right-click on file/folder in explorer shows New File, New Folder, Rename, Delete options
+- Added: find across files (Ctrl+Shift+F) — search file contents across the project, results grouped by file with line number and matching text, click to jump to line
+- Added: src/main/search.ts — content search module (searchInFiles function)
+- Added: src/renderer/modules/find-in-files/ — find-in-files UI overlay module
+- Changed: version bumped to 0.1.4
+
 ## [0.1.3] - 2026-07-01
 
 - Fixed: "monaco is not defined" ReferenceError — shortcuts module now guards against Monaco not being loaded yet
