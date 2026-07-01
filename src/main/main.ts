@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import { getConfig, setConfig } from './voidscode';
 import { logError, logInfo, logWarn } from './logger';
 import { createTerminal, writeTerminal, resizeTerminal, killTerminal } from './terminal';
-import { getGitStatus, stageFile, unstageFile, commitChanges } from './git';
+import { getGitStatus, stageFile, unstageFile, commitChanges, pushChanges, pullChanges, fetchRemotes, cloneRepo, getGitConfig, setGitConfig } from './git';
 
 let mainWindow: BrowserWindow | null = null;
 let settingsWindow: BrowserWindow | null = null;
@@ -230,6 +230,30 @@ ipcMain.handle('git-unstage', async (_event, cwd: string, filePath: string) => {
 
 ipcMain.handle('git-commit', async (_event, cwd: string, message: string) => {
   return commitChanges(cwd, message);
+});
+
+ipcMain.handle('git-push', async (_event, cwd: string) => {
+  return pushChanges(cwd);
+});
+
+ipcMain.handle('git-pull', async (_event, cwd: string) => {
+  return pullChanges(cwd);
+});
+
+ipcMain.handle('git-fetch', async (_event, cwd: string) => {
+  return fetchRemotes(cwd);
+});
+
+ipcMain.handle('git-clone', async (_event, url: string, destDir: string) => {
+  return cloneRepo(url, destDir);
+});
+
+ipcMain.handle('git-get-config', async (_event, cwd: string) => {
+  return getGitConfig(cwd);
+});
+
+ipcMain.handle('git-set-config', async (_event, cwd: string, name: string, email: string) => {
+  return setGitConfig(cwd, name, email);
 });
 
 ipcMain.on('open-settings-window', () => {

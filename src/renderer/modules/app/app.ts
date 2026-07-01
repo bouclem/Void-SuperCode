@@ -85,6 +85,18 @@ window.App = (() => {
         window.Git.commit();
       }
     });
+
+    const pushBtn = document.getElementById('git-push-btn');
+    if (pushBtn) pushBtn.addEventListener('click', function () { window.Git.push(); });
+
+    const pullBtn = document.getElementById('git-pull-btn');
+    if (pullBtn) pullBtn.addEventListener('click', function () { window.Git.pull(); });
+
+    const fetchBtn = document.getElementById('git-fetch-btn');
+    if (fetchBtn) fetchBtn.addEventListener('click', function () { window.Git.fetch(); });
+
+    const cloneBtn = document.getElementById('git-clone-btn');
+    if (cloneBtn) cloneBtn.addEventListener('click', function () { window.Git.showCloneDialog(); });
   }
 
   function initResizeHandle(): void {

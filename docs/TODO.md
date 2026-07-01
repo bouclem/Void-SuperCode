@@ -22,3 +22,7 @@
 - [x] Add terminal integration
 - [x] Add resizable bottom panel
 - [x] Add git integration (source control)
+- [x] Add GitHub & GitLab integration (clone, push, pull, fetch)
+- [x] Add git settings (user.name, user.email)
+- [x] Fix terminal not opening
+- [x] Split CSS into multiple files

@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.0.14] - 2026-07-01
+
+- Fixed: terminal not opening — bottom panel and resize handle were outside #app div, pushed below viewport
+- Changed: split style.css into 6 separate CSS files in styles/ folder (base, editor, sidebar, bottom-panel, git, modal)
+- Changed: style.css now uses @import to load split CSS files
+
+## [0.0.13] - 2026-07-01
+
+- Added: GitHub & GitLab integration — clone from any remote URL (github.com, gitlab.com, etc.)
+- Added: clone dialog with URL and destination folder inputs
+- Added: push, pull, fetch buttons in source control panel header
+- Added: git settings in settings window — user.name and user.email configuration
+- Added: git config get/set via IPC (reads and writes git config for current repo)
+- Changed: git action buttons only visible when current folder is a git repo
+
 ## [0.0.12] - 2026-07-01
 
 - Added: real settings window — separate Electron BrowserWindow with its own title bar

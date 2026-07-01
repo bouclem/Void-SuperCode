@@ -86,3 +86,59 @@ export async function commitChanges(cwd: string, message: string): Promise<boole
     return false;
   }
 }
+
+export async function pushChanges(cwd: string): Promise<boolean> {
+  try {
+    await runGit(cwd, ['push']);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export async function pullChanges(cwd: string): Promise<boolean> {
+  try {
+    await runGit(cwd, ['pull']);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export async function fetchRemotes(cwd: string): Promise<boolean> {
+  try {
+    await runGit(cwd, ['fetch']);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export async function cloneRepo(url: string, destDir: string): Promise<boolean> {
+  try {
+    await runGit(destDir, ['clone', url]);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export async function getGitConfig(cwd: string): Promise<{ name: string; email: string }> {
+  try {
+    const name = await runGit(cwd, ['config', 'user.name']);
+    const email = await runGit(cwd, ['config', 'user.email']);
+    return { name: name || '', email: email || '' };
+  } catch {
+    return { name: '', email: '' };
+  }
+}
+
+export async function setGitConfig(cwd: string, name: string, email: string): Promise<boolean> {
+  try {
+    if (name) await runGit(cwd, ['config', 'user.name', name]);
+    if (email) await runGit(cwd, ['config', 'user.email', email]);
+    return true;
+  } catch {
+    return false;
+  }
+}

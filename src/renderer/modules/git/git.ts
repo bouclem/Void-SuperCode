@@ -35,10 +35,6 @@ window.Git = (() => {
     if (sidebar) {
       sidebar.style.display = 'none';
     }
-    const settingsPanel = document.getElementById('settings-panel');
-    if (settingsPanel) {
-      settingsPanel.style.display = 'none';
-    }
     const filesBtn = document.getElementById('activity-files-btn');
     if (filesBtn) {
       filesBtn.classList.remove('active');
@@ -76,6 +72,11 @@ window.Git = (() => {
     const header = panel.querySelector('.git-branch') as HTMLElement | null;
     if (header) {
       header.textContent = status.isRepo ? 'Branch: ' + status.branch : 'Not a git repository';
+    }
+
+    const actionsBar = panel.querySelector('.git-actions') as HTMLElement | null;
+    if (actionsBar) {
+      actionsBar.style.display = status.isRepo ? 'flex' : 'none';
     }
 
     const changesList = panel.querySelector('.git-changes') as HTMLElement | null;
@@ -181,5 +182,83 @@ window.Git = (() => {
     }
   }
 
-  return { init, show, hide, toggle, refresh, setFolder, commit };
+  async function push(): Promise<void> {
+    if (!currentFolder) return;
+    await window.api.gitPush(currentFolder);
+    refresh();
+  }
+
+  async function pull(): Promise<void> {
+    if (!currentFolder) return;
+    await window.api.gitPull(currentFolder);
+    refresh();
+  }
+
+  async function fetch(): Promise<void> {
+    if (!currentFolder) return;
+    await window.api.gitFetch(currentFolder);
+    refresh();
+  }
+
+  function showCloneDialog(): void {
+    const overlay = document.createElement('div');
+    overlay.className = 'git-clone-overlay';
+
+    const dialog = document.createElement('div');
+    dialog.className = 'git-clone-dialog';
+
+    const title = document.createElement('div');
+    title.className = 'git-clone-title';
+    title.textContent = 'Clone Repository';
+
+    const urlInput = document.createElement('input');
+    urlInput.type = 'text';
+    urlInput.className = 'git-clone-input';
+    urlInput.placeholder = 'https://github.com/user/repo or https://gitlab.com/user/repo';
+
+    const destInput = document.createElement('input');
+    destInput.type = 'text';
+    destInput.className = 'git-clone-input';
+    destInput.placeholder = 'Destination folder (optional)';
+
+    const btnRow = document.createElement('div');
+    btnRow.className = 'git-clone-btns';
+
+    const cancelBtn = document.createElement('button');
+    cancelBtn.className = 'git-clone-btn-cancel';
+    cancelBtn.textContent = 'Cancel';
+    cancelBtn.addEventListener('click', function () {
+      overlay.remove();
+    });
+
+    const cloneBtn = document.createElement('button');
+    cloneBtn.className = 'git-clone-btn-go';
+    cloneBtn.textContent = 'Clone';
+    cloneBtn.addEventListener('click', async function () {
+      const url = urlInput.value.trim();
+      if (!url) return;
+      const dest = destInput.value.trim() || '.';
+      const success = await window.api.gitClone(url, dest);
+      if (success) {
+        overlay.remove();
+        refresh();
+      }
+    });
+
+    btnRow.appendChild(cancelBtn);
+    btnRow.appendChild(cloneBtn);
+
+    dialog.appendChild(title);
+    dialog.appendChild(urlInput);
+    dialog.appendChild(destInput);
+    dialog.appendChild(btnRow);
+    overlay.appendChild(dialog);
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) overlay.remove();
+    });
+    document.body.appendChild(overlay);
+    urlInput.focus();
+  }
+
+  return { init, show, hide, toggle, refresh, setFolder, commit, push, pull, fetch, showCloneDialog };
 })();

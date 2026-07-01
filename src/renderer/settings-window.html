@@ -63,6 +63,17 @@
       cursor: pointer;
     }
     .row select:focus { outline: none; border-color: #007acc; }
+    .row input[type="text"] {
+      background: #3d3d3d;
+      color: #cccccc;
+      border: 1px solid #555;
+      border-radius: 3px;
+      padding: 4px 8px;
+      font-size: 12px;
+      font-family: inherit;
+      width: 180px;
+    }
+    .row input[type="text"]:focus { outline: none; border-color: #007acc; }
   </style>
 </head>
 <body>
@@ -88,6 +99,17 @@
         </select>
       </div>
     </div>
+    <div class="section">
+      <h3>Git</h3>
+      <div class="row">
+        <label for="git-user-name">User name</label>
+        <input type="text" id="git-user-name" placeholder="Your name" />
+      </div>
+      <div class="row">
+        <label for="git-user-email">User email</label>
+        <input type="text" id="git-user-email" placeholder="your@email.com" />
+      </div>
+    </div>
   </div>
   <script>
     const { ipcRenderer } = require('electron');
@@ -96,6 +118,10 @@
       const config = await ipcRenderer.invoke('get-config');
       document.getElementById('setting-autosave').checked = config.autosave !== false;
       document.getElementById('setting-loglevel').value = config.logLevel || 'normal';
+
+      const gitConfig = await ipcRenderer.invoke('git-get-config', config.lastFolder || process.cwd());
+      document.getElementById('git-user-name').value = gitConfig.name || '';
+      document.getElementById('git-user-email').value = gitConfig.email || '';
     }
 
     document.getElementById('setting-autosave').addEventListener('change', function () {
@@ -104,6 +130,14 @@
 
     document.getElementById('setting-loglevel').addEventListener('change', function () {
       ipcRenderer.send('settings-changed', { logLevel: this.value });
+    });
+
+    document.getElementById('git-user-name').addEventListener('change', function () {
+      ipcRenderer.invoke('git-set-config', process.cwd(), this.value, document.getElementById('git-user-email').value);
+    });
+
+    document.getElementById('git-user-email').addEventListener('change', function () {
+      ipcRenderer.invoke('git-set-config', process.cwd(), document.getElementById('git-user-name').value, this.value);
     });
 
     loadSettings();

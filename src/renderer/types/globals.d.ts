@@ -76,6 +76,10 @@ interface Window {
     refresh(): Promise<void>;
     setFolder(folder: string | null): void;
     commit(): Promise<void>;
+    push(): Promise<void>;
+    pull(): Promise<void>;
+    fetch(): Promise<void>;
+    showCloneDialog(): void;
   };
   api: {
     openFolderDialog(): Promise<string | null>;
@@ -98,6 +102,12 @@ interface Window {
     gitStage(cwd: string, filePath: string): Promise<boolean>;
     gitUnstage(cwd: string, filePath: string): Promise<boolean>;
     gitCommit(cwd: string, message: string): Promise<boolean>;
+    gitPush(cwd: string): Promise<boolean>;
+    gitPull(cwd: string): Promise<boolean>;
+    gitFetch(cwd: string): Promise<boolean>;
+    gitClone(url: string, destDir: string): Promise<boolean>;
+    gitGetConfig(cwd: string): Promise<{ name: string; email: string }>;
+    gitSetConfig(cwd: string, name: string, email: string): Promise<boolean>;
     openSettingsWindow(): void;
     onSettingsUpdated(callback: (updates: Record<string, unknown>) => void): void;
   };

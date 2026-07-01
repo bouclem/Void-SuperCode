@@ -1,0 +1,250 @@
+#git-panel {
+  display: none;
+  flex-direction: column;
+  width: 240px;
+  min-width: 240px;
+  background: #252526;
+  border-right: 1px solid #1a1a1a;
+  overflow: hidden;
+}
+
+#git-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 35px;
+  padding: 0 10px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #cccccc;
+  border-bottom: 1px solid #333;
+  user-select: none;
+}
+
+.git-actions {
+  display: none;
+  gap: 2px;
+}
+
+.git-action-btn {
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  font-size: 14px;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+}
+
+.git-action-btn:hover {
+  background: #3d3d3d;
+  color: #fff;
+}
+
+#git-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.git-branch {
+  padding: 4px 10px;
+  font-size: 12px;
+  color: #999;
+  font-weight: 600;
+}
+
+.git-empty {
+  padding: 8px 10px;
+  font-size: 12px;
+  color: #666;
+}
+
+.git-section {
+  padding: 6px 10px 2px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+}
+
+.git-file-row {
+  display: flex;
+  align-items: center;
+  padding: 3px 10px;
+  font-size: 12px;
+  color: #cccccc;
+  cursor: default;
+}
+
+.git-file-row:hover {
+  background: #2a2d2e;
+}
+
+.git-status-letter {
+  width: 16px;
+  font-weight: 700;
+  font-size: 12px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.git-status-modified { color: #e2c08d; }
+.git-status-added { color: #73c991; }
+.git-status-deleted { color: #c74e39; }
+.git-status-untracked { color: #73c991; }
+.git-status-renamed { color: #69a4ff; }
+
+.git-file-name {
+  flex: 1;
+  margin-left: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.git-file-action {
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.git-file-action:hover {
+  background: #3d3d3d;
+  color: #fff;
+}
+
+.git-commit-section {
+  display: none;
+  flex-direction: column;
+  padding: 8px 10px;
+  gap: 6px;
+}
+
+#git-commit-msg {
+  background: #3d3d3d;
+  border: 1px solid #555;
+  border-radius: 3px;
+  padding: 6px 8px;
+  color: #cccccc;
+  font-size: 12px;
+  font-family: inherit;
+}
+
+#git-commit-msg:focus {
+  outline: none;
+  border-color: #007acc;
+}
+
+#git-commit-btn {
+  background: #007acc;
+  border: none;
+  border-radius: 3px;
+  padding: 6px 12px;
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+#git-commit-btn:hover {
+  background: #1a8ad4;
+}
+
+.git-clone-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.git-clone-dialog {
+  background: #252526;
+  border: 1px solid #3d3d3d;
+  border-radius: 6px;
+  width: 440px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.git-clone-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.git-clone-input {
+  background: #3d3d3d;
+  border: 1px solid #555;
+  border-radius: 3px;
+  padding: 8px 10px;
+  color: #cccccc;
+  font-size: 12px;
+  font-family: inherit;
+}
+
+.git-clone-input:focus {
+  outline: none;
+  border-color: #007acc;
+}
+
+.git-clone-btns {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.git-clone-btn-cancel {
+  background: #3d3d3d;
+  border: 1px solid #555;
+  border-radius: 3px;
+  padding: 6px 16px;
+  color: #cccccc;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.git-clone-btn-cancel:hover {
+  background: #4d4d4d;
+}
+
+.git-clone-btn-go {
+  background: #007acc;
+  border: none;
+  border-radius: 3px;
+  padding: 6px 16px;
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.git-clone-btn-go:hover {
+  background: #1a8ad4;
+}

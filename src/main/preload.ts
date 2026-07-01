@@ -28,6 +28,12 @@ contextBridge.exposeInMainWorld('api', {
   gitStage: (cwd: string, filePath: string): Promise<boolean> => ipcRenderer.invoke('git-stage', cwd, filePath),
   gitUnstage: (cwd: string, filePath: string): Promise<boolean> => ipcRenderer.invoke('git-unstage', cwd, filePath),
   gitCommit: (cwd: string, message: string): Promise<boolean> => ipcRenderer.invoke('git-commit', cwd, message),
+  gitPush: (cwd: string): Promise<boolean> => ipcRenderer.invoke('git-push', cwd),
+  gitPull: (cwd: string): Promise<boolean> => ipcRenderer.invoke('git-pull', cwd),
+  gitFetch: (cwd: string): Promise<boolean> => ipcRenderer.invoke('git-fetch', cwd),
+  gitClone: (url: string, destDir: string): Promise<boolean> => ipcRenderer.invoke('git-clone', url, destDir),
+  gitGetConfig: (cwd: string): Promise<{ name: string; email: string }> => ipcRenderer.invoke('git-get-config', cwd),
+  gitSetConfig: (cwd: string, name: string, email: string): Promise<boolean> => ipcRenderer.invoke('git-set-config', cwd, name, email),
   openSettingsWindow: (): void => { ipcRenderer.send('open-settings-window'); },
   onSettingsUpdated: (callback: (updates: Record<string, unknown>) => void): void => {
     ipcRenderer.on('settings-updated', (_event, updates) => callback(updates));

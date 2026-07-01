@@ -13,6 +13,8 @@ A lightweight desktop code editor built with Electron, TypeScript, and Monaco Ed
 - Debug Console with console.log/error/warn interception and runtime error capture
 - Settings menu — floating modal dialog with autosave toggle and log level control
 - Git integration — source control panel with stage/unstage/commit
+- GitHub & GitLab integration — clone from any remote URL, push, pull, fetch
+- Git settings — user.name and user.email configuration in settings window
 - Resizable bottom panel — drag to resize terminal/debug console
 - Persistent config and daily logs in `~/.voidscode/`
 - Insider version tagging with badge
@@ -60,7 +62,8 @@ src/
     types/        TypeScript declaration files (globals, window interfaces)
     icons/        SVG icons for sidebar, activity bar, and file tree
     index.html    Main renderer HTML
-    style.css     Global styles
+    style.css     CSS entry point (imports from styles/)
+    styles/       Split CSS files (base, editor, sidebar, bottom-panel, git, modal)
   lang/
     javascript/   JavaScript language support (config, icons)
 docs/             Project documentation
