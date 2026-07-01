@@ -135,6 +135,7 @@ window.FileExplorer = (() => {
   }
 
   function createNewFile(): void {
+    console.log('[file-explorer] createNewFile called, currentFolderPath:', currentFolderPath);
     if (!currentFolderPath) {
       showInlineInput(null, 'file');
       return;
@@ -151,7 +152,10 @@ window.FileExplorer = (() => {
   }
 
   function showInlineInput(dirPath: string | null, type: 'file' | 'folder'): void {
+    console.log('[file-explorer] showInlineInput called, dirPath:', dirPath, 'type:', type);
     removeInlineInput();
+
+    let committed = false;
 
     const wrapper = document.createElement('div');
     wrapper.className = 'tree-inline-input';
@@ -183,16 +187,22 @@ window.FileExplorer = (() => {
       if (e.key === 'Enter') {
         e.preventDefault();
         const name = input.value.trim();
+        console.log('[file-explorer] Enter pressed, name:', name);
         if (!name) {
+          committed = true;
           removeInlineInput();
           return;
         }
         const basePath = dirPath ?? currentFolderPath ?? '';
+        console.log('[file-explorer] basePath:', basePath, 'dirPath:', dirPath, 'currentFolderPath:', currentFolderPath);
         if (!basePath) {
+          committed = true;
           removeInlineInput();
           return;
         }
         const fullPath = basePath + '/' + name;
+        console.log('[file-explorer] fullPath:', fullPath);
+        committed = true;
         removeInlineInput();
         if (type === 'folder') {
           doCreateFolder(fullPath);
@@ -201,12 +211,15 @@ window.FileExplorer = (() => {
         }
       } else if (e.key === 'Escape') {
         e.preventDefault();
+        committed = true;
         removeInlineInput();
       }
     });
 
     input.addEventListener('blur', function () {
-      removeInlineInput();
+      if (!committed) {
+        removeInlineInput();
+      }
     });
   }
 
@@ -218,9 +231,13 @@ window.FileExplorer = (() => {
   }
 
   async function doCreateFile(filePath: string): Promise<void> {
+    console.log('[file-explorer] doCreateFile called, filePath:', filePath);
     const success = await window.api.createFile(filePath);
+    console.log('[file-explorer] createFile result:', success);
     if (success) {
       await refresh();
+    } else {
+      window.api.logMessage('ERROR', 'file-explorer', 'Failed to create file: ' + filePath);
     }
   }
 
@@ -228,6 +245,8 @@ window.FileExplorer = (() => {
     const success = await window.api.createFolder(folderPath);
     if (success) {
       await refresh();
+    } else {
+      window.api.logMessage('ERROR', 'file-explorer', 'Failed to create folder: ' + folderPath);
     }
   }
 

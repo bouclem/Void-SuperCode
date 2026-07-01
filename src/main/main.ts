@@ -97,33 +97,43 @@ ipcMain.handle('read-file', async (_event, filePath: string) => {
 
 ipcMain.handle('create-file', async (_event, filePath: string) => {
   try {
-    if (fs.existsSync(filePath)) {
+    const normalized = path.normalize(filePath);
+    if (fs.existsSync(normalized)) {
+      logError('create-file', 'File already exists: ' + normalized);
       return false;
     }
-    fs.writeFileSync(filePath, '', 'utf-8');
+    fs.writeFileSync(normalized, '', 'utf-8');
+    logInfo('create-file', 'Created file: ' + normalized);
     return true;
-  } catch {
+  } catch (err) {
+    logError('create-file', 'Failed to create file: ' + filePath + ' - ' + (err as Error).message);
     return false;
   }
 });
 
 ipcMain.handle('save-file', async (_event, filePath: string, content: string) => {
   try {
-    fs.writeFileSync(filePath, content, 'utf-8');
+    const normalized = path.normalize(filePath);
+    fs.writeFileSync(normalized, content, 'utf-8');
     return true;
-  } catch {
+  } catch (err) {
+    logError('save-file', 'Failed to save: ' + filePath + ' - ' + (err as Error).message);
     return false;
   }
 });
 
 ipcMain.handle('create-folder', async (_event, folderPath: string) => {
   try {
-    if (fs.existsSync(folderPath)) {
+    const normalized = path.normalize(folderPath);
+    if (fs.existsSync(normalized)) {
+      logError('create-folder', 'Folder already exists: ' + normalized);
       return false;
     }
-    fs.mkdirSync(folderPath, { recursive: true });
+    fs.mkdirSync(normalized, { recursive: true });
+    logInfo('create-folder', 'Created folder: ' + normalized);
     return true;
-  } catch {
+  } catch (err) {
+    logError('create-folder', 'Failed to create folder: ' + folderPath + ' - ' + (err as Error).message);
     return false;
   }
 });
