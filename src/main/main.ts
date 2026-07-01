@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import { getConfig, setConfig } from './voidscode';
 import { logError, logInfo, logWarn } from './logger';
 import { createTerminal, writeTerminal, resizeTerminal, killTerminal } from './terminal';
-import { getGitStatus, stageFile, unstageFile, commitChanges, pushChanges, pullChanges, fetchRemotes, cloneRepo, getGitConfig, setGitConfig, gitLog, gitPublish, gitHasRemote } from './git';
+import { getGitStatus, stageFile, unstageFile, commitChanges, pushChanges, pullChanges, fetchRemotes, cloneRepo, getGitConfig, setGitConfig, gitLog, gitPublish, gitHasRemote, gitInit } from './git';
 import { runFile as runFileExec, searchFiles, checkForUpdates, downloadAndInstallUpdate } from './auto-update';
 import { shell } from 'electron';
 
@@ -259,6 +259,10 @@ ipcMain.handle('git-publish', async (_event, cwd: string) => {
 
 ipcMain.handle('git-has-remote', async (_event, cwd: string) => {
   return gitHasRemote(cwd);
+});
+
+ipcMain.handle('git-init', async (_event, cwd: string) => {
+  return gitInit(cwd);
 });
 
 ipcMain.on('settings-changed', (_event, updates: Record<string, unknown>) => {

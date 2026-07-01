@@ -154,6 +154,7 @@ interface Window {
     gitLog(cwd: string, maxCount: number): Promise<{ hash: string; shortHash: string; author: string; date: string; message: string }[]>;
     gitPublish(cwd: string): Promise<boolean>;
     gitHasRemote(cwd: string): Promise<boolean>;
+    gitInit(cwd: string): Promise<boolean>;
     onSettingsUpdated(callback: (updates: Record<string, unknown>) => void): void;
     runFile(filePath: string, content: string): Promise<{ success: boolean; stdout: string; stderr: string; error?: string }>;
     searchFiles(rootDir: string, query: string): Promise<{ name: string; path: string; relativePath: string }[]>;

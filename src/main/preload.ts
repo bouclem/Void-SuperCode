@@ -37,6 +37,7 @@ contextBridge.exposeInMainWorld('api', {
   gitLog: (cwd: string, maxCount: number): Promise<{ hash: string; shortHash: string; author: string; date: string; message: string }[]> => ipcRenderer.invoke('git-log', cwd, maxCount),
   gitPublish: (cwd: string): Promise<boolean> => ipcRenderer.invoke('git-publish', cwd),
   gitHasRemote: (cwd: string): Promise<boolean> => ipcRenderer.invoke('git-has-remote', cwd),
+  gitInit: (cwd: string): Promise<boolean> => ipcRenderer.invoke('git-init', cwd),
   onSettingsUpdated: (callback: (updates: Record<string, unknown>) => void): void => {
     ipcRenderer.on('settings-updated', (_event, updates) => callback(updates));
   },

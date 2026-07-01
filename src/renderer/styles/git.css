@@ -248,3 +248,25 @@
 .git-clone-btn-go:hover {
   background: #1a8ad4;
 }
+
+.git-init-btn {
+  margin: 10px 8px;
+  padding: 8px 12px;
+  background: #0e639c;
+  border: none;
+  border-radius: 3px;
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  width: calc(100% - 16px);
+}
+
+.git-init-btn:hover {
+  background: #1a8ad4;
+}
+
+.git-init-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}

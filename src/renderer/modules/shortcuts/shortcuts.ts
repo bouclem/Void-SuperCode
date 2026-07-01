@@ -145,6 +145,7 @@ window.Shortcuts = (() => {
   }
 
   function parseToMonaco(binding: string): number | null {
+    if (typeof monaco === 'undefined') return null;
     const lower = binding.toLowerCase();
     const parts = lower.split('+');
     const key = parts[parts.length - 1] ?? '';
@@ -179,6 +180,7 @@ window.Shortcuts = (() => {
 
   function applyMonacoShortcut(def: ShortcutDef, binding?: string): void {
     if (!window.editor) return;
+    if (typeof monaco === 'undefined') return;
     const actualBinding = binding ?? getBinding(def.id);
     if (!actualBinding) return;
 

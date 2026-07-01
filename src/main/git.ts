@@ -195,3 +195,12 @@ export async function gitPublish(cwd: string): Promise<boolean> {
     return false;
   }
 }
+
+export async function gitInit(cwd: string): Promise<boolean> {
+  try {
+    await runGit(cwd, ['init']);
+    return true;
+  } catch {
+    return false;
+  }
+}

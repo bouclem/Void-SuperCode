@@ -1,5 +1,11 @@
-const XtermTerminal = (window as any).Terminal;
-const XtermFitAddon = (window as any).FitAddon;
+let _xtermCtor: any = (window as any).Terminal;
+if (_xtermCtor && typeof _xtermCtor !== 'function' && _xtermCtor.Terminal) {
+  _xtermCtor = _xtermCtor.Terminal;
+}
+let _xtermFitAddon: any = (window as any).FitAddon;
+if (_xtermFitAddon && typeof _xtermFitAddon !== 'function' && _xtermFitAddon.FitAddon) {
+  _xtermFitAddon = _xtermFitAddon.FitAddon;
+}
 
 window.Terminal = (() => {
   let panel: HTMLElement | null = null;
@@ -14,7 +20,7 @@ window.Terminal = (() => {
     if (!panel) return;
 
     if (!initialized) {
-      term = new XtermTerminal({
+      term = new _xtermCtor({
         theme: {
           background: '#1e1e1e',
           foreground: '#cccccc',
@@ -25,7 +31,7 @@ window.Terminal = (() => {
         cursorBlink: true,
       });
 
-      const fitAddon = new XtermFitAddon.FitAddon();
+      const fitAddon = new _xtermFitAddon.FitAddon();
       term.loadAddon(fitAddon);
       term.open(panel);
       fitAddon.fit();

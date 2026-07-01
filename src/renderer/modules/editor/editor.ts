@@ -25,6 +25,9 @@ window.Editor = (() => {
         tabSize: 2,
       });
       window.editor = editor;
+      if (window.Shortcuts) {
+        window.Shortcuts.applyAllMonacoShortcuts();
+      }
     });
   }
 

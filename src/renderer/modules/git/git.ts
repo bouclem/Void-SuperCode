@@ -87,8 +87,25 @@ window.Git = (() => {
     if (!status.isRepo) {
       const empty = document.createElement('div');
       empty.className = 'git-empty';
-      empty.textContent = 'Open a git repository to see changes';
+      empty.textContent = 'Not a git repository';
       changesList.appendChild(empty);
+
+      const initBtn = document.createElement('button');
+      initBtn.className = 'git-init-btn';
+      initBtn.textContent = 'Initialize Git Repository';
+      initBtn.addEventListener('click', async function () {
+        if (!currentFolder) return;
+        initBtn.disabled = true;
+        initBtn.textContent = 'Initializing...';
+        const success = await window.api.gitInit(currentFolder);
+        if (success) {
+          refresh();
+        } else {
+          initBtn.disabled = false;
+          initBtn.textContent = 'Initialize Git Repository';
+        }
+      });
+      changesList.appendChild(initBtn);
       return;
     }
 

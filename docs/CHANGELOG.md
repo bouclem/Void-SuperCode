@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.3] - 2026-07-01
+
+- Fixed: "monaco is not defined" ReferenceError — shortcuts module now guards against Monaco not being loaded yet
+- Fixed: "XtermTerminal is not a constructor" — improved xterm.js UMD export detection with fallback
+- Fixed: run button now only shows when a file is open, hidden on welcome screen
+- Added: "Initialize Git Repository" button in source control panel for non-repo folders
+- Changed: version bumped to 0.1.3
+
 ## [0.1.2] - 2026-07-01
 
 - Fixed: auto-update asset matching on Windows — regex now matches "Void SuperCode" (spaces) not just "void-supercode" (hyphens)
