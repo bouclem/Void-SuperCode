@@ -1,5 +1,6 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import * as path from 'path';
+import * as fs from 'fs';
 
 function createWindow(): void {
   const win = new BrowserWindow({
@@ -9,9 +10,11 @@ function createWindow(): void {
     minHeight: 400,
     title: 'Void SuperCode',
     backgroundColor: '#1e1e1e',
+    icon: path.join(__dirname, '..', '..', 'icon.svg'),
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
+      preload: path.join(__dirname, 'preload.js'),
     },
   });
 
@@ -32,5 +35,44 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
+  }
+});
+
+ipcMain.handle('open-folder-dialog', async () => {
+  const result = await dialog.showOpenDialog({
+    properties: ['openDirectory'],
+  });
+  if (result.canceled || result.filePaths.length === 0) {
+    return null;
+  }
+  return result.filePaths[0]!;
+});
+
+ipcMain.handle('read-directory', async (_event, dirPath: string) => {
+  try {
+    const entries = fs.readdirSync(dirPath, { withFileTypes: true });
+    const items = entries
+      .filter((e) => !e.name.startsWith('.'))
+      .map((e) => ({
+        name: e.name,
+        path: path.join(dirPath, e.name),
+        isDirectory: e.isDirectory(),
+      }))
+      .sort((a, b) => {
+        if (a.isDirectory && !b.isDirectory) return -1;
+        if (!a.isDirectory && b.isDirectory) return 1;
+        return a.name.localeCompare(b.name);
+      });
+    return items;
+  } catch {
+    return [];
+  }
+});
+
+ipcMain.handle('read-file', async (_event, filePath: string) => {
+  try {
+    return fs.readFileSync(filePath, 'utf-8');
+  } catch {
+    return '';
   }
 });

@@ -11,7 +11,16 @@
     <div id="titlebar">
       <span id="title">Void SuperCode</span>
     </div>
-    <div id="editor"></div>
+    <div id="main">
+      <div id="sidebar">
+        <div id="sidebar-header">
+          <span>Explorer</span>
+          <button id="open-folder-btn" title="Open Folder">&#128193;</button>
+        </div>
+        <div id="file-tree"></div>
+      </div>
+      <div id="editor"></div>
+    </div>
   </div>
 
   <script>
@@ -29,10 +38,10 @@
   <script>
     require.config({ paths: { vs: 'vs' } });
     require(['vs/editor/editor.main'], function () {
-      monaco.editor.create(document.getElementById('editor'), {
+      window.editor = monaco.editor.create(document.getElementById('editor'), {
         value: [
           '// Welcome to Void SuperCode',
-          '// Start coding here...',
+          '// Open a folder to start exploring files',
           '',
           'function hello() {',
           "  console.log('Hello, World!');",
@@ -49,6 +58,71 @@
         scrollBeyondLastLine: false,
         tabSize: 2,
       });
+    });
+  </script>
+  <script>
+    const fileTree = document.getElementById('file-tree');
+    const openFolderBtn = document.getElementById('open-folder-btn');
+
+    function getLanguageFromExtension(filename) {
+      const ext = filename.split('.').pop().toLowerCase();
+      const map = {
+        js: 'javascript', ts: 'typescript', tsx: 'typescript',
+        html: 'html', css: 'css', json: 'json',
+        md: 'markdown', py: 'python', java: 'java',
+        c: 'c', cpp: 'cpp', rs: 'rust', go: 'go',
+        xml: 'xml', yaml: 'yaml', yml: 'yaml',
+        sh: 'shell', sql: 'sql', txt: 'plaintext',
+      };
+      return map[ext] || 'plaintext';
+    }
+
+    async function loadDirectory(dirPath, container, depth) {
+      const items = await window.api.readDirectory(dirPath);
+      container.innerHTML = '';
+      for (const item of items) {
+        const el = document.createElement('div');
+        el.className = item.isDirectory ? 'tree-folder' : 'tree-file';
+        el.style.paddingLeft = (depth * 16 + 8) + 'px';
+        const icon = item.isDirectory ? '\uD83D\uDCC1' : '\uD83D\uDCC4';
+        el.innerHTML = '<span class="tree-icon">' + icon + '</span><span class="tree-label">' + item.name + '</span>';
+        if (item.isDirectory) {
+          let expanded = false;
+          const childContainer = document.createElement('div');
+          el.querySelector('.tree-label').addEventListener('click', async function () {
+            if (!expanded) {
+              expanded = true;
+              await loadDirectory(item.path, childContainer, depth + 1);
+              el.parentElement.insertBefore(childContainer, el.nextSibling);
+            } else {
+              expanded = false;
+              childContainer.remove();
+            }
+          });
+        } else {
+          el.querySelector('.tree-label').addEventListener('click', async function () {
+            const content = await window.api.readFile(item.path);
+            if (window.editor) {
+              window.editor.setValue(content);
+              const lang = getLanguageFromExtension(item.name);
+              const model = monaco.editor.createModel(content, lang);
+              window.editor.setModel(model);
+            }
+          });
+        }
+        container.appendChild(el);
+      }
+    }
+
+    openFolderBtn.addEventListener('click', async function () {
+      const folderPath = await window.api.openFolderDialog();
+      if (folderPath) {
+        const folderName = folderPath.split(/[\\/]/).pop();
+        fileTree.innerHTML = '<div class="tree-root">' + folderName + '</div>';
+        const treeContainer = document.createElement('div');
+        fileTree.appendChild(treeContainer);
+        await loadDirectory(folderPath, treeContainer, 0);
+      }
     });
   </script>
 </body>
