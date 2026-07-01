@@ -18,6 +18,19 @@ window.FileExplorer = (() => {
     newFileBtn.addEventListener('click', createNewFile);
     newFolderBtn.addEventListener('click', createNewFolder);
     fileTree.addEventListener('dblclick', handleDblClick);
+    loadLastFolder();
+  }
+
+  async function loadLastFolder(): Promise<void> {
+    try {
+      const config = await window.api.getConfig();
+      if (config.lastFolder) {
+        currentFolderPath = config.lastFolder;
+        await refresh();
+      }
+    } catch {
+      // Non-critical
+    }
   }
 
   async function openFile(): Promise<void> {
@@ -33,6 +46,7 @@ window.FileExplorer = (() => {
     if (folderPath) {
       currentFolderPath = folderPath;
       await refresh();
+      await window.api.setConfig({ lastFolder: folderPath });
     }
   }
 

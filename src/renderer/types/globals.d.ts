@@ -49,6 +49,9 @@ interface Window {
     createFile(filePath: string): Promise<boolean>;
     saveFile(filePath: string, content: string): Promise<boolean>;
     createFolder(folderPath: string): Promise<boolean>;
+    getConfig(): Promise<{ lastFolder: string | null }>;
+    setConfig(updates: Record<string, unknown>): Promise<boolean>;
+    logMessage(level: string, source: string, message: string): Promise<boolean>;
   };
   MonacoEnvironment: {
     getWorkerUrl(): string;

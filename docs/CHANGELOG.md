@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.0.7] - 2026-07-01
+
+- Added: last opened folder is remembered and auto-loaded on next startup
+- Added: .voidscode directory in user home for config and logs
+- Added: config.json for persisting user settings (lastFolder)
+- Added: daily log files in .voidscode/logs/ for IDE and code errors
+- Added: voidscode.ts module for .voidscode directory and config management
+- Added: logger.ts module for daily logging with ERROR/WARN/INFO levels
+- Added: uncaught exception logging in main process
+- Added: insider version badge in titlebar (amber "Insider" tag)
+- Added: releaseChannel field in package.json
+- Fixed: app icon now uses PNG format (Windows compatible) instead of SVG
+- Added: generate-icon.ps1 script for PNG icon generation
+
 ## [0.0.6] - 2026-07-01
 
 - Fixed: Monaco editor no longer editable when welcome page is visible

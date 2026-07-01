@@ -1,8 +1,11 @@
 import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
+import { getConfig, setConfig } from './voidscode';
+import { logError, logInfo } from './logger';
 
 function createWindow(): void {
+  const iconPath = path.join(__dirname, '..', 'icon.png');
   const win = new BrowserWindow({
     width: 1200,
     height: 800,
@@ -10,7 +13,7 @@ function createWindow(): void {
     minHeight: 400,
     title: 'Void SuperCode',
     backgroundColor: '#1e1e1e',
-    icon: path.join(__dirname, '..', '..', 'icon.svg'),
+    icon: fs.existsSync(iconPath) ? iconPath : undefined,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -23,6 +26,7 @@ function createWindow(): void {
 }
 
 app.whenReady().then(() => {
+  logInfo('main', 'Application started');
   createWindow();
 
   app.on('activate', () => {
@@ -30,6 +34,10 @@ app.whenReady().then(() => {
       createWindow();
     }
   });
+});
+
+process.on('uncaughtException', (err) => {
+  logError('main', 'Uncaught exception: ' + err.message + '\n' + err.stack);
 });
 
 app.on('window-all-closed', () => {
@@ -118,4 +126,24 @@ ipcMain.handle('create-folder', async (_event, folderPath: string) => {
   } catch {
     return false;
   }
+});
+
+ipcMain.handle('get-config', async () => {
+  return getConfig();
+});
+
+ipcMain.handle('set-config', async (_event, updates: Record<string, unknown>) => {
+  setConfig(updates);
+  return true;
+});
+
+ipcMain.handle('log-message', async (_event, level: string, source: string, message: string) => {
+  if (level === 'ERROR') {
+    logError(source, message);
+  } else if (level === 'WARN') {
+    logInfo(source, message);
+  } else {
+    logInfo(source, message);
+  }
+  return true;
 });
