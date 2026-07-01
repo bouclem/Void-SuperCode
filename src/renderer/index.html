@@ -17,6 +17,9 @@
         <button id="activity-files-btn" title="Files" class="activity-btn">
           <img src="icons/files-activity.svg" alt="Files" />
         </button>
+        <button id="activity-debug-btn" title="Debug Console" class="activity-btn">
+          <img src="icons/debug.svg" alt="Debug" />
+        </button>
       </div>
       <div id="sidebar">
         <div id="sidebar-header">
@@ -78,6 +81,15 @@
         </div>
       </div>
     </div>
+    <div id="bottom-panel">
+      <div id="bottom-panel-header">
+        <span>Debug Console</span>
+        <button id="bottom-panel-close" title="Close">
+          <img src="icons/close.svg" alt="Close" />
+        </button>
+      </div>
+      <div id="debug-console-output"></div>
+    </div>
   </div>
 
   <script src="vs/loader.js"></script>
@@ -85,6 +97,8 @@
   <script src="js/modules/tabs/tabs.js"></script>
   <script src="js/modules/welcome/welcome.js"></script>
   <script src="js/modules/file-explorer/file-explorer.js"></script>
+  <script src="js/modules/debug-console/debug-console.js"></script>
+  <script src="js/modules/autosave/autosave.js"></script>
   <script src="js/modules/app/app.js"></script>
 </body>
 </html>

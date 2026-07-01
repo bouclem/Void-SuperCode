@@ -1,0 +1,12 @@
+{
+  "language": "javascript",
+  "extensions": [".js", ".mjs", ".jsx"],
+  "monacoLanguage": "javascript",
+  "bracketPairColorization": true,
+  "autoClosingBrackets": "always",
+  "icons": {
+    "js": "icons/js-file.svg",
+    "jsx": "icons/jsx-file.svg",
+    "mjs": "icons/mjs-file.svg"
+  }
+}

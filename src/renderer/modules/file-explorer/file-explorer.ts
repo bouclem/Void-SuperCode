@@ -74,7 +74,7 @@ window.FileExplorer = (() => {
 
       const iconImg = document.createElement('img');
       iconImg.className = 'tree-icon';
-      iconImg.src = item.isDirectory ? 'icons/folder.svg' : 'icons/file.svg';
+      iconImg.src = getFileIcon(item.name, item.isDirectory);
       iconImg.alt = '';
 
       const label = document.createElement('span');
@@ -107,22 +107,35 @@ window.FileExplorer = (() => {
     }
   }
 
+  function getFileIcon(name: string, isDirectory: boolean): string {
+    if (isDirectory) return 'icons/folder.svg';
+    const ext = name.split('.').pop()?.toLowerCase() ?? '';
+    if (ext === 'js') return 'lang/javascript/icons/js-file.svg';
+    if (ext === 'jsx') return 'lang/javascript/icons/jsx-file.svg';
+    if (ext === 'mjs') return 'lang/javascript/icons/mjs-file.svg';
+    return 'icons/file.svg';
+  }
+
   function handleDblClick(e: MouseEvent): void {
     const target = e.target as HTMLElement;
     const treeEl = target.closest('.tree-folder, .tree-file') as HTMLElement | null;
     if (!treeEl) return;
     const isDir = treeEl.dataset.isDirectory === 'true';
-    const parentPath = getParentPath(treeEl);
+    const filePath = treeEl.dataset.path;
     if (isDir) {
-      showInlineInput(parentPath, 'file');
-    } else {
-      const parent = treeEl.parentElement;
-      if (parent && parent.id !== 'tree-container') {
-        const parentDir = getParentPath(parent);
-        showInlineInput(parentDir, 'file');
-      } else if (currentFolderPath) {
-        showInlineInput(currentFolderPath, 'file');
-      }
+      const label = treeEl.querySelector('.tree-label') as HTMLElement | null;
+      if (label) label.click();
+    } else if (filePath) {
+      openFileByPath(filePath, treeEl.querySelector('.tree-label')?.textContent ?? filePath);
+    }
+  }
+
+  async function openFileByPath(filePath: string, fileName: string): Promise<void> {
+    try {
+      const content = await window.api.readFile(filePath);
+      window.Editor.openFile(fileName, content, filePath);
+    } catch {
+      // Non-critical
     }
   }
 

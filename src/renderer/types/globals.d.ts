@@ -43,6 +43,18 @@ interface Window {
     showSidebar(): void;
     hideSidebar(): void;
   };
+  DebugConsole: {
+    init(): void;
+    show(): void;
+    hide(): void;
+    toggle(): void;
+    appendLine(level: string, source: string, message: string): void;
+  };
+  Autosave: {
+    init(): void;
+    start(): void;
+    stop(): void;
+  };
   api: {
     openFolderDialog(): Promise<string | null>;
     openFileDialog(): Promise<string | null>;

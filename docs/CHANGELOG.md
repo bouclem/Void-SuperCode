@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.0.10] - 2026-07-01
+
+- Changed: debug console button moved to bottom left of activity bar
+- Added: autosave system — saves current file every 15 seconds if it has unsaved changes
+- Added: autosave.ts module with start/stop controls
+- Fixed: double-clicking a file in the explorer now opens it instead of creating a new file
+- Fixed: double-clicking a folder expands/collapses it
+- Added: close confirmation modal when closing a tab with unsaved changes
+- Added: modal with Save / Don't Save / Cancel buttons (custom styled, not native dialog)
+
+## [0.0.9] - 2026-07-01
+
+- Added: JavaScript language support with bracket pair colorization and auto-closing brackets/quotes
+- Added: .jsx and .mjs file extension support (mapped to JavaScript in Monaco)
+- Added: JavaScript-specific file icons in src/lang/javascript/icons/ (js-file.svg, jsx-file.svg, mjs-file.svg)
+- Added: src/lang/javascript/ folder with lang.config.json for language configuration
+- Added: bottom panel with Debug Console for logs and DevTools console output
+- Added: debug-console.ts module — intercepts console.log/error/warn and runtime errors
+- Added: debug.svg (bug icon) and close.svg icons in activity bar
+- Added: Debug Console toggle button in activity bar
+- Fixed: inline input blur event no longer prevents file creation (committed flag fix)
+
 ## [0.0.8] - 2026-07-01
 
 - Added: "INSIDER" text on app icon for insider builds

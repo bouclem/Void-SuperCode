@@ -6,6 +6,8 @@ window.App = (() => {
     window.Tabs.init();
     window.Welcome.init();
     window.FileExplorer.init();
+    window.DebugConsole.init();
+    window.Autosave.init();
     initActivityBar();
   }
 

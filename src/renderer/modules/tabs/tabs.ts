@@ -37,6 +37,99 @@ window.Tabs = (() => {
   }
 
   function closeTab(filePath: string): void {
+    const tab = getTab(filePath);
+    if (tab && tab.isDirty) {
+      showCloseConfirm(tab.name, function (action: 'save' | 'discard' | 'cancel') {
+        if (action === 'cancel') return;
+        if (action === 'save') {
+          doSaveAndClose(filePath);
+        } else {
+          doCloseTab(filePath);
+        }
+      });
+    } else {
+      doCloseTab(filePath);
+    }
+  }
+
+  async function doSaveAndClose(filePath: string): Promise<void> {
+    const tab = getTab(filePath);
+    if (tab) {
+      const content = tab.model.getValue();
+      await window.api.saveFile(tab.path, content);
+      markClean(filePath);
+    }
+    doCloseTab(filePath);
+  }
+
+  function showCloseConfirm(fileName: string, callback: (action: 'save' | 'discard' | 'cancel') => void): void {
+    const overlay = document.createElement('div');
+    overlay.id = 'modal-overlay';
+
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+
+    const title = document.createElement('div');
+    title.className = 'modal-title';
+    title.textContent = 'Do you want to save the changes to ' + fileName + '?';
+
+    const message = document.createElement('div');
+    message.className = 'modal-message';
+    message.textContent = 'Your changes will be lost if you don\'t save them.';
+
+    const btnContainer = document.createElement('div');
+    btnContainer.className = 'modal-buttons';
+
+    const saveBtn = document.createElement('button');
+    saveBtn.className = 'modal-btn modal-btn-primary';
+    saveBtn.textContent = 'Save';
+
+    const discardBtn = document.createElement('button');
+    discardBtn.className = 'modal-btn';
+    discardBtn.textContent = 'Don\'t Save';
+
+    const cancelBtn = document.createElement('button');
+    cancelBtn.className = 'modal-btn';
+    cancelBtn.textContent = 'Cancel';
+
+    btnContainer.appendChild(saveBtn);
+    btnContainer.appendChild(discardBtn);
+    btnContainer.appendChild(cancelBtn);
+
+    modal.appendChild(title);
+    modal.appendChild(message);
+    modal.appendChild(btnContainer);
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+
+    function cleanup(): void {
+      overlay.remove();
+    }
+
+    saveBtn.addEventListener('click', function () {
+      cleanup();
+      callback('save');
+    });
+
+    discardBtn.addEventListener('click', function () {
+      cleanup();
+      callback('discard');
+    });
+
+    cancelBtn.addEventListener('click', function () {
+      cleanup();
+      callback('cancel');
+    });
+
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) {
+        cleanup();
+        callback('cancel');
+      }
+    });
+  }
+
+  function doCloseTab(filePath: string): void {
     const idx = tabs.findIndex(function (t) { return t.path === filePath; });
     if (idx === -1) return;
 

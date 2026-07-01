@@ -12,3 +12,9 @@
 - [x] Remember last opened folder
 - [x] Add .voidscode config and logging system
 - [x] Add insider version tagging
+- [x] Add JavaScript language support
+- [x] Add JavaScript file icons in /lang/javascript/
+- [x] Add bottom panel with Debug Console
+- [x] Add autosave system
+- [x] Fix double-click file to open it
+- [x] Add close confirmation popup for unsaved files

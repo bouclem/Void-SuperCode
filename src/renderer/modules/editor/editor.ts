@@ -36,6 +36,7 @@ window.Editor = (() => {
     const ext = filename.split('.').pop()?.toLowerCase() ?? '';
     const map: Record<string, string> = {
       js: 'javascript', ts: 'typescript', tsx: 'typescript',
+      jsx: 'javascript', mjs: 'javascript',
       html: 'html', css: 'css', json: 'json',
       md: 'markdown', py: 'python', java: 'java',
       c: 'c', cpp: 'cpp', rs: 'rust', go: 'go',
