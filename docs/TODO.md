@@ -19,3 +19,6 @@
 - [x] Fix double-click file to open it
 - [x] Add close confirmation popup for unsaved files
 - [x] Add settings button and settings menu
+- [x] Add terminal integration
+- [x] Add resizable bottom panel
+- [x] Add git integration (source control)

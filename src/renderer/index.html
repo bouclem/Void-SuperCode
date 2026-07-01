@@ -21,6 +21,9 @@
         <button id="activity-debug-btn" title="Debug Console" class="activity-btn">
           <img src="icons/debug.svg" alt="Debug" />
         </button>
+        <button id="activity-git-btn" title="Source Control" class="activity-btn">
+          <img src="icons/git.svg" alt="Git" />
+        </button>
         <button id="activity-settings-btn" title="Settings" class="activity-btn">
           <img src="icons/settings.svg" alt="Settings" />
         </button>
@@ -47,22 +50,16 @@
           <div class="tree-empty">Open a folder to start</div>
         </div>
       </div>
-      <div id="settings-panel">
-        <div id="settings-header">
-          <span>Settings</span>
+      <div id="git-panel">
+        <div id="git-header">
+          <span>Source Control</span>
         </div>
-        <div id="settings-content">
-          <div class="setting-row">
-            <label for="setting-autosave">Autosave (every 15s)</label>
-            <input type="checkbox" id="setting-autosave" />
-          </div>
-          <div class="setting-row">
-            <label for="setting-loglevel">Log level</label>
-            <select id="setting-loglevel">
-              <option value="full">Full (INFO + WARN + ERROR)</option>
-              <option value="normal">Normal (WARN + ERROR)</option>
-              <option value="minimal">Minimal (ERROR only)</option>
-            </select>
+        <div id="git-content">
+          <div class="git-branch"></div>
+          <div class="git-changes"></div>
+          <div class="git-commit-section">
+            <input type="text" id="git-commit-msg" placeholder="Commit message" />
+            <button id="git-commit-btn">Commit</button>
           </div>
         </div>
       </div>
@@ -104,6 +101,8 @@
         </div>
       </div>
     </div>
+  </div>
+  <div id="panel-resize-handle"></div>
     <div id="bottom-panel">
       <div id="bottom-panel-header">
         <div id="bottom-panel-tabs">
@@ -130,6 +129,7 @@
   <script src="js/modules/autosave/autosave.js"></script>
   <script src="js/modules/settings/settings.js"></script>
   <script src="js/modules/terminal/terminal.js"></script>
+  <script src="js/modules/git/git.js"></script>
   <script src="js/modules/app/app.js"></script>
 </body>
 </html>

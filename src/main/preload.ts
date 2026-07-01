@@ -23,4 +23,13 @@ contextBridge.exposeInMainWorld('api', {
   terminalExit: (callback: () => void): void => {
     ipcRenderer.on('terminal-exit', callback);
   },
+  gitStatus: (cwd: string): Promise<{ branch: string | null; files: { path: string; status: string; staged: boolean }[]; isRepo: boolean }> =>
+    ipcRenderer.invoke('git-status', cwd),
+  gitStage: (cwd: string, filePath: string): Promise<boolean> => ipcRenderer.invoke('git-stage', cwd, filePath),
+  gitUnstage: (cwd: string, filePath: string): Promise<boolean> => ipcRenderer.invoke('git-unstage', cwd, filePath),
+  gitCommit: (cwd: string, message: string): Promise<boolean> => ipcRenderer.invoke('git-commit', cwd, message),
+  openSettingsWindow: (): void => { ipcRenderer.send('open-settings-window'); },
+  onSettingsUpdated: (callback: (updates: Record<string, unknown>) => void): void => {
+    ipcRenderer.on('settings-updated', (_event, updates) => callback(updates));
+  },
 });

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings - Void SuperCode</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #1e1e1e;
+      color: #cccccc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 13px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    #header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 40px;
+      padding: 0 16px;
+      border-bottom: 1px solid #333;
+      font-size: 14px;
+      font-weight: 600;
+      user-select: none;
+      -webkit-app-region: drag;
+      flex-shrink: 0;
+    }
+    #header span { color: #cccccc; }
+    #content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 24px;
+    }
+    .section { margin-bottom: 24px; }
+    .section h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #333;
+    }
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 0;
+    }
+    .row label { color: #cccccc; font-size: 13px; }
+    .row input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; }
+    .row select {
+      background: #3d3d3d;
+      color: #cccccc;
+      border: 1px solid #555;
+      border-radius: 3px;
+      padding: 4px 8px;
+      font-size: 12px;
+      font-family: inherit;
+      cursor: pointer;
+    }
+    .row select:focus { outline: none; border-color: #007acc; }
+  </style>
+</head>
+<body>
+  <div id="header">
+    <span>Settings</span>
+  </div>
+  <div id="content">
+    <div class="section">
+      <h3>General</h3>
+      <div class="row">
+        <label for="setting-autosave">Autosave (every 15s)</label>
+        <input type="checkbox" id="setting-autosave" />
+      </div>
+    </div>
+    <div class="section">
+      <h3>Logging</h3>
+      <div class="row">
+        <label for="setting-loglevel">Log level</label>
+        <select id="setting-loglevel">
+          <option value="full">Full (INFO + WARN + ERROR)</option>
+          <option value="normal">Normal (WARN + ERROR)</option>
+          <option value="minimal">Minimal (ERROR only)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <script>
+    const { ipcRenderer } = require('electron');
+
+    async function loadSettings() {
+      const config = await ipcRenderer.invoke('get-config');
+      document.getElementById('setting-autosave').checked = config.autosave !== false;
+      document.getElementById('setting-loglevel').value = config.logLevel || 'normal';
+    }
+
+    document.getElementById('setting-autosave').addEventListener('change', function () {
+      ipcRenderer.send('settings-changed', { autosave: this.checked });
+    });
+
+    document.getElementById('setting-loglevel').addEventListener('change', function () {
+      ipcRenderer.send('settings-changed', { logLevel: this.value });
+    });
+
+    loadSettings();
+  </script>
+</body>
+</html>

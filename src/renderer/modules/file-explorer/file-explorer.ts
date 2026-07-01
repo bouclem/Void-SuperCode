@@ -49,6 +49,7 @@ window.FileExplorer = (() => {
       currentFolderPath = folderPath;
       await refresh();
       await window.api.setConfig({ lastFolder: folderPath });
+      window.Git.setFolder(folderPath);
       window.App.showSidebar();
     }
   }

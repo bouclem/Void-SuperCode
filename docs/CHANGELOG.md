@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.0.12] - 2026-07-01
+
+- Added: real settings window — separate Electron BrowserWindow with its own title bar
+- Added: settings-window.html — standalone HTML page with inline styles and scripts
+- Added: settings changes sent via IPC from settings window to main window
+- Added: resizable bottom panel — drag handle between editor and terminal/debug
+- Added: git integration — source control panel in sidebar
+- Added: git status (branch, staged/unstaged files with M/A/D/U/R status letters)
+- Added: stage/unstage files with + / - buttons
+- Added: commit input with message field and commit button
+- Added: git activity bar button (source control icon)
+- Changed: settings now opens as a real OS window, not an overlay or sidebar panel
+
 ## [0.0.11] - 2026-07-01
 
 - Added: settings button (gear icon) at bottom of activity bar

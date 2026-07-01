@@ -68,6 +68,15 @@ interface Window {
     open(cwd: string): void;
     close(): void;
   };
+  Git: {
+    init(): void;
+    show(): void;
+    hide(): void;
+    toggle(): void;
+    refresh(): Promise<void>;
+    setFolder(folder: string | null): void;
+    commit(): Promise<void>;
+  };
   api: {
     openFolderDialog(): Promise<string | null>;
     openFileDialog(): Promise<string | null>;
@@ -85,6 +94,12 @@ interface Window {
     terminalKill(): Promise<boolean>;
     terminalOutput(callback: (_event: unknown, data: string) => void): void;
     terminalExit(callback: () => void): void;
+    gitStatus(cwd: string): Promise<{ branch: string | null; files: { path: string; status: string; staged: boolean }[]; isRepo: boolean }>;
+    gitStage(cwd: string, filePath: string): Promise<boolean>;
+    gitUnstage(cwd: string, filePath: string): Promise<boolean>;
+    gitCommit(cwd: string, message: string): Promise<boolean>;
+    openSettingsWindow(): void;
+    onSettingsUpdated(callback: (updates: Record<string, unknown>) => void): void;
   };
   MonacoEnvironment: {
     getWorkerUrl(): string;

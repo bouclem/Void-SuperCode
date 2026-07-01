@@ -11,8 +11,11 @@ window.App = (() => {
     window.Settings.init();
     window.Settings.initControls();
     window.Terminal.init();
+    window.Git.init();
     initActivityBar();
     initBottomPanelTabs();
+    initResizeHandle();
+    initGitCommit();
   }
 
   function initActivityBar(): void {
@@ -37,6 +40,7 @@ window.App = (() => {
     filesBtn.classList.add('active');
     sidebarVisible = true;
     window.Settings.hide();
+    window.Git.hide();
   }
 
   function hideSidebar(): void {
@@ -67,6 +71,53 @@ window.App = (() => {
           }
         }
       });
+    });
+  }
+
+  function initGitCommit(): void {
+    const commitBtn = document.getElementById('git-commit-btn')!;
+    const commitInput = document.getElementById('git-commit-msg')!;
+    commitBtn.addEventListener('click', function () {
+      window.Git.commit();
+    });
+    commitInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        window.Git.commit();
+      }
+    });
+  }
+
+  function initResizeHandle(): void {
+    const handle = document.getElementById('panel-resize-handle')!;
+    const bottomPanel = document.getElementById('bottom-panel')!;
+    let isResizing = false;
+    let startY = 0;
+    let startHeight = 0;
+
+    handle.addEventListener('mousedown', function (e) {
+      isResizing = true;
+      startY = e.clientY;
+      startHeight = bottomPanel.offsetHeight;
+      document.body.style.cursor = 'ns-resize';
+      e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', function (e) {
+      if (!isResizing) return;
+      const delta = startY - e.clientY;
+      let newHeight = startHeight + delta;
+      const maxH = window.innerHeight * 0.6;
+      if (newHeight < 100) newHeight = 100;
+      if (newHeight > maxH) newHeight = maxH;
+      bottomPanel.style.height = newHeight + 'px';
+      bottomPanel.style.flex = 'none';
+    });
+
+    document.addEventListener('mouseup', function () {
+      if (isResizing) {
+        isResizing = false;
+        document.body.style.cursor = '';
+      }
     });
   }
 

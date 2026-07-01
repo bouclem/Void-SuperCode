@@ -4,6 +4,38 @@ import * as fs from 'fs';
 import { getConfig, setConfig } from './voidscode';
 import { logError, logInfo, logWarn } from './logger';
 import { createTerminal, writeTerminal, resizeTerminal, killTerminal } from './terminal';
+import { getGitStatus, stageFile, unstageFile, commitChanges } from './git';
+
+let mainWindow: BrowserWindow | null = null;
+let settingsWindow: BrowserWindow | null = null;
+
+function createSettingsWindow(): void {
+  if (settingsWindow && !settingsWindow.isDestroyed()) {
+    settingsWindow.focus();
+    return;
+  }
+
+  settingsWindow = new BrowserWindow({
+    width: 500,
+    height: 400,
+    minWidth: 400,
+    minHeight: 300,
+    title: 'Settings - Void SuperCode',
+    backgroundColor: '#1e1e1e',
+    parent: mainWindow ?? undefined,
+    modal: false,
+    autoHideMenuBar: true,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  });
+
+  settingsWindow.loadFile(path.join(__dirname, '..', 'renderer', 'settings-window.html'));
+  settingsWindow.on('closed', function () {
+    settingsWindow = null;
+  });
+}
 
 function createWindow(): void {
   const iconPath = path.join(__dirname, '..', 'icon.png');
@@ -23,6 +55,10 @@ function createWindow(): void {
   });
 
   win.loadFile(path.join(__dirname, '..', 'renderer', 'index.html'));
+  mainWindow = win;
+  win.on('closed', function () {
+    mainWindow = null;
+  });
   win.setMenuBarVisibility(false);
 }
 
@@ -178,4 +214,31 @@ ipcMain.handle('terminal-resize', async (_event, cols: number, rows: number) => 
 ipcMain.handle('terminal-kill', async () => {
   killTerminal();
   return true;
+});
+
+ipcMain.handle('git-status', async (_event, cwd: string) => {
+  return getGitStatus(cwd);
+});
+
+ipcMain.handle('git-stage', async (_event, cwd: string, filePath: string) => {
+  return stageFile(cwd, filePath);
+});
+
+ipcMain.handle('git-unstage', async (_event, cwd: string, filePath: string) => {
+  return unstageFile(cwd, filePath);
+});
+
+ipcMain.handle('git-commit', async (_event, cwd: string, message: string) => {
+  return commitChanges(cwd, message);
+});
+
+ipcMain.on('open-settings-window', () => {
+  createSettingsWindow();
+});
+
+ipcMain.on('settings-changed', (_event, updates: Record<string, unknown>) => {
+  setConfig(updates);
+  if (mainWindow && !mainWindow.isDestroyed()) {
+    mainWindow.webContents.send('settings-updated', updates);
+  }
 });

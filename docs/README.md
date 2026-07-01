@@ -11,7 +11,9 @@ A lightweight desktop code editor built with Electron, TypeScript, and Monaco Ed
 - Close confirmation dialog for unsaved files
 - Integrated terminal (opens in current folder root)
 - Debug Console with console.log/error/warn interception and runtime error capture
-- Settings panel with autosave toggle and log level control
+- Settings menu — floating modal dialog with autosave toggle and log level control
+- Git integration — source control panel with stage/unstage/commit
+- Resizable bottom panel — drag to resize terminal/debug console
 - Persistent config and daily logs in `~/.voidscode/`
 - Insider version tagging with badge
 - JavaScript language support with bracket pair colorization and auto-closing brackets
@@ -36,10 +38,11 @@ npm start
 
 ```
 src/
-  main/           Electron main process (window, IPC, terminal, logging, config)
+  main/           Electron main process (window, IPC, terminal, git, logging, config)
     main.ts       App entry, IPC handlers
     preload.ts    Context bridge for renderer
     terminal.ts   PTY management for integrated terminal
+    git.ts        Git status, stage, unstage, commit via child_process
     logger.ts     Daily log files with level filtering
     voidscode.ts  Config and .voidscode directory management
   renderer/
@@ -51,8 +54,9 @@ src/
       welcome/    Welcome page
       debug-console/  Debug console with console interception
       autosave/   Periodic autosave
-      settings/   Settings panel
+      settings/   Settings floating modal dialog
       terminal/   xterm.js terminal frontend
+      git/        Source control panel (status, stage, commit)
     types/        TypeScript declaration files (globals, window interfaces)
     icons/        SVG icons for sidebar, activity bar, and file tree
     index.html    Main renderer HTML
