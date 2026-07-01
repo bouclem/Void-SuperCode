@@ -14,12 +14,6 @@ window.CommandPalette = (() => {
   let selectedIdx = 0;
 
   function init(): void {
-    document.addEventListener('keydown', function (e) {
-      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'P') {
-        e.preventDefault();
-        show();
-      }
-    });
   }
 
   function registerCommands(cmds: Command[]): void {

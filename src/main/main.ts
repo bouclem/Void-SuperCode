@@ -29,35 +29,6 @@ function isInsiderBuild(): boolean {
 }
 
 let mainWindow: BrowserWindow | null = null;
-let settingsWindow: BrowserWindow | null = null;
-
-function createSettingsWindow(): void {
-  if (settingsWindow && !settingsWindow.isDestroyed()) {
-    settingsWindow.focus();
-    return;
-  }
-
-  settingsWindow = new BrowserWindow({
-    width: 500,
-    height: 400,
-    minWidth: 400,
-    minHeight: 300,
-    title: 'Settings - Void SuperCode',
-    backgroundColor: '#1e1e1e',
-    parent: mainWindow ?? undefined,
-    modal: false,
-    autoHideMenuBar: true,
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
-    },
-  });
-
-  settingsWindow.loadFile(path.join(__dirname, '..', 'renderer', 'settings-window.html'));
-  settingsWindow.on('closed', function () {
-    settingsWindow = null;
-  });
-}
 
 function createWindow(): void {
   const iconPath = path.join(__dirname, '..', 'icon.png');
@@ -288,10 +259,6 @@ ipcMain.handle('git-publish', async (_event, cwd: string) => {
 
 ipcMain.handle('git-has-remote', async (_event, cwd: string) => {
   return gitHasRemote(cwd);
-});
-
-ipcMain.on('open-settings-window', () => {
-  createSettingsWindow();
 });
 
 ipcMain.on('settings-changed', (_event, updates: Record<string, unknown>) => {

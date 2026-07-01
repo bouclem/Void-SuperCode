@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.1.2] - 2026-07-01
+
+- Fixed: auto-update asset matching on Windows — regex now matches "Void SuperCode" (spaces) not just "void-supercode" (hyphens)
+- Added: find & replace in editor — Ctrl+F for find, Ctrl+H for replace (Monaco built-in find widget)
+- Added: keyboard shortcut settings — embedded settings screen with left nav for General and Keyboard Shortcuts
+- Added: shortcuts module — central shortcut manager with runtime rebinding, persisted in config
+- Added: settings.css — styles for embedded settings overlay with sidebar navigation
+- Changed: settings is now an embedded overlay inside the IDE window instead of a separate OS window
+- Changed: removed separate settings BrowserWindow and open-settings-window IPC handler
+- Changed: version bumped to 0.1.2
+
 ## [0.1.1] - 2026-07-01
 
 - Fixed: terminal not working — "Terminal is not a constructor" error (xterm constructor was overwritten by module)

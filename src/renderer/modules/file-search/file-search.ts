@@ -12,12 +12,6 @@ window.FileSearch = (() => {
   let selectedIdx = 0;
 
   function init(): void {
-    document.addEventListener('keydown', function (e) {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'p' && !e.shiftKey) {
-        e.preventDefault();
-        show();
-      }
-    });
   }
 
   async function show(): Promise<void> {

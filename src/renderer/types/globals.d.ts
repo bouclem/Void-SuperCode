@@ -63,6 +63,22 @@ interface Window {
     toggle(): void;
     initControls(): void;
   };
+  SettingsScreen: {
+    init(): void;
+    show(): void;
+    hide(): void;
+    toggle(): void;
+  };
+  Shortcuts: {
+    init(): void;
+    register(def: { id: string; label: string; defaultBinding: string; action: () => void; monaco: boolean }): void;
+    getBinding(id: string): string;
+    getAll(): { id: string; label: string; binding: string; defaultBinding: string }[];
+    rebind(id: string, binding: string): void;
+    reset(id: string): void;
+    resetAll(): void;
+    applyAllMonacoShortcuts(): void;
+  };
   Terminal: {
     init(): void;
     open(cwd: string): void;
@@ -138,7 +154,6 @@ interface Window {
     gitLog(cwd: string, maxCount: number): Promise<{ hash: string; shortHash: string; author: string; date: string; message: string }[]>;
     gitPublish(cwd: string): Promise<boolean>;
     gitHasRemote(cwd: string): Promise<boolean>;
-    openSettingsWindow(): void;
     onSettingsUpdated(callback: (updates: Record<string, unknown>) => void): void;
     runFile(filePath: string, content: string): Promise<{ success: boolean; stdout: string; stderr: string; error?: string }>;
     searchFiles(rootDir: string, query: string): Promise<{ name: string; path: string; relativePath: string }[]>;

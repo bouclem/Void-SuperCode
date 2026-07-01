@@ -25,10 +25,6 @@ window.Editor = (() => {
         tabSize: 2,
       });
       window.editor = editor;
-
-      editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, function () {
-        saveCurrentFile();
-      });
     });
   }
 

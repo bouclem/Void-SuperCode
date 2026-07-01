@@ -38,3 +38,47 @@
 - [x] Add TypeScript language support
 - [x] Add Publish button in source control
 - [x] Add commit history view
+
+## Future Ideas
+
+- [x] Add find & replace in file (Ctrl+F / Ctrl+H)
+- [ ] Add find across files (Ctrl+Shift+F)
+- [x] Add keyboard shortcuts settings (rebindable, persisted in config)
+- [ ] Add file rename/delete from file explorer context menu
+- [ ] Add drag & drop file open (drop file onto editor)
+- [ ] Add multi-cursor editing support
+- [ ] Add code folding in Monaco editor
+- [ ] Add minimap toggle setting
+- [ ] Add word wrap toggle setting
+- [ ] Add custom themes (dark/light/high-contrast)
+- [ ] Add Python language support (config + icons)
+- [ ] Add C/C++ language support (config + icons)
+- [ ] Add Rust language support (config + icons)
+- [ ] Add Go language support (config + icons)
+- [ ] Add Java language support (config + icons)
+- [ ] Add HTML/CSS live preview for web files
+- [ ] Add integrated debugger (attach to Node.js process)
+- [ ] Add ESLint integration for JS/TS files
+- [ ] Add Prettier formatting on save
+- [ ] Add Git diff viewer (compare changes before commit)
+- [ ] Add Git branch switcher dropdown
+- [ ] Add Git stash support (stash, pop, list)
+- [ ] Add Git merge conflict resolution UI
+- [ ] Add extension/plugin system
+- [ ] Add workspace settings (.voidscode/workspace.json)
+- [ ] Add recent files/folders history on welcome page
+- [ ] Add split editor view (side by side)
+- [ ] Add terminal tabs (multiple terminal sessions)
+- [ ] Add terminal restart button
+- [ ] Add output panel as separate tab from debug console
+- [ ] Add status bar (bottom) with cursor position, language, encoding
+- [ ] Add breadcrumb navigation (file path above editor)
+- [ ] Add auto-close HTML/XML tags
+- [ ] Add Emmet abbreviation expansion
+- [ ] Add snippet support
+- [ ] Add "Open in External Editor" option
+- [ ] Add file watcher for external changes (reload if file changed on disk)
+- [ ] Add macOS and Linux builds to electron-builder config
+- [ ] Add portable settings sync (export/import config)
+- [ ] Add crash report system
+- [ ] Add telemetry opt-in (anonymous usage stats)

@@ -4,6 +4,8 @@ window.Settings = (() => {
   function init(): void {
     toggleBtn = document.getElementById('activity-settings-btn')!;
     toggleBtn.addEventListener('click', toggle);
+    window.SettingsScreen.init();
+
     window.api.onSettingsUpdated(function (updates) {
       if ('autosave' in updates) {
         if (updates.autosave) {
@@ -16,19 +18,18 @@ window.Settings = (() => {
   }
 
   function toggle(): void {
-    window.api.openSettingsWindow();
+    window.SettingsScreen.toggle();
   }
 
   function show(): void {
-    window.api.openSettingsWindow();
+    window.SettingsScreen.show();
   }
 
   function hide(): void {
-    // Settings window closes itself
+    window.SettingsScreen.hide();
   }
 
   function initControls(): void {
-    // Settings controls are in the separate settings window
   }
 
   return { init, show, hide, toggle, initControls };

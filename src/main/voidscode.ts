@@ -8,6 +8,7 @@ interface VoidCodeConfig {
   logLevel: 'full' | 'normal' | 'minimal';
   autoUpdate: boolean;
   releaseChannel: string;
+  shortcuts?: Record<string, string>;
 }
 
 const defaultConfig: VoidCodeConfig = {

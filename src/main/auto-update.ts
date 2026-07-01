@@ -26,10 +26,10 @@ interface GitHubRelease {
 
 function getPlatformAssetPattern(): RegExp {
   const platform = process.platform;
-  if (platform === 'win32') return /void-supercode.*\.zip$/i;
-  if (platform === 'darwin') return /void-supercode.*\.dmg$/i;
-  if (platform === 'linux') return /void-supercode.*\.(appimage|tar\.gz)$/i;
-  return /void-supercode.*/i;
+  if (platform === 'win32') return /supercode.*\.zip$/i;
+  if (platform === 'darwin') return /supercode.*\.dmg$/i;
+  if (platform === 'linux') return /supercode.*\.(appimage|tar\.gz)$/i;
+  return /supercode.*/i;
 }
 
 export function downloadAndInstallUpdate(

@@ -17,6 +17,8 @@ window.App = (() => {
     window.MarkdownPreview.init();
     window.RunFile.init();
     window.AutoUpdate.init();
+    window.Shortcuts.init();
+    registerShortcuts();
     registerCommands();
     initActivityBar();
     initBottomPanelTabs();
@@ -33,6 +35,8 @@ window.App = (() => {
       { id: 'files.search', label: 'Go to File', shortcut: 'Ctrl+P', action: function () { window.FileSearch.show(); } },
       { id: 'file.run', label: 'Run File', action: function () { window.RunFile.run(); } },
       { id: 'file.save', label: 'Save File', shortcut: 'Ctrl+S', action: function () { window.Editor.saveCurrentFile(); } },
+      { id: 'editor.find', label: 'Find', shortcut: 'Ctrl+F', action: function () { const ed = window.editor; if (ed) { const a = ed.getAction('actions.find'); if (a) a.run(); } } },
+      { id: 'editor.replace', label: 'Replace', shortcut: 'Ctrl+H', action: function () { const ed = window.editor; if (ed) { const a = ed.getAction('editor.action.startFindReplaceAction'); if (a) a.run(); } } },
       { id: 'git.commit', label: 'Git: Commit', action: function () { window.Git.commit(); } },
       { id: 'git.push', label: 'Git: Push', action: function () { window.Git.push(); } },
       { id: 'git.pull', label: 'Git: Pull', action: function () { window.Git.pull(); } },
@@ -43,7 +47,7 @@ window.App = (() => {
       { id: 'view.toggle-sidebar', label: 'Toggle Sidebar', action: function () { document.getElementById('activity-files-btn')!.click(); } },
       { id: 'view.toggle-debug', label: 'Toggle Debug Console', action: function () { window.DebugConsole.toggle(); } },
       { id: 'view.toggle-git', label: 'Toggle Source Control', action: function () { window.Git.toggle(); } },
-      { id: 'settings.open', label: 'Open Settings', action: function () { window.api.openSettingsWindow(); } },
+      { id: 'settings.open', label: 'Open Settings', action: function () { window.Settings.toggle(); } },
       { id: 'app.check-updates', label: 'Check for Updates', action: function () { window.AutoUpdate.checkForUpdates(true); } },
     ]);
   }
@@ -166,6 +170,29 @@ window.App = (() => {
         isResizing = false;
         document.body.style.cursor = '';
       }
+    });
+  }
+
+  function registerShortcuts(): void {
+    window.Shortcuts.register({
+      id: 'file.save', label: 'Save File', defaultBinding: 'Ctrl+S', monaco: true,
+      action: function () { window.Editor.saveCurrentFile(); }
+    });
+    window.Shortcuts.register({
+      id: 'editor.find', label: 'Find', defaultBinding: 'Ctrl+F', monaco: true,
+      action: function () { const ed = window.editor; if (ed) { const a = ed.getAction('actions.find'); if (a) a.run(); } }
+    });
+    window.Shortcuts.register({
+      id: 'editor.replace', label: 'Replace', defaultBinding: 'Ctrl+H', monaco: true,
+      action: function () { const ed = window.editor; if (ed) { const a = ed.getAction('editor.action.startFindReplaceAction'); if (a) a.run(); } }
+    });
+    window.Shortcuts.register({
+      id: 'files.search', label: 'Go to File', defaultBinding: 'Ctrl+P', monaco: false,
+      action: function () { window.FileSearch.show(); }
+    });
+    window.Shortcuts.register({
+      id: 'commandPalette.open', label: 'Command Palette', defaultBinding: 'Ctrl+Shift+P', monaco: false,
+      action: function () { window.CommandPalette.show(); }
     });
   }
 
