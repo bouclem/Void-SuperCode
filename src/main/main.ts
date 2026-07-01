@@ -2,7 +2,8 @@ import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
 import { getConfig, setConfig } from './voidscode';
-import { logError, logInfo } from './logger';
+import { logError, logInfo, logWarn } from './logger';
+import { createTerminal, writeTerminal, resizeTerminal, killTerminal } from './terminal';
 
 function createWindow(): void {
   const iconPath = path.join(__dirname, '..', 'icon.png');
@@ -151,9 +152,30 @@ ipcMain.handle('log-message', async (_event, level: string, source: string, mess
   if (level === 'ERROR') {
     logError(source, message);
   } else if (level === 'WARN') {
-    logInfo(source, message);
+    logWarn(source, message);
   } else {
     logInfo(source, message);
   }
+  return true;
+});
+
+ipcMain.handle('terminal-create', async (event, cwd: string) => {
+  const win = BrowserWindow.fromWebContents(event.sender);
+  if (!win) return false;
+  return createTerminal(cwd, win);
+});
+
+ipcMain.handle('terminal-input', async (_event, data: string) => {
+  writeTerminal(data);
+  return true;
+});
+
+ipcMain.handle('terminal-resize', async (_event, cols: number, rows: number) => {
+  resizeTerminal(cols, rows);
+  return true;
+});
+
+ipcMain.handle('terminal-kill', async () => {
+  killTerminal();
   return true;
 });

@@ -4,10 +4,14 @@ import { app } from 'electron';
 
 interface VoidCodeConfig {
   lastFolder: string | null;
+  autosave: boolean;
+  logLevel: 'full' | 'normal' | 'minimal';
 }
 
 const defaultConfig: VoidCodeConfig = {
   lastFolder: null,
+  autosave: true,
+  logLevel: 'normal',
 };
 
 function getVoidCodeDir(): string {

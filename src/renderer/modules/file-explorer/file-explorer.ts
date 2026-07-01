@@ -24,8 +24,9 @@ window.FileExplorer = (() => {
   async function loadLastFolder(): Promise<void> {
     try {
       const config = await window.api.getConfig();
-      if (config.lastFolder) {
-        currentFolderPath = config.lastFolder;
+      const lastFolder = config.lastFolder as string | null;
+      if (lastFolder) {
+        currentFolderPath = lastFolder;
         await refresh();
         window.App.showSidebar();
       }
@@ -263,5 +264,9 @@ window.FileExplorer = (() => {
     }
   }
 
-  return { init, refresh, openFile };
+  function getCurrentFolder(): string | null {
+    return currentFolderPath;
+  }
+
+  return { init, refresh, openFile, getCurrentFolder };
 })();

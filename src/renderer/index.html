@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Void SuperCode</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="xterm/xterm.css" />
 </head>
 <body>
   <div id="app">
@@ -19,6 +20,9 @@
         </button>
         <button id="activity-debug-btn" title="Debug Console" class="activity-btn">
           <img src="icons/debug.svg" alt="Debug" />
+        </button>
+        <button id="activity-settings-btn" title="Settings" class="activity-btn">
+          <img src="icons/settings.svg" alt="Settings" />
         </button>
       </div>
       <div id="sidebar">
@@ -41,6 +45,25 @@
         </div>
         <div id="file-tree">
           <div class="tree-empty">Open a folder to start</div>
+        </div>
+      </div>
+      <div id="settings-panel">
+        <div id="settings-header">
+          <span>Settings</span>
+        </div>
+        <div id="settings-content">
+          <div class="setting-row">
+            <label for="setting-autosave">Autosave (every 15s)</label>
+            <input type="checkbox" id="setting-autosave" />
+          </div>
+          <div class="setting-row">
+            <label for="setting-loglevel">Log level</label>
+            <select id="setting-loglevel">
+              <option value="full">Full (INFO + WARN + ERROR)</option>
+              <option value="normal">Normal (WARN + ERROR)</option>
+              <option value="minimal">Minimal (ERROR only)</option>
+            </select>
+          </div>
         </div>
       </div>
       <div id="editor-area">
@@ -83,15 +106,21 @@
     </div>
     <div id="bottom-panel">
       <div id="bottom-panel-header">
-        <span>Debug Console</span>
+        <div id="bottom-panel-tabs">
+          <button class="panel-tab active" data-panel="debug">Debug Console</button>
+          <button class="panel-tab" data-panel="terminal">Terminal</button>
+        </div>
         <button id="bottom-panel-close" title="Close">
           <img src="icons/close.svg" alt="Close" />
         </button>
       </div>
-      <div id="debug-console-output"></div>
+      <div id="debug-console-output" class="panel-content active"></div>
+      <div id="terminal-container" class="panel-content"></div>
     </div>
   </div>
 
+  <script src="xterm/xterm.js"></script>
+  <script src="xterm/addon-fit.js"></script>
   <script src="vs/loader.js"></script>
   <script src="js/modules/editor/editor.js"></script>
   <script src="js/modules/tabs/tabs.js"></script>
@@ -99,6 +128,8 @@
   <script src="js/modules/file-explorer/file-explorer.js"></script>
   <script src="js/modules/debug-console/debug-console.js"></script>
   <script src="js/modules/autosave/autosave.js"></script>
+  <script src="js/modules/settings/settings.js"></script>
+  <script src="js/modules/terminal/terminal.js"></script>
   <script src="js/modules/app/app.js"></script>
 </body>
 </html>

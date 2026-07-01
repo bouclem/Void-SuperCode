@@ -1,8 +1,17 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { getLogsDir } from './voidscode';
+import { getLogsDir, getConfig } from './voidscode';
 
 type LogLevel = 'ERROR' | 'WARN' | 'INFO';
+
+function shouldLog(level: LogLevel): boolean {
+  const config = getConfig();
+  const setting = config.logLevel || 'normal';
+  if (setting === 'full') return true;
+  if (setting === 'normal') return level === 'ERROR' || level === 'WARN';
+  if (setting === 'minimal') return level === 'ERROR';
+  return true;
+}
 
 function getLogFilePath(): string {
   const date = new Date().toISOString().slice(0, 10);
@@ -14,6 +23,7 @@ function formatTimestamp(): string {
 }
 
 export function log(level: LogLevel, source: string, message: string): void {
+  if (!shouldLog(level)) return;
   try {
     const line = `[${formatTimestamp()}] [${level}] [${source}] ${message}\n`;
     fs.appendFileSync(getLogFilePath(), line, 'utf-8');

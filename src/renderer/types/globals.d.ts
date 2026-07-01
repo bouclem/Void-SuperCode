@@ -19,8 +19,9 @@ interface Window {
   };
   FileExplorer: {
     init(): void;
-    refresh(): void;
-    openFile(): Promise<void>;
+    refresh(): Promise<void>;
+    openFile(filename: string, content: string, filePath: string): void;
+    getCurrentFolder(): string | null;
   };
   Welcome: {
     init(): void;
@@ -55,6 +56,18 @@ interface Window {
     start(): void;
     stop(): void;
   };
+  Settings: {
+    init(): void;
+    show(): void;
+    hide(): void;
+    toggle(): void;
+    initControls(): void;
+  };
+  Terminal: {
+    init(): void;
+    open(cwd: string): void;
+    close(): void;
+  };
   api: {
     openFolderDialog(): Promise<string | null>;
     openFileDialog(): Promise<string | null>;
@@ -63,9 +76,15 @@ interface Window {
     createFile(filePath: string): Promise<boolean>;
     saveFile(filePath: string, content: string): Promise<boolean>;
     createFolder(folderPath: string): Promise<boolean>;
-    getConfig(): Promise<{ lastFolder: string | null }>;
+    getConfig(): Promise<Record<string, unknown>>;
     setConfig(updates: Record<string, unknown>): Promise<boolean>;
     logMessage(level: string, source: string, message: string): Promise<boolean>;
+    terminalCreate(cwd: string): Promise<boolean>;
+    terminalInput(data: string): Promise<boolean>;
+    terminalResize(cols: number, rows: number): Promise<boolean>;
+    terminalKill(): Promise<boolean>;
+    terminalOutput(callback: (_event: unknown, data: string) => void): void;
+    terminalExit(callback: () => void): void;
   };
   MonacoEnvironment: {
     getWorkerUrl(): string;

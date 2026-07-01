@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.0.11] - 2026-07-01
+
+- Added: settings button (gear icon) at bottom of activity bar
+- Added: settings panel with autosave toggle and log level dropdown
+- Added: settings persisted in .voidscode/config.json (autosave, logLevel)
+- Added: log level filtering — Full (INFO+WARN+ERROR), Normal (WARN+ERROR), Minimal (ERROR only)
+- Added: terminal integration using node-pty + xterm.js
+- Added: terminal opens in current folder root
+- Added: bottom panel tab switcher (Debug Console / Terminal)
+- Changed: autosave now reads enabled setting from config
+- Changed: debug button no longer at bottom (settings button takes that spot)
+
 ## [0.0.10] - 2026-07-01
 
 - Changed: debug console button moved to bottom left of activity bar

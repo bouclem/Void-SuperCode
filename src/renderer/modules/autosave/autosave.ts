@@ -2,8 +2,15 @@ window.Autosave = (() => {
   const INTERVAL_MS = 15000;
   let timerId: ReturnType<typeof setInterval> | null = null;
 
-  function init(): void {
-    start();
+  async function init(): Promise<void> {
+    try {
+      const config = await window.api.getConfig();
+      if ((config as any).autosave !== false) {
+        start();
+      }
+    } catch {
+      start();
+    }
   }
 
   function start(): void {
