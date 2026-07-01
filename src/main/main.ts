@@ -48,6 +48,16 @@ ipcMain.handle('open-folder-dialog', async () => {
   return result.filePaths[0]!;
 });
 
+ipcMain.handle('open-file-dialog', async () => {
+  const result = await dialog.showOpenDialog({
+    properties: ['openFile'],
+  });
+  if (result.canceled || result.filePaths.length === 0) {
+    return null;
+  }
+  return result.filePaths[0]!;
+});
+
 ipcMain.handle('read-directory', async (_event, dirPath: string) => {
   try {
     const entries = fs.readdirSync(dirPath, { withFileTypes: true });

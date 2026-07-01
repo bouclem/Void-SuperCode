@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.0.5] - 2026-07-01
+
+- Added open file dialog for opening individual files
+- Added welcome/tutorial page shown when no files are open
+- Added activity bar on far left with stacked files icon button
+- Added toggle sidebar via activity bar button
+- Added open-file.svg and files-activity.svg icons
+- Added Welcome module for empty state management
+
 ## [0.0.4] - 2026-07-01
 
 - Added file tabs for multiple open files with switch/close support

@@ -20,6 +20,12 @@ interface Window {
   FileExplorer: {
     init(): void;
     refresh(): void;
+    openFile(): Promise<void>;
+  };
+  Welcome: {
+    init(): void;
+    show(): void;
+    hide(): void;
   };
   Tabs: {
     init(): void;
@@ -37,6 +43,7 @@ interface Window {
   };
   api: {
     openFolderDialog(): Promise<string | null>;
+    openFileDialog(): Promise<string | null>;
     readDirectory(dirPath: string): Promise<{ name: string; path: string; isDirectory: boolean }[]>;
     readFile(filePath: string): Promise<string>;
     createFile(filePath: string): Promise<boolean>;

@@ -8,12 +8,22 @@ window.FileExplorer = (() => {
   let currentFolderPath: string | null = null;
   const fileTree = document.getElementById('file-tree')!;
   const openFolderBtn = document.getElementById('open-folder-btn')!;
+  const openFileBtn = document.getElementById('open-file-btn')!;
   const newFileBtn = document.getElementById('new-file-btn')!;
 
   function init(): void {
     openFolderBtn.addEventListener('click', openFolder);
+    openFileBtn.addEventListener('click', openFile);
     newFileBtn.addEventListener('click', createNewFile);
     fileTree.addEventListener('dblclick', handleDblClick);
+  }
+
+  async function openFile(): Promise<void> {
+    const filePath = await window.api.openFileDialog();
+    if (!filePath) return;
+    const fileName = filePath.split(/[\\/]/).pop() ?? filePath;
+    const content = await window.api.readFile(filePath);
+    window.Editor.openFile(fileName, content, filePath);
   }
 
   async function openFolder(): Promise<void> {
@@ -130,5 +140,5 @@ window.FileExplorer = (() => {
     }
   }
 
-  return { init, refresh };
+  return { init, refresh, openFile };
 })();

@@ -1,6 +1,6 @@
 {
   "name": "void-supercode",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Void SuperCode - A lightweight code editor",
   "main": "dist/main/main.js",
   "scripts": {

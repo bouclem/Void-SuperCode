@@ -33,6 +33,7 @@ window.Tabs = (() => {
     tabs.push(tab);
     renderTabs();
     switchTab(filePath);
+    window.Welcome.hide();
   }
 
   function closeTab(filePath: string): void {
@@ -51,6 +52,7 @@ window.Tabs = (() => {
       } else {
         activePath = null;
         window.Editor.setModel(null);
+        window.Welcome.show();
       }
     }
     renderTabs();

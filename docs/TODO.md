@@ -1,7 +1,7 @@
 # TODO
 
 - [x] Add file explorer / sidebar
-- [ ] Add open file dialog
+- [x] Add open file dialog
 - [x] Add save functionality
 - [x] Add tabs for multiple files
 - [ ] Add terminal integration

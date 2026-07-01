@@ -21,9 +21,9 @@ npm start
 src/
   main/         Electron main process (window creation, IPC, app lifecycle)
   renderer/
-    modules/    UI logic split by feature (editor, tabs, file-explorer, app)
+    modules/    UI logic split by feature (editor, tabs, welcome, file-explorer, app)
     types/      TypeScript declaration files (globals, window interfaces)
-    icons/      SVG icons for sidebar and file tree
+    icons/      SVG icons for sidebar, activity bar, and file tree
     index.html  Main renderer HTML
     style.css   Global styles
 docs/           Project documentation
