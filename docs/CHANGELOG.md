@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.0.4] - 2026-07-01
+
+- Added file tabs for multiple open files with switch/close support
+- Added save file functionality (Ctrl+S / Cmd+S)
+- Added dirty indicator (dot) on unsaved tabs
+- Added save-file IPC handler in main process
+- Restructured renderer code into modules folder (editor, tabs, file-explorer, app)
+- Moved type declarations into separate types folder
+
 ## [0.0.3] - 2026-07-01
 
 - Added create new file via + icon button in sidebar

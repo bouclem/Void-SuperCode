@@ -19,7 +19,12 @@ npm start
 
 ```
 src/
-  main/       Electron main process (window creation, app lifecycle)
-  renderer/   UI layer (HTML/CSS + Monaco editor)
-docs/         Project documentation
+  main/         Electron main process (window creation, IPC, app lifecycle)
+  renderer/
+    modules/    UI logic split by feature (editor, tabs, file-explorer, app)
+    types/      TypeScript declaration files (globals, window interfaces)
+    icons/      SVG icons for sidebar and file tree
+    index.html  Main renderer HTML
+    style.css   Global styles
+docs/           Project documentation
 ```

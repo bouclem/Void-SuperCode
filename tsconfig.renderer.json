@@ -10,10 +10,10 @@
     "skipLibCheck": true,
     "types": [],
     "outDir": "dist/renderer/js",
-    "rootDir": "src/renderer/ts",
+    "rootDir": "src/renderer",
     "sourceMap": false,
     "incremental": true,
     "tsBuildInfoFile": "dist/renderer/tsconfig.renderer.tsbuildinfo"
   },
-  "include": ["src/renderer/ts/**/*.ts"]
+  "include": ["src/renderer/modules/**/*.ts", "src/renderer/types/**/*.ts"]
 }

@@ -72,7 +72,7 @@ window.FileExplorer = (() => {
       } else {
         label.addEventListener('click', async function () {
           const content = await window.api.readFile(item.path);
-          window.Editor.openFile(item.name, content);
+          window.Editor.openFile(item.name, content, item.path);
         });
       }
       container.appendChild(el);

@@ -6,4 +6,5 @@ contextBridge.exposeInMainWorld('api', {
     ipcRenderer.invoke('read-directory', dirPath),
   readFile: (filePath: string): Promise<string> => ipcRenderer.invoke('read-file', filePath),
   createFile: (filePath: string): Promise<boolean> => ipcRenderer.invoke('create-file', filePath),
+  saveFile: (filePath: string, content: string): Promise<boolean> => ipcRenderer.invoke('save-file', filePath, content),
 });

@@ -35,6 +35,71 @@ html, body {
   font-weight: 500;
 }
 
+#editor-area {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+#tab-bar {
+  display: flex;
+  height: 35px;
+  background: #252526;
+  border-bottom: 1px solid #333;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-app-region: no-drag;
+}
+
+#tab-bar:empty {
+  display: none;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  height: 35px;
+  padding: 0 10px;
+  background: #2d2d2d;
+  border-right: 1px solid #333;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.tab:hover {
+  background: #343434;
+}
+
+.tab-active {
+  background: #1e1e1e;
+  border-bottom: 2px solid #007acc;
+}
+
+.tab-label {
+  color: #cccccc;
+  font-size: 13px;
+}
+
+.tab-active .tab-label {
+  color: #ffffff;
+}
+
+.tab-close {
+  margin-left: 8px;
+  color: #6b6b6b;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.tab-close:hover {
+  color: #ffffff;
+  background: #3d3d3d;
+  border-radius: 3px;
+}
+
 #editor {
   flex: 1;
   width: 100%;

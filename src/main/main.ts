@@ -88,3 +88,12 @@ ipcMain.handle('create-file', async (_event, filePath: string) => {
     return false;
   }
 });
+
+ipcMain.handle('save-file', async (_event, filePath: string, content: string) => {
+  try {
+    fs.writeFileSync(filePath, content, 'utf-8');
+    return true;
+  } catch {
+    return false;
+  }
+});

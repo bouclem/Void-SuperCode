@@ -15,18 +15,8 @@ window.Editor = (() => {
     require.config({ paths: { vs: 'vs' } });
     require(['vs/editor/editor.main'], function () {
       editor = monaco.editor.create(document.getElementById('editor')!, {
-        value: [
-          '// Welcome to Void SuperCode',
-          '// Open a folder or create a new file to start coding',
-          '',
-          'function hello() {',
-          "  console.log('Hello, World!');",
-          '}',
-          '',
-          'hello();',
-          ''
-        ].join('\n'),
-        language: 'javascript',
+        value: '',
+        language: 'plaintext',
         theme: 'vs-dark',
         automaticLayout: true,
         fontSize: 14,
@@ -35,6 +25,10 @@ window.Editor = (() => {
         tabSize: 2,
       });
       window.editor = editor;
+
+      editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, function () {
+        saveCurrentFile();
+      });
     });
   }
 
@@ -51,11 +45,25 @@ window.Editor = (() => {
     return map[ext] ?? 'plaintext';
   }
 
-  function openFile(filename: string, content: string): void {
-    if (!editor) return;
-    const lang = getLanguageFromExtension(filename);
+  function createModel(filePath: string, content: string): any {
+    const fileName = filePath.split(/[\\/]/).pop() ?? filePath;
+    const lang = getLanguageFromExtension(fileName);
     const model = monaco.editor.createModel(content, lang);
+
+    model.onDidChangeContent(function () {
+      window.Tabs.markDirty(filePath);
+    });
+
+    return model;
+  }
+
+  function setModel(model: any): void {
+    if (!editor) return;
     editor.setModel(model);
+  }
+
+  function openFile(filename: string, content: string, filePath: string): void {
+    window.Tabs.openTab(filePath, filename, content);
   }
 
   function setContent(content: string): void {
@@ -63,5 +71,15 @@ window.Editor = (() => {
     editor.setValue(content);
   }
 
-  return { init, openFile, setContent };
+  async function saveCurrentFile(): Promise<void> {
+    const tab = window.Tabs.getActiveTab();
+    if (!tab) return;
+    const content = tab.model.getValue();
+    const success = await window.api.saveFile(tab.path, content);
+    if (success) {
+      window.Tabs.markClean(tab.path);
+    }
+  }
+
+  return { init, openFile, setContent, setModel, createModel, saveCurrentFile };
 })();
