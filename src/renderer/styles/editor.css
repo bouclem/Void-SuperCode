@@ -168,14 +168,18 @@
 }
 
 #run-file-btn {
-  margin-left: auto;
-  background: transparent;
-  border: none;
+  position: absolute;
+  top: 42px;
+  left: 8px;
+  z-index: 10;
+  background: rgba(37, 37, 38, 0.9);
+  border: 1px solid #333;
+  border-radius: 4px;
   color: #4ec9b0;
   font-size: 14px;
   cursor: pointer;
-  padding: 0 8px;
-  height: 35px;
+  padding: 2px 8px;
+  height: 26px;
   flex-shrink: 0;
 }
 

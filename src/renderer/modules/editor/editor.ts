@@ -23,6 +23,10 @@ window.Editor = (() => {
         minimap: { enabled: true },
         scrollBeyondLastLine: false,
         tabSize: 2,
+        folding: true,
+        foldingStrategy: 'indentation',
+        showFoldingControls: 'always',
+        foldingImportsByDefault: true,
       });
       window.editor = editor;
       if (window.Shortcuts) {

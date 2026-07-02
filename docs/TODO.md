@@ -47,7 +47,7 @@
 - [x] Add file rename/delete from file explorer context menu
 - [x] Add drag & drop file open (drop file onto editor)
 - [ ] Add multi-cursor editing support
-- [ ] Add code folding in Monaco editor
+- [x] Add code folding in Monaco editor
 - [ ] Add minimap toggle setting
 - [ ] Add word wrap toggle setting
 - [ ] Add custom themes (dark/light/high-contrast)

@@ -19,6 +19,7 @@ window.App = (() => {
     window.RunFile.init();
     window.AutoUpdate.init();
     window.Shortcuts.init();
+    window.CodeFolding.init();
     registerShortcuts();
     registerCommands();
     initActivityBar();
@@ -51,6 +52,11 @@ window.App = (() => {
       { id: 'view.toggle-git', label: 'Toggle Source Control', action: function () { window.Git.toggle(); } },
       { id: 'settings.open', label: 'Open Settings', action: function () { window.Settings.toggle(); } },
       { id: 'app.check-updates', label: 'Check for Updates', action: function () { window.AutoUpdate.checkForUpdates(true); } },
+      { id: 'editor.fold-all', label: 'Fold All', action: function () { window.CodeFolding.collapseAll(); } },
+      { id: 'editor.unfold-all', label: 'Unfold All', action: function () { window.CodeFolding.expandAll(); } },
+      { id: 'editor.toggle-fold', label: 'Toggle Fold', action: function () { window.CodeFolding.toggleCurrent(); } },
+      { id: 'editor.fold-level1', label: 'Fold Level 1', action: function () { window.CodeFolding.collapseLevel1(); } },
+      { id: 'editor.fold-level2', label: 'Fold Level 2', action: function () { window.CodeFolding.collapseLevel2(); } },
     ]);
   }
 

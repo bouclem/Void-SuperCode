@@ -125,10 +125,19 @@ interface Window {
   RunFile: {
     init(): void;
     run(): Promise<void>;
+    updateVisibility(): void;
   };
   AutoUpdate: {
     init(): void;
     checkForUpdates(showNotification: boolean): Promise<void>;
+  };
+  CodeFolding: {
+    init(): void;
+    collapseAll(): void;
+    expandAll(): void;
+    toggleCurrent(): void;
+    collapseLevel1(): void;
+    collapseLevel2(): void;
   };
   api: {
     openFolderDialog(): Promise<string | null>;

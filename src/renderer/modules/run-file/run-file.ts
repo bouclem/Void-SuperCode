@@ -68,5 +68,12 @@ window.RunFile = (() => {
     }
   }
 
-  return { init, run };
+  function updateVisibility(): void {
+    const runBtn = document.getElementById('run-file-btn');
+    if (!runBtn) return;
+    const tab = window.Tabs.getActiveTab();
+    runBtn.style.display = tab ? '' : 'none';
+  }
+
+  return { init, run, updateVisibility };
 })();

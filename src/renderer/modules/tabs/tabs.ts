@@ -34,7 +34,7 @@ window.Tabs = (() => {
     renderTabs();
     switchTab(filePath);
     window.Welcome.hide();
-    updateRunButton();
+    window.RunFile.updateVisibility();
   }
 
   function closeTab(filePath: string): void {
@@ -150,7 +150,7 @@ window.Tabs = (() => {
       }
     }
     renderTabs();
-    updateRunButton();
+    window.RunFile.updateVisibility();
   }
 
   function switchTab(filePath: string): void {
@@ -159,7 +159,7 @@ window.Tabs = (() => {
     activePath = filePath;
     window.Editor.setModel(tab.model);
     renderTabs();
-    updateRunButton();
+    window.RunFile.updateVisibility();
   }
 
   function markDirty(filePath: string): void {
@@ -208,13 +208,6 @@ window.Tabs = (() => {
       el.appendChild(label);
       el.appendChild(closeBtn);
       tabBar.appendChild(el);
-    }
-  }
-
-  function updateRunButton(): void {
-    const runBtn = document.getElementById('run-file-btn');
-    if (runBtn) {
-      runBtn.style.display = tabs.length > 0 ? '' : 'none';
     }
   }
 

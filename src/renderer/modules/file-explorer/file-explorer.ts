@@ -31,6 +31,7 @@ window.FileExplorer = (() => {
       if (lastFolder) {
         currentFolderPath = lastFolder;
         await refresh();
+        window.Git.setFolder(lastFolder);
         window.App.showSidebar();
       }
     } catch {
@@ -92,6 +93,7 @@ window.FileExplorer = (() => {
       if (item.isDirectory) {
         let expanded = false;
         const childContainer = document.createElement('div');
+        childContainer.className = 'tree-child-container';
         label.addEventListener('click', async function () {
           if (!expanded) {
             expanded = true;
@@ -250,12 +252,44 @@ window.FileExplorer = (() => {
     }
   }
 
+  async function reloadFolderChildren(folderPath: string): Promise<void> {
+    if (!currentFolderPath) return;
+
+    if (folderPath === currentFolderPath || folderPath === currentFolderPath.replace(/[\\/]/g, '/')) {
+      await refresh();
+      return;
+    }
+
+    const folderEl = fileTree.querySelector('.tree-folder[data-path="' + folderPath + '"]') as HTMLElement | null;
+    if (!folderEl) {
+      await refresh();
+      return;
+    }
+
+    let depth = 0;
+    let parent: HTMLElement | null = folderEl.parentElement;
+    while (parent && parent.id !== 'tree-container') {
+      depth++;
+      parent = parent.parentElement;
+    }
+
+    let childContainer = folderEl.nextElementSibling as HTMLElement | null;
+    if (!childContainer || !childContainer.classList.contains('tree-child-container')) {
+      childContainer = document.createElement('div');
+      childContainer.className = 'tree-child-container';
+      folderEl.parentElement!.insertBefore(childContainer, folderEl.nextSibling);
+    }
+
+    await loadDirectory(folderPath, childContainer, depth + 1);
+  }
+
   async function doCreateFile(filePath: string): Promise<void> {
     console.log('[file-explorer] doCreateFile called, filePath:', filePath);
     const success = await window.api.createFile(filePath);
     console.log('[file-explorer] createFile result:', success);
     if (success) {
-      await refresh();
+      const parentPath = filePath.split(/[\\/]/).slice(0, -1).join('/');
+      await reloadFolderChildren(parentPath);
     } else {
       window.api.logMessage('ERROR', 'file-explorer', 'Failed to create file: ' + filePath);
     }
@@ -264,7 +298,8 @@ window.FileExplorer = (() => {
   async function doCreateFolder(folderPath: string): Promise<void> {
     const success = await window.api.createFolder(folderPath);
     if (success) {
-      await refresh();
+      const parentPath = folderPath.split(/[\\/]/).slice(0, -1).join('/');
+      await reloadFolderChildren(parentPath);
     } else {
       window.api.logMessage('ERROR', 'file-explorer', 'Failed to create folder: ' + folderPath);
     }
@@ -403,10 +438,12 @@ window.FileExplorer = (() => {
     const success = await window.api.renameFile(oldPath, newPath);
     if (success) {
       refreshActiveTab(oldPath, newPath);
-      await refresh();
+      const parentPath = oldPath.split(/[\\/]/).slice(0, -1).join('/');
+      await reloadFolderChildren(parentPath);
     } else {
       window.api.logMessage('ERROR', 'file-explorer', 'Failed to rename: ' + oldPath + ' -> ' + newPath);
-      await refresh();
+      const parentPath = oldPath.split(/[\\/]/).slice(0, -1).join('/');
+      await reloadFolderChildren(parentPath);
     }
   }
 
@@ -465,7 +502,8 @@ window.FileExplorer = (() => {
     if (success) {
       const tab = window.Tabs.getTab(targetPath);
       if (tab) window.Tabs.closeTab(targetPath);
-      await refresh();
+      const parentPath = targetPath.split(/[\\/]/).slice(0, -1).join('/');
+      await reloadFolderChildren(parentPath);
     } else {
       window.api.logMessage('ERROR', 'file-explorer', 'Failed to delete: ' + targetPath);
     }

@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.1.6] - 2026-07-02
+
+- Fixed: run button now shows as a floating button at top-left of editor area (was inside tab-bar and got destroyed by renderTabs innerHTML reset)
+- Fixed: newly created files/folders now appear immediately in the file explorer without reopening the IDE (reloadFolderChildren reloads only the parent folder instead of full tree refresh)
+- Fixed: git "Initialize Git Repository" button now shows on startup for non-repo folders (loadLastFolder was missing Git.setFolder call)
+- Added: code folding in Monaco editor — folding enabled with indentation strategy, always-visible folding controls, command palette entries for Fold All, Unfold All, Toggle Fold, Fold Level 1, Fold Level 2
+- Added: src/renderer/modules/code-folding/code-folding.ts — code folding module with collapse/expand commands
+- Changed: version bumped to 0.1.6
+
 ## [0.1.5] - 2026-07-02
 
 - Fixed: auto-update still reporting "No matching release asset found for platform: win32" — root cause was tags API with lexicographic string comparison picking wrong tag (v0.1.3 > 0.1.4 because 'v' > '0' in ASCII); switched to releases API with proper semver compareVersions()
