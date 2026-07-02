@@ -3,6 +3,7 @@
   flex-direction: column;
   flex: 1;
   overflow: hidden;
+  position: relative;
 }
 
 #editor-area.drag-over {
@@ -155,6 +156,29 @@
 
 .welcome-item strong {
   color: #ddd;
+}
+
+#html-preview {
+  position: absolute;
+  top: 35px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  z-index: 5;
+}
+
+#markdown-preview {
+  position: absolute;
+  top: 35px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+  background: #1e1e1e;
+  color: #ddd;
+  padding: 20px;
+  z-index: 5;
 }
 
 .welcome-item kbd {

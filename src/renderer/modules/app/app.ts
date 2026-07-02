@@ -20,6 +20,7 @@ window.App = (() => {
     window.AutoUpdate.init();
     window.Shortcuts.init();
     window.CodeFolding.init();
+    window.HtmlPreview.init();
     registerShortcuts();
     registerCommands();
     initActivityBar();

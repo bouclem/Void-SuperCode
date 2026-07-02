@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.7] - 2026-07-02
+
+- Fixed: run button still not showing — root cause was #editor-area missing position:relative, so the absolutely-positioned button anchored to wrong ancestor
+- Fixed: language file icons (JS, TS, Julia) not showing in file explorer — root cause was copyfiles -u 1 creating doubled nested path (dist/renderer/lang/javascript/icons/lang/javascript/icons/) instead of correct dist/renderer/lang/javascript/icons/; changed to -u 4
+- Added: HTML live preview — open .html/.htm file and click run button to toggle between editor and rendered iframe preview
+- Added: src/renderer/modules/html-preview/html-preview.ts — HTML preview module with sandboxed iframe
+- Changed: version bumped to 0.1.7
+
 ## [0.1.6] - 2026-07-02
 
 - Fixed: run button now shows as a floating button at top-left of editor area (was inside tab-bar and got destroyed by renderTabs innerHTML reset)

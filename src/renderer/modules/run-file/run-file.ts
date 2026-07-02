@@ -30,6 +30,11 @@ window.RunFile = (() => {
       return;
     }
 
+    if (ext === 'html' || ext === 'htm') {
+      toggleHtmlPreview(tab);
+      return;
+    }
+
     if (ext === 'js' || ext === 'mjs' || ext === 'ts' || ext === 'tsx' || ext === 'jsx') {
       const content = tab.model.getValue();
       switchToDebugTab();
@@ -65,6 +70,19 @@ window.RunFile = (() => {
       const editor = document.getElementById('editor');
       if (editor) editor.style.display = 'none';
       window.MarkdownPreview.show(content);
+    }
+  }
+
+  function toggleHtmlPreview(tab: Tab): void {
+    if (window.HtmlPreview.isOpen()) {
+      window.HtmlPreview.hide();
+      const editor = document.getElementById('editor');
+      if (editor) editor.style.display = '';
+    } else {
+      const content = tab.model.getValue();
+      const editor = document.getElementById('editor');
+      if (editor) editor.style.display = 'none';
+      window.HtmlPreview.show(content);
     }
   }
 

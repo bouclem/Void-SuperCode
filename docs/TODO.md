@@ -56,7 +56,7 @@
 - [ ] Add Rust language support (config + icons)
 - [ ] Add Go language support (config + icons)
 - [ ] Add Java language support (config + icons)
-- [ ] Add HTML/CSS live preview for web files
+- [x] Add HTML/CSS live preview for web files
 - [ ] Add integrated debugger (attach to Node.js process)
 - [ ] Add ESLint integration for JS/TS files
 - [ ] Add Prettier formatting on save

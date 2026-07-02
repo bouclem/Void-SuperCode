@@ -139,6 +139,12 @@ interface Window {
     collapseLevel1(): void;
     collapseLevel2(): void;
   };
+  HtmlPreview: {
+    init(): void;
+    show(content: string): void;
+    hide(): void;
+    isOpen(): boolean;
+  };
   api: {
     openFolderDialog(): Promise<string | null>;
     openFileDialog(): Promise<string | null>;

@@ -2,7 +2,7 @@
 
 A lightweight desktop code editor built with Electron, TypeScript, and Monaco Editor.
 
-![Version](https://img.shields.io/badge/version-0.1.6-blue) ![License](https://img.shields.io/badge/license-MIT-green) ![Platform](https://img.shields.io/badge/platform-Windows-blue)
+![Version](https://img.shields.io/badge/version-0.1.7-blue) ![License](https://img.shields.io/badge/license-MIT-green) ![Platform](https://img.shields.io/badge/platform-Windows-blue)
 
 ## Features
 
@@ -37,6 +37,7 @@ A lightweight desktop code editor built with Electron, TypeScript, and Monaco Ed
 - Find across files (Ctrl+Shift+F) — content search with grouped results
 - Keyboard shortcuts settings — rebindable, persisted in config
 - Code folding in Monaco editor — indentation-based folding with command palette actions
+- HTML live preview — open .html files and click run button to toggle rendered iframe preview
 
 ## Quick Start (For Users)
 
@@ -192,6 +193,7 @@ src/
       shortcuts/        Rebindable keyboard shortcuts
       settings-screen/  Settings screen UI
       code-folding/     Code folding commands (fold/unfold all, toggle, levels)
+      html-preview/     HTML live preview via sandboxed iframe
     types/        TypeScript declaration files (globals, window interfaces)
     icons/        SVG icons for sidebar, activity bar, and file tree
     index.html    Main renderer HTML
