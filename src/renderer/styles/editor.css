@@ -5,6 +5,12 @@
   overflow: hidden;
 }
 
+#editor-area.drag-over {
+  outline: 2px dashed #569cd6;
+  outline-offset: -4px;
+  background: rgba(86, 156, 214, 0.08);
+}
+
 #tab-bar {
   display: flex;
   height: 35px;

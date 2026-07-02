@@ -308,7 +308,7 @@ export function checkForUpdates(currentVersion: string, isInsider: boolean): Pro
   return new Promise(function (resolve) {
     const options: https.RequestOptions = {
       hostname: 'api.github.com',
-      path: '/repos/bouclem/Void-SuperCode/tags',
+      path: '/repos/bouclem/Void-SuperCode/releases?per_page=10',
       method: 'GET',
       headers: {
         'User-Agent': 'Void-SuperCode',
@@ -320,19 +320,30 @@ export function checkForUpdates(currentVersion: string, isInsider: boolean): Pro
       res.on('data', function (chunk) { data += chunk; });
       res.on('end', function () {
         try {
-          const tags = JSON.parse(data) as Array<{ name: string }>;
-          if (!tags || tags.length === 0) {
+          const releases = JSON.parse(data) as Array<{ tag_name: string; html_url: string }>;
+          if (!releases || releases.length === 0) {
             resolve({ updateAvailable: false, latestVersion: currentVersion, downloadUrl: '', currentVersion });
             return;
           }
 
           let latestTag: string | null = null;
-          for (const tag of tags) {
-            const tagName = tag.name;
-            if (isInsider && tagName.indexOf('-insider') !== -1) {
-              if (!latestTag || tagName > latestTag) latestTag = tagName;
-            } else if (!isInsider && tagName.indexOf('-insider') === -1) {
-              if (!latestTag || tagName > latestTag) latestTag = tagName;
+          let latestHtmlUrl = '';
+          for (const release of releases) {
+            const tagName = release.tag_name;
+            const isInsiderRelease = tagName.indexOf('-insider') !== -1;
+            if (isInsider && !isInsiderRelease) continue;
+            if (!isInsider && isInsiderRelease) continue;
+
+            const normalizedTag = tagName.replace(/^v/, '');
+            if (!latestTag) {
+              latestTag = tagName;
+              latestHtmlUrl = release.html_url;
+            } else {
+              const prev = latestTag.replace(/^v/, '');
+              if (compareVersions(normalizedTag, prev) > 0) {
+                latestTag = tagName;
+                latestHtmlUrl = release.html_url;
+              }
             }
           }
 
@@ -347,7 +358,7 @@ export function checkForUpdates(currentVersion: string, isInsider: boolean): Pro
           resolve({
             updateAvailable,
             latestVersion: latestTag,
-            downloadUrl: 'https://github.com/bouclem/Void-SuperCode/releases/tag/' + latestTag,
+            downloadUrl: latestHtmlUrl || ('https://github.com/bouclem/Void-SuperCode/releases/tag/' + latestTag),
             currentVersion,
           });
         } catch {

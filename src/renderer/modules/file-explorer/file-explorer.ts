@@ -20,6 +20,7 @@ window.FileExplorer = (() => {
     fileTree.addEventListener('dblclick', handleDblClick);
     fileTree.addEventListener('contextmenu', handleContextMenu);
     document.addEventListener('click', hideContextMenu);
+    initDragAndDrop();
     loadLastFolder();
   }
 
@@ -129,9 +130,8 @@ window.FileExplorer = (() => {
     if (!treeEl) return;
     const isDir = treeEl.dataset.isDirectory === 'true';
     const filePath = treeEl.dataset.path;
-    if (isDir) {
-      const label = treeEl.querySelector('.tree-label') as HTMLElement | null;
-      if (label) label.click();
+    if (isDir && filePath) {
+      showInlineInput(filePath, 'file');
     } else if (filePath) {
       openFileByPath(filePath, treeEl.querySelector('.tree-label')?.textContent ?? filePath);
     }
@@ -469,6 +469,40 @@ window.FileExplorer = (() => {
     } else {
       window.api.logMessage('ERROR', 'file-explorer', 'Failed to delete: ' + targetPath);
     }
+  }
+
+  function initDragAndDrop(): void {
+    const editorArea = document.getElementById('editor-area');
+    if (!editorArea) return;
+
+    editorArea.addEventListener('dragover', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      editorArea.classList.add('drag-over');
+    });
+
+    editorArea.addEventListener('dragleave', function (e) {
+      if (e.target === editorArea) {
+        editorArea.classList.remove('drag-over');
+      }
+    });
+
+    editorArea.addEventListener('drop', async function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      editorArea.classList.remove('drag-over');
+
+      const files = e.dataTransfer?.files;
+      if (!files || files.length === 0) return;
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        if (!file) continue;
+        const filePath = (file as any).path as string | undefined;
+        if (!filePath) continue;
+        await openFileByPath(filePath, file.name);
+      }
+    });
   }
 
   return { init, refresh, openFile, getCurrentFolder, refreshActiveTab };

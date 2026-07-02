@@ -45,7 +45,7 @@
 - [x] Add find across files (Ctrl+Shift+F)
 - [x] Add keyboard shortcuts settings (rebindable, persisted in config)
 - [x] Add file rename/delete from file explorer context menu
-- [ ] Add drag & drop file open (drop file onto editor)
+- [x] Add drag & drop file open (drop file onto editor)
 - [ ] Add multi-cursor editing support
 - [ ] Add code folding in Monaco editor
 - [ ] Add minimap toggle setting

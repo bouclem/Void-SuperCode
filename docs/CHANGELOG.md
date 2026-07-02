@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.5] - 2026-07-02
+
+- Fixed: auto-update still reporting "No matching release asset found for platform: win32" — root cause was tags API with lexicographic string comparison picking wrong tag (v0.1.3 > 0.1.4 because 'v' > '0' in ASCII); switched to releases API with proper semver compareVersions()
+- Fixed: double-click on folder now creates a new file inside it instead of expanding/collapsing
+- Added: drag & drop file open — drop files from OS explorer onto the editor area to open them
+- Added: .drag-over CSS style for visual feedback when dragging files over editor
+- Changed: version bumped to 0.1.5
+
 ## [0.1.4] - 2026-07-01
 
 - Fixed: auto-update "No matching release asset found for platform: win32" — regex now matches both .zip and .exe assets, prefers .zip for in-place extraction, falls back to .exe NSIS installer
