@@ -145,6 +145,12 @@ interface Window {
     hide(): void;
     isOpen(): boolean;
   };
+  Extensions: {
+    init(): void;
+  };
+  Autocompletion: {
+    init(): void;
+  };
   api: {
     openFolderDialog(): Promise<string | null>;
     openFileDialog(): Promise<string | null>;

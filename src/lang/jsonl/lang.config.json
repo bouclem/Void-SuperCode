@@ -1,0 +1,10 @@
+{
+  "language": "jsonl",
+  "extensions": [".jsonl"],
+  "monacoLanguage": "jsonl",
+  "bracketPairColorization": true,
+  "autoClosingBrackets": "always",
+  "icons": {
+    "jsonl": "icons/jsonl-file.svg"
+  }
+}

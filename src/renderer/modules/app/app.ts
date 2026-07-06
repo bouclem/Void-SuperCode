@@ -21,6 +21,7 @@ window.App = (() => {
     window.Shortcuts.init();
     window.CodeFolding.init();
     window.HtmlPreview.init();
+    window.Extensions.init();
     registerShortcuts();
     registerCommands();
     initActivityBar();

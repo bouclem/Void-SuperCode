@@ -123,6 +123,8 @@ window.FileExplorer = (() => {
     if (ext === 'ts') return 'lang/typescript/icons/ts-file.svg';
     if (ext === 'tsx') return 'lang/typescript/icons/tsx-file.svg';
     if (ext === 'jl') return 'lang/julia/icons/julia-file.svg';
+    if (ext === 'json') return 'lang/json/icons/json-file.svg';
+    if (ext === 'jsonl') return 'lang/jsonl/icons/jsonl-file.svg';
     return 'icons/file.svg';
   }
 

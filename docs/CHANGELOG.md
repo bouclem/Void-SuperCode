@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.2.0] - 2026-07-06
+
+- Added: extension support skeleton — src/extensions/ folder and src/renderer/modules/extensions/extensions.ts module with TODO stubs for future extension loading
+- Added: JSON language support — src/lang/json/ with lang.config.json and json-file.svg icon
+- Added: JSONL language support — src/lang/jsonl/ with lang.config.json and jsonl-file.svg icon, custom Monaco language registration
+- Added: tab completion (autoclosing) for JS, JSON, and JSONL — autoclosing pairs for quotes "", parentheses (), brackets [], curly braces {}, backticks `` via Monaco language configuration
+- Added: src/AI/autocompletion/autocompletion.ts — dedicated autocompletion module (future home for AI code completion, snippets, parameter hints)
+- Added: tsconfig.ai.json — separate TypeScript config for src/AI/ modules compiled to dist/renderer/js/AI/
+- Changed: version bumped to 0.2.0
+
 ## [0.1.7] - 2026-07-02
 
 - Fixed: run button still not showing — root cause was #editor-area missing position:relative, so the absolutely-positioned button anchored to wrong ancestor

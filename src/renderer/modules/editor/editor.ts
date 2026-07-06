@@ -27,7 +27,10 @@ window.Editor = (() => {
         foldingStrategy: 'indentation',
         showFoldingControls: 'always',
         foldingImportsByDefault: true,
+        autoClosingBrackets: 'always',
+        autoClosingQuotes: 'always',
       });
+      window.Autocompletion.init();
       window.editor = editor;
       if (window.Shortcuts) {
         window.Shortcuts.applyAllMonacoShortcuts();
@@ -40,7 +43,7 @@ window.Editor = (() => {
     const map: Record<string, string> = {
       js: 'javascript', ts: 'typescript', tsx: 'typescript',
       jsx: 'javascript', mjs: 'javascript',
-      html: 'html', css: 'css', json: 'json',
+      html: 'html', css: 'css', json: 'json', jsonl: 'jsonl',
       md: 'markdown', py: 'python', java: 'java',
       c: 'c', cpp: 'cpp', rs: 'rust', go: 'go',
       xml: 'xml', yaml: 'yaml', yml: 'yaml',

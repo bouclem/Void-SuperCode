@@ -1,0 +1,10 @@
+{
+  "language": "json",
+  "extensions": [".json"],
+  "monacoLanguage": "json",
+  "bracketPairColorization": true,
+  "autoClosingBrackets": "always",
+  "icons": {
+    "json": "icons/json-file.svg"
+  }
+}
