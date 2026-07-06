@@ -407,21 +407,81 @@ window.SettingsScreen = (() => {
     autocompletionRow.appendChild(autocompletionCheckbox);
     section.appendChild(autocompletionRow);
 
-    body.appendChild(section);
+    const alwaysAcceptRow = document.createElement('div');
+    alwaysAcceptRow.className = 'settings-row';
+    const alwaysAcceptLabel = document.createElement('label');
+    alwaysAcceptLabel.textContent = 'Always accept code added';
+    const alwaysAcceptCheckbox = document.createElement('input');
+    alwaysAcceptCheckbox.type = 'checkbox';
+    alwaysAcceptCheckbox.id = 'setting-ai-always-accept';
+    alwaysAcceptRow.appendChild(alwaysAcceptLabel);
+    alwaysAcceptRow.appendChild(alwaysAcceptCheckbox);
+    section.appendChild(alwaysAcceptRow);
 
-    loadAISettings(autocompletionCheckbox);
+    const ollamaSection = document.createElement('div');
+    ollamaSection.className = 'settings-section';
+    const ollamaH3 = document.createElement('h3');
+    ollamaH3.textContent = 'Ollama';
+    ollamaSection.appendChild(ollamaH3);
+
+    const ollamaUrlRow = document.createElement('div');
+    ollamaUrlRow.className = 'settings-row';
+    const ollamaUrlLabel = document.createElement('label');
+    ollamaUrlLabel.textContent = 'Ollama URL';
+    const ollamaUrlInput = document.createElement('input');
+    ollamaUrlInput.type = 'text';
+    ollamaUrlInput.id = 'setting-ai-ollama-url';
+    ollamaUrlInput.placeholder = 'http://localhost:11434';
+    ollamaUrlRow.appendChild(ollamaUrlLabel);
+    ollamaUrlRow.appendChild(ollamaUrlInput);
+    ollamaSection.appendChild(ollamaUrlRow);
+
+    const ollamaModelRow = document.createElement('div');
+    ollamaModelRow.className = 'settings-row';
+    const ollamaModelLabel = document.createElement('label');
+    ollamaModelLabel.textContent = 'Ollama Model';
+    const ollamaModelInput = document.createElement('input');
+    ollamaModelInput.type = 'text';
+    ollamaModelInput.id = 'setting-ai-ollama-model';
+    ollamaModelInput.placeholder = 'llama3';
+    ollamaModelRow.appendChild(ollamaModelLabel);
+    ollamaModelRow.appendChild(ollamaModelInput);
+    ollamaSection.appendChild(ollamaModelRow);
+
+    body.appendChild(section);
+    body.appendChild(ollamaSection);
+
+    loadAISettings(autocompletionCheckbox, alwaysAcceptCheckbox, ollamaUrlInput, ollamaModelInput);
 
     autocompletionCheckbox.addEventListener('change', function () {
       window.api.setConfig({ aiAutocompletion: autocompletionCheckbox.checked });
       window.Autocompletion.setEnabled(autocompletionCheckbox.checked);
     });
+
+    alwaysAcceptCheckbox.addEventListener('change', function () {
+      window.api.setConfig({ aiAlwaysAccept: alwaysAcceptCheckbox.checked });
+      if (window.AIChat) window.AIChat.setAlwaysAccept(alwaysAcceptCheckbox.checked);
+    });
+
+    ollamaUrlInput.addEventListener('change', function () {
+      window.api.setConfig({ aiOllamaUrl: ollamaUrlInput.value });
+      if (window.Ollama) window.Ollama.setUrl(ollamaUrlInput.value);
+    });
+
+    ollamaModelInput.addEventListener('change', function () {
+      window.api.setConfig({ aiOllamaModel: ollamaModelInput.value });
+      if (window.Ollama) window.Ollama.setModel(ollamaModelInput.value);
+    });
   }
 
-  async function loadAISettings(autocompletionCheckbox: HTMLInputElement): Promise<void> {
+  async function loadAISettings(autocompletionCheckbox: HTMLInputElement, alwaysAcceptCheckbox: HTMLInputElement, ollamaUrlInput: HTMLInputElement, ollamaModelInput: HTMLInputElement): Promise<void> {
     try {
       const config = await window.api.getConfig();
       const cfg = config as Record<string, unknown>;
       autocompletionCheckbox.checked = cfg.aiAutocompletion !== false;
+      alwaysAcceptCheckbox.checked = cfg.aiAlwaysAccept === true;
+      ollamaUrlInput.value = (cfg.aiOllamaUrl as string) || '';
+      ollamaModelInput.value = (cfg.aiOllamaModel as string) || '';
     } catch {
       // Non-critical
     }

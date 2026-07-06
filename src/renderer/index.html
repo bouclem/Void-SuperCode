@@ -12,6 +12,7 @@
     <div id="titlebar">
       <span id="title">Void SuperCode</span>
       <span id="version-badge" class="badge-insider">Insider</span>
+      <button id="ai-chat-btn" title="AI Chat">AI Chat</button>
     </div>
     <div id="main">
       <div id="activity-bar">
@@ -78,7 +79,20 @@
         <div id="tab-bar">
         </div>
         <button id="run-file-btn" title="Run File" style="display:none;">&#9654;</button>
+        <div id="editor-wrapper">
         <div id="editor"></div>
+        <div id="ai-chat-panel">
+          <div id="ai-chat-header">
+            <span>AI Chat</span>
+            <button id="ai-chat-close" title="Close">&times;</button>
+          </div>
+          <div id="ai-chat-messages"></div>
+          <div id="ai-chat-input-area">
+            <textarea id="ai-chat-input" placeholder="Ask AI... (Enter to send, Shift+Enter for newline)"></textarea>
+            <button id="ai-chat-send">Send</button>
+          </div>
+        </div>
+        </div>
         <div id="welcome-page">
           <div class="welcome-content">
             <h1>Void SuperCode</h1>
@@ -135,6 +149,7 @@
   <script src="vs/loader.js"></script>
   <script src="js/AI/autoclosing/autoclosing.js"></script>
   <script src="js/AI/autocompletion/autocompletion.js"></script>
+  <script src="js/AI/api/ollama.js"></script>
   <script src="js/AI/api/api.js"></script>
   <script src="js/AI/tools/tools.js"></script>
   <script src="js/modules/editor/editor.js"></script>
@@ -156,6 +171,7 @@
   <script src="js/modules/settings-screen/settings-screen.js"></script>
   <script src="js/modules/code-folding/code-folding.js"></script>
   <script src="js/modules/html-preview/html-preview.js"></script>
+  <script src="js/modules/ai-chat/ai-chat.js"></script>
   <script src="js/modules/extensions/extensions.js"></script>
   <script src="js/modules/app/app.js"></script>
 </body>

@@ -158,11 +158,39 @@ interface Window {
   };
   AIApi: {
     init(): void;
+    setProvider(name: string): void;
+    getProvider(): string;
+    chat(messages: { role: string; content: string }[]): Promise<string>;
+    complete(prompt: string): Promise<string>;
+  };
+  Ollama: {
+    setUrl(url: string): void;
+    setModel(name: string): void;
+    getUrl(): string;
+    getModel(): string;
+    chat(messages: { role: string; content: string }[]): Promise<string>;
+    complete(prompt: string): Promise<string>;
+    listModels(): Promise<string[]>;
   };
   AITools: {
     fileWrite(filePath: string, content: string): Promise<boolean>;
-    fileModify(filePath: string, oldText: string, newText: string): Promise<boolean>;
+    fileEdit(filePath: string, oldText: string, newText: string): Promise<boolean>;
+    fileMultiEdit(filePath: string, edits: { oldText: string; newText: string }[]): Promise<boolean>;
+    fileDelete(filePath: string): Promise<boolean>;
+    fileRead(filePath: string): Promise<string>;
+    fileRename(oldPath: string, newPath: string): Promise<boolean>;
+    fileSearch(dir: string, pattern: string): Promise<{ name: string; path: string; relativePath: string }[]>;
+    projectTree(dirPath: string): Promise<{ name: string; path: string; isDirectory: boolean; children?: unknown[] }[]>;
     folderWrite(folderPath: string): Promise<boolean>;
+  };
+  AIChat: {
+    init(): void;
+    show(): void;
+    hide(): void;
+    toggle(): void;
+    isOpen(): boolean;
+    setAlwaysAccept(value: boolean): void;
+    clear(): void;
   };
   api: {
     openFolderDialog(): Promise<string | null>;

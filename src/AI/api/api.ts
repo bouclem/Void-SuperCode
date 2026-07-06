@@ -1,13 +1,43 @@
 window.AIApi = (() => {
+  let provider = 'ollama';
+
   function init(): void {
-    //TODO: initialize AI API connection (OpenAI, Anthropic, local models, etc.)
-    //TODO: load API key from config
-    //TODO: set up request handling for AI completions, chat, etc.
+    loadConfig();
   }
 
-  //TODO: async function chat(messages: unknown[]): Promise<string>
-  //TODO: async function complete(prompt: string): Promise<string>
-  //TODO: async function embed(text: string): Promise<number[]>
+  async function loadConfig(): Promise<void> {
+    try {
+      const config = await window.api.getConfig();
+      const cfg = config as Record<string, unknown>;
+      if (cfg.aiProvider) provider = cfg.aiProvider as string;
+      if (cfg.aiOllamaUrl && window.Ollama) window.Ollama.setUrl(cfg.aiOllamaUrl as string);
+      if (cfg.aiOllamaModel && window.Ollama) window.Ollama.setModel(cfg.aiOllamaModel as string);
+    } catch {
+      // Non-critical
+    }
+  }
 
-  return { init };
+  function setProvider(name: string): void {
+    provider = name;
+  }
+
+  function getProvider(): string {
+    return provider;
+  }
+
+  async function chat(messages: { role: string; content: string }[]): Promise<string> {
+    if (provider === 'ollama' && window.Ollama) {
+      return await window.Ollama.chat(messages);
+    }
+    return 'Error: No AI provider configured';
+  }
+
+  async function complete(prompt: string): Promise<string> {
+    if (provider === 'ollama' && window.Ollama) {
+      return await window.Ollama.complete(prompt);
+    }
+    return 'Error: No AI provider configured';
+  }
+
+  return { init, setProvider, getProvider, chat, complete };
 })();

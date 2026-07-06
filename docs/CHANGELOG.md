@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.2.3] - 2026-07-06
+
+- Added: AI chat button in top right corner of titlebar — opens AI chat panel (open by default)
+- Added: src/renderer/modules/ai-chat/ai-chat.ts — AI chat panel with message history, Ollama integration, diff view with red (code removed) and green (code added), accept/reject buttons for code changes
+- Added: src/renderer/styles/ai-chat.css — styles for AI chat panel, diff view, accept/reject buttons, input area
+- Added: src/AI/api/ollama.ts — Ollama API module with chat(), complete(), listModels(), configurable URL and model
+- Added: Ollama support in AIApi — api.ts now loads config, delegates chat/complete to Ollama
+- Added: New AI tools — file.multi.edit, file.delete, file.read, file.rename, file.search, project.tree (recursive directory tree without reading file contents)
+- Added: RED/GREEN diff acceptance system — AI code changes show red (removed) and green (added) with Accept/Reject buttons
+- Added: Command confirmation — any AI command and any deletion requires explicit user acceptance before execution
+- Added: New AI setting "Always accept code added" — when enabled, code additions are auto-accepted without manual confirmation
+- Added: Ollama URL and Ollama Model settings in AI settings section
+- Added: Code minimap (already enabled in Monaco editor config)
+- Changed: Renamed file.modify → file.edit in AI tools
+- Changed: Run button moved from top-left to top-right of editor area
+- Changed: AI activity bar button now opens AI chat panel instead of settings
+- Changed: AIApi interface expanded with setProvider, getProvider, chat, complete methods
+- Changed: voidscode.ts config now includes aiAlwaysAccept, aiProvider, aiOllamaUrl, aiOllamaModel
+- Changed: version bumped to 0.2.3
+
 ## [0.2.2] - 2026-07-06
 
 - Added: Python language support — src/lang/python/ with lang.config.json and py-file.svg icon

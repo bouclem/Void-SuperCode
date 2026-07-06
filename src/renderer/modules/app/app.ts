@@ -22,7 +22,10 @@ window.App = (() => {
     window.CodeFolding.init();
     window.HtmlPreview.init();
     window.Extensions.init();
+    window.AIChat.init();
+    window.AIApi.init();
     initActivityBarAI();
+    initAIChatButton();
     registerShortcuts();
     registerCommands();
     initActivityBar();
@@ -82,7 +85,16 @@ window.App = (() => {
     const aiBtn = document.getElementById('activity-ai-btn');
     if (aiBtn) {
       aiBtn.addEventListener('click', function () {
-        window.Settings.toggle();
+        window.AIChat.toggle();
+      });
+    }
+  }
+
+  function initAIChatButton(): void {
+    const chatBtn = document.getElementById('ai-chat-btn');
+    if (chatBtn) {
+      chatBtn.addEventListener('click', function () {
+        window.AIChat.toggle();
       });
     }
   }

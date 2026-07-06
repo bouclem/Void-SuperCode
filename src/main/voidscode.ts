@@ -9,6 +9,11 @@ interface VoidCodeConfig {
   autoUpdate: boolean;
   releaseChannel: string;
   shortcuts?: Record<string, string>;
+  aiAutocompletion?: boolean;
+  aiAlwaysAccept?: boolean;
+  aiProvider?: string;
+  aiOllamaUrl?: string;
+  aiOllamaModel?: string;
 }
 
 const defaultConfig: VoidCodeConfig = {
@@ -17,6 +22,8 @@ const defaultConfig: VoidCodeConfig = {
   logLevel: 'normal',
   autoUpdate: true,
   releaseChannel: 'insider',
+  aiAlwaysAccept: false,
+  aiProvider: 'ollama',
 };
 
 function getVoidCodeDir(): string {
