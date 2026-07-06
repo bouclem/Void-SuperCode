@@ -156,6 +156,14 @@ interface Window {
     init(): void;
     setEnabled(value: boolean): void;
   };
+  AIApi: {
+    init(): void;
+  };
+  AITools: {
+    fileWrite(filePath: string, content: string): Promise<boolean>;
+    fileModify(filePath: string, oldText: string, newText: string): Promise<boolean>;
+    folderWrite(folderPath: string): Promise<boolean>;
+  };
   api: {
     openFolderDialog(): Promise<string | null>;
     openFileDialog(): Promise<string | null>;

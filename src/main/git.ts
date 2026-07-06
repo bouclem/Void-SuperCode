@@ -28,7 +28,18 @@ function runGit(cwd: string, args: string[]): Promise<string> {
 
 export async function getGitStatus(cwd: string): Promise<GitStatus> {
   try {
-    const branch = await runGit(cwd, ['rev-parse', '--abbrev-ref', 'HEAD']);
+    const inWorkTree = await runGit(cwd, ['rev-parse', '--is-inside-work-tree']);
+    if (inWorkTree.trim() !== 'true') {
+      return { branch: null, files: [], isRepo: false };
+    }
+
+    let branch: string = 'main';
+    try {
+      branch = await runGit(cwd, ['rev-parse', '--abbrev-ref', 'HEAD']);
+    } catch {
+      // Empty repo with no commits yet — default to 'main'
+    }
+
     const porcelain = await runGit(cwd, ['status', '--porcelain']);
 
     const files: GitFile[] = [];

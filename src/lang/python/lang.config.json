@@ -1,0 +1,10 @@
+{
+  "language": "python",
+  "extensions": [".py", ".pyw"],
+  "monacoLanguage": "python",
+  "bracketPairColorization": true,
+  "autoClosingBrackets": "always",
+  "icons": {
+    "py": "icons/py-file.svg"
+  }
+}

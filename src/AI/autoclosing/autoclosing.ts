@@ -2,6 +2,8 @@ window.Autoclosing = (() => {
   function init(): void {
     if (typeof monaco === 'undefined') return;
 
+    monaco.languages.register({ id: 'jsonl' });
+
     var commonPairs = [
       { open: '{', close: '}' },
       { open: '[', close: ']' },
@@ -81,7 +83,33 @@ window.Autoclosing = (() => {
       ],
     });
 
-    //TODO: add language-specific autoclosing rules for XML, YAML, Python, etc.
+    //TODO: add language-specific autoclosing rules for XML, YAML, etc.
+
+    monaco.languages.setLanguageConfiguration('python', {
+      comments: { lineComment: '#', blockComment: ['"""', '"""'] },
+      brackets: [['{', '}'], ['[', ']'], ['(', ')']],
+      autoClosingPairs: [
+        { open: '{', close: '}' },
+        { open: '[', close: ']' },
+        { open: '(', close: ')' },
+        { open: '"', close: '"' },
+        { open: "'", close: "'" },
+      ],
+      surroundingPairs: [
+        { open: '{', close: '}' },
+        { open: '[', close: ']' },
+        { open: '(', close: ')' },
+        { open: '"', close: '"' },
+        { open: "'", close: "'" },
+      ],
+    });
+
+    monaco.languages.setLanguageConfiguration('cpp', {
+      comments: { lineComment: '//', blockComment: ['/*', '*/'] },
+      brackets: [['{', '}'], ['[', ']'], ['(', ')']],
+      autoClosingPairs: commonPairs,
+      surroundingPairs: commonPairs,
+    });
   }
 
   return { init };

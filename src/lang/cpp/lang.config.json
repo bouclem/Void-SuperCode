@@ -1,0 +1,10 @@
+{
+  "language": "cpp",
+  "extensions": [".cpp", ".cc", ".cxx", ".h", ".hpp"],
+  "monacoLanguage": "cpp",
+  "bracketPairColorization": true,
+  "autoClosingBrackets": "always",
+  "icons": {
+    "cpp": "icons/cpp-file.svg"
+  }
+}

@@ -100,8 +100,12 @@ ipcMain.handle('open-file-dialog', async () => {
 ipcMain.handle('read-directory', async (_event, dirPath: string) => {
   try {
     const entries = fs.readdirSync(dirPath, { withFileTypes: true });
+    const allowedDotFolders = ['.voidscode', '.vscode'];
     const items = entries
-      .filter((e) => !e.name.startsWith('.'))
+      .filter((e) => {
+        if (!e.name.startsWith('.')) return true;
+        return allowedDotFolders.includes(e.name);
+      })
       .map((e) => ({
         name: e.name,
         path: path.join(dirPath, e.name),

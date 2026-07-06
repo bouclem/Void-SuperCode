@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.2.2] - 2026-07-06
+
+- Added: Python language support — src/lang/python/ with lang.config.json and py-file.svg icon
+- Added: C++ language support — src/lang/cpp/ with lang.config.json and cpp-file.svg icon
+- Added: HTML file icon — src/lang/html/icons/html-file.svg
+- Added: CSS file icon — src/lang/css/icons/css-file.svg
+- Added: Python autoclosing — brackets, quotes, # line comments, """ block comments
+- Added: C++ autoclosing — brackets, quotes, backticks, // line comments, /* */ block comments
+- Added: src/AI/api/api.ts — placeholder module for future AI API integration (OpenAI, Anthropic, local models)
+- Added: src/AI/tools/tools.ts — base AI tool infrastructure with file.write, file.modify (step-by-step text replacement), folder.write
+- Fixed: "Cannot set configuration for unknown language jsonl" — Monaco jsonl language now registered before setLanguageConfiguration
+- Fixed: .voidscode and .vscode folders now visible in file explorer (other dot folders like .git still hidden)
+- Fixed: Git init button now correctly updates after initializing — getGitStatus uses --is-inside-work-tree instead of --abbrev-ref HEAD which fails on empty repos with no commits
+- Changed: version bumped to 0.2.2
+
 ## [0.2.1] - 2026-07-06
 
 - Added: TypeScript autoclosing support — autoclosing pairs for brackets, quotes, braces, backticks with block comments

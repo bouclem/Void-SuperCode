@@ -127,6 +127,11 @@ window.FileExplorer = (() => {
     if (ext === 'jl') return 'lang/julia/icons/julia-file.svg';
     if (ext === 'json') return 'lang/json/icons/json-file.svg';
     if (ext === 'jsonl') return 'lang/jsonl/icons/jsonl-file.svg';
+    if (ext === 'py' || ext === 'pyw') return 'lang/python/icons/py-file.svg';
+    if (ext === 'cpp' || ext === 'cc' || ext === 'cxx') return 'lang/cpp/icons/cpp-file.svg';
+    if (ext === 'h' || ext === 'hpp') return 'lang/cpp/icons/cpp-file.svg';
+    if (ext === 'html' || ext === 'htm') return 'lang/html/icons/html-file.svg';
+    if (ext === 'css') return 'lang/css/icons/css-file.svg';
     return 'icons/file.svg';
   }
 
