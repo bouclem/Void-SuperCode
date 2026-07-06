@@ -56,4 +56,6 @@ contextBridge.exposeInMainWorld('api', {
   onInstallProgress: (callback: (progress: { stage: string; message: string; percent?: number }) => void): void => {
     ipcRenderer.on('install-progress', (_event, progress) => callback(progress));
   },
+  scanExtensions: (): Promise<string[]> => ipcRenderer.invoke('scan-extensions'),
+  pathExists: (targetPath: string): Promise<boolean> => ipcRenderer.invoke('path-exists', targetPath),
 });

@@ -335,6 +335,25 @@ ipcMain.on('open-external', (_event, url: string) => {
   shell.openExternal(url);
 });
 
+ipcMain.handle('scan-extensions', async () => {
+  try {
+    const voidscodeDir = path.join(app.getPath('home'), '.voidscode', 'extensions');
+    if (!fs.existsSync(voidscodeDir)) return [];
+    const entries = fs.readdirSync(voidscodeDir, { withFileTypes: true });
+    return entries.filter((e) => e.isDirectory()).map((e) => e.name);
+  } catch {
+    return [];
+  }
+});
+
+ipcMain.handle('path-exists', async (_event, targetPath: string) => {
+  try {
+    return fs.existsSync(targetPath);
+  } catch {
+    return false;
+  }
+});
+
 ipcMain.handle('install-update', async (event, latestTag: string) => {
   const win = BrowserWindow.fromWebContents(event.sender);
   return downloadAndInstallUpdate(latestTag, function (progress) {

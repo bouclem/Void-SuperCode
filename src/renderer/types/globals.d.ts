@@ -147,9 +147,14 @@ interface Window {
   };
   Extensions: {
     init(): void;
+    scanExtensions(): Promise<string[]>;
+  };
+  Autoclosing: {
+    init(): void;
   };
   Autocompletion: {
     init(): void;
+    setEnabled(value: boolean): void;
   };
   api: {
     openFolderDialog(): Promise<string | null>;
@@ -192,6 +197,8 @@ interface Window {
     openExternal(url: string): void;
     installUpdate(latestTag: string): Promise<boolean>;
     onInstallProgress(callback: (progress: { stage: string; message: string; percent?: number }) => void): void;
+    scanExtensions(): Promise<string[]>;
+    pathExists(targetPath: string): Promise<boolean>;
   };
   MonacoEnvironment: {
     getWorkerUrl(): string;

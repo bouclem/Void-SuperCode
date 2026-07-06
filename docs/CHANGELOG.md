@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.2.1] - 2026-07-06
+
+- Added: TypeScript autoclosing support — autoclosing pairs for brackets, quotes, braces, backticks with block comments
+- Added: HTML autoclosing support — autoclosing pairs for <>, {}, [], (), quotes, backticks with HTML comment blocks
+- Added: CSS autoclosing support — autoclosing pairs for {}, [], (), quotes with CSS comment blocks
+- Added: HTML autocompletion — Monaco completion provider with 90+ HTML tag suggestions (typing < shows tag list with descriptions)
+- Added: CSS autocompletion — Monaco completion provider with 150+ CSS property suggestions (color, display, flex, grid, margin, padding, etc.)
+- Added: src/AI/autocompletion/autocompletion.ts — intelligent suggestion lists module, respects aiAutocompletion config toggle
+- Added: AI settings menu — new "AI" section in settings with Autocompletion YES/NO toggle (saved as aiAutocompletion in config)
+- Added: AI activity bar icon — src/renderer/icons/ai.svg for future AI features and settings access
+- Added: scanExtensions() async function in extensions module — reads ~/.voidscode/extensions/ folder via IPC
+- Added: ~/.voidscode/extensions/ folder auto-created by voidscode.ts ensureDir()
+- Added: project-level .voidscode detection — when opening a folder containing .voidscode/, debug console logs ".voidscode found in code folder: OK"
+- Added: pathExists IPC handler for checking hidden folder existence
+- Renamed: src/AI/autocompletion/autoclosing.ts → src/AI/autoclosing/autoclosing.ts — autoclosing is bracket/quote pairs, autocompletion reserved for future intelligent suggestions
+- Changed: version bumped to 0.2.1
+
 ## [0.2.0] - 2026-07-06
 
 - Added: extension support skeleton — src/extensions/ folder and src/renderer/modules/extensions/extensions.ts module with TODO stubs for future extension loading

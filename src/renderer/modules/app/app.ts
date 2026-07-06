@@ -22,6 +22,7 @@ window.App = (() => {
     window.CodeFolding.init();
     window.HtmlPreview.init();
     window.Extensions.init();
+    initActivityBarAI();
     registerShortcuts();
     registerCommands();
     initActivityBar();
@@ -75,6 +76,15 @@ window.App = (() => {
         showSidebar();
       }
     });
+  }
+
+  function initActivityBarAI(): void {
+    const aiBtn = document.getElementById('activity-ai-btn');
+    if (aiBtn) {
+      aiBtn.addEventListener('click', function () {
+        window.Settings.toggle();
+      });
+    }
   }
 
   function showSidebar(): void {

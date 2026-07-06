@@ -39,8 +39,14 @@ window.SettingsScreen = (() => {
     shortcutsItem.textContent = 'Keyboard Shortcuts';
     shortcutsItem.dataset.section = 'shortcuts';
 
+    const aiItem = document.createElement('div');
+    aiItem.className = 'settings-nav-item';
+    aiItem.textContent = 'AI';
+    aiItem.dataset.section = 'ai';
+
     nav.appendChild(generalItem);
     nav.appendChild(shortcutsItem);
+    nav.appendChild(aiItem);
 
     sidebar.appendChild(sidebarHeader);
     sidebar.appendChild(nav);
@@ -81,18 +87,22 @@ window.SettingsScreen = (() => {
     });
 
     generalItem.addEventListener('click', function () {
-      selectSection('general', generalItem, shortcutsItem, title, body);
+      selectSection('general', generalItem, shortcutsItem, aiItem, title, body);
     });
     shortcutsItem.addEventListener('click', function () {
-      selectSection('shortcuts', generalItem, shortcutsItem, title, body);
+      selectSection('shortcuts', generalItem, shortcutsItem, aiItem, title, body);
+    });
+    aiItem.addEventListener('click', function () {
+      selectSection('ai', generalItem, shortcutsItem, aiItem, title, body);
     });
 
     renderGeneral(body);
   }
 
-  function selectSection(section: string, generalItem: HTMLElement, shortcutsItem: HTMLElement, title: HTMLElement, body: HTMLElement): void {
+  function selectSection(section: string, generalItem: HTMLElement, shortcutsItem: HTMLElement, aiItem: HTMLElement, title: HTMLElement, body: HTMLElement): void {
     generalItem.classList.remove('settings-nav-active');
     shortcutsItem.classList.remove('settings-nav-active');
+    aiItem.classList.remove('settings-nav-active');
 
     if (section === 'general') {
       generalItem.classList.add('settings-nav-active');
@@ -102,6 +112,10 @@ window.SettingsScreen = (() => {
       shortcutsItem.classList.add('settings-nav-active');
       title.textContent = 'Keyboard Shortcuts';
       renderShortcuts(body);
+    } else if (section === 'ai') {
+      aiItem.classList.add('settings-nav-active');
+      title.textContent = 'AI';
+      renderAI(body);
     }
   }
 
@@ -365,6 +379,52 @@ window.SettingsScreen = (() => {
     setTimeout(function () {
       if (!done) finish();
     }, 5000);
+  }
+
+  function renderAI(body: HTMLElement): void {
+    body.innerHTML = '';
+
+    const section = document.createElement('div');
+    section.className = 'settings-section';
+
+    const h3 = document.createElement('h3');
+    h3.textContent = 'AI';
+    section.appendChild(h3);
+
+    const desc = document.createElement('p');
+    desc.className = 'settings-shortcuts-desc';
+    desc.textContent = 'Configure AI-assisted features.';
+    section.appendChild(desc);
+
+    const autocompletionRow = document.createElement('div');
+    autocompletionRow.className = 'settings-row';
+    const autocompletionLabel = document.createElement('label');
+    autocompletionLabel.textContent = 'Autocompletion';
+    const autocompletionCheckbox = document.createElement('input');
+    autocompletionCheckbox.type = 'checkbox';
+    autocompletionCheckbox.id = 'setting-ai-autocompletion';
+    autocompletionRow.appendChild(autocompletionLabel);
+    autocompletionRow.appendChild(autocompletionCheckbox);
+    section.appendChild(autocompletionRow);
+
+    body.appendChild(section);
+
+    loadAISettings(autocompletionCheckbox);
+
+    autocompletionCheckbox.addEventListener('change', function () {
+      window.api.setConfig({ aiAutocompletion: autocompletionCheckbox.checked });
+      window.Autocompletion.setEnabled(autocompletionCheckbox.checked);
+    });
+  }
+
+  async function loadAISettings(autocompletionCheckbox: HTMLInputElement): Promise<void> {
+    try {
+      const config = await window.api.getConfig();
+      const cfg = config as Record<string, unknown>;
+      autocompletionCheckbox.checked = cfg.aiAutocompletion !== false;
+    } catch {
+      // Non-critical
+    }
   }
 
   function hide(): void {

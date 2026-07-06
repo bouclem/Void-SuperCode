@@ -36,6 +36,10 @@ function ensureDir(): void {
   if (!fs.existsSync(logsDir)) {
     fs.mkdirSync(logsDir, { recursive: true });
   }
+  const extensionsDir = path.join(dir, 'extensions');
+  if (!fs.existsSync(extensionsDir)) {
+    fs.mkdirSync(extensionsDir, { recursive: true });
+  }
 }
 
 export function getConfig(): VoidCodeConfig {

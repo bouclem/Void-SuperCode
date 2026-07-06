@@ -30,6 +30,7 @@ window.Editor = (() => {
         autoClosingBrackets: 'always',
         autoClosingQuotes: 'always',
       });
+      window.Autoclosing.init();
       window.Autocompletion.init();
       window.editor = editor;
       if (window.Shortcuts) {

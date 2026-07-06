@@ -33,6 +33,7 @@ window.FileExplorer = (() => {
         await refresh();
         window.Git.setFolder(lastFolder);
         window.App.showSidebar();
+        await checkVoidscodeFolder(lastFolder);
       }
     } catch {
       // Non-critical
@@ -55,6 +56,7 @@ window.FileExplorer = (() => {
       await window.api.setConfig({ lastFolder: folderPath });
       window.Git.setFolder(folderPath);
       window.App.showSidebar();
+      await checkVoidscodeFolder(folderPath);
     }
   }
 
@@ -309,6 +311,18 @@ window.FileExplorer = (() => {
 
   function getCurrentFolder(): string | null {
     return currentFolderPath;
+  }
+
+  async function checkVoidscodeFolder(folderPath: string): Promise<void> {
+    try {
+      const voidscodePath = folderPath.replace(/[\\/]+$/, '') + '/.voidscode';
+      const exists = await window.api.pathExists(voidscodePath);
+      if (exists) {
+        window.DebugConsole.appendLine('INFO', 'voidscode', '.voidscode found in code folder: OK');
+      }
+    } catch {
+      // Non-critical
+    }
   }
 
   function refreshActiveTab(oldPath: string, newPath: string): void {
